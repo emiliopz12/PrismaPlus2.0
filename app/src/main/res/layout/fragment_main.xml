@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.MainFragment">
+
+    <RelativeLayout
+        android:background="@color/colorDarkBlue"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Facturación"
+
+            android:textColor="#ddd"
+            android:textSize="24sp"/>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_weight=".33">
+
+
+        <RelativeLayout
+            android:background="@color/colorDCyan"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Productos"
+                android:textColor="#000"
+                android:textSize="24sp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Listados"
+                android:textColor="#000"
+                android:textSize="24sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@color/colorDarkCyan"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Clientes"
+            android:textColor="#ddd"
+            android:textSize="24sp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

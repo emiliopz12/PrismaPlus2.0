@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <item android:title="Facturacion">
+        <menu>
+
+
+            <item
+                android:id="@+id/nav_create_fact"
+                android:title="Crear Factura" />
+            <item
+                android:id="@+id/nav_fact_recurr"
+                android:title="Factura Recurrente" />
+            <item
+                android:id="@+id/nav_cotizaciones"
+                android:title="Cotizaciones" />
+
+            <item
+                android:id="@+id/nav_recibos"
+                android:title="Recibos" />
+            <item
+                android:id="@+id/nav_recibir"
+                android:title="Recibir" />
+        </menu>
+    </item>
+
+
+    <item
+        android:id="@+id/nav_clientes"
+        android:title="Clientes">
+
+    </item>
+
+    <item
+        android:id="@+id/nav_productos"
+        android:title="Productos">
+
+    </item>
+
+
+
+    <item android:title="Listados">
+        <menu>
+
+            <item
+                android:id="@+id/nav_docs"
+                android:title="Documentos" />
+
+            <item
+                android:id="@+id/nav_recurrentes"
+                android:title="Recurrentes" />
+            <item
+                android:id="@+id/nav_Cotizaciones"
+                android:title="Cotizaciones" />
+
+            <item
+                android:id="@+id/nav_Recibos_lis"
+                android:title="Recibos" />
+            <item
+                android:id="@+id/nav_recibidos"
+                android:title="Recibidos" />
+
+
+            <item
+                android:id="@+id/antiguedad"
+                android:title="Antiguedad" />
+            <item
+                android:id="@+id/nav_svendidos"
+                android:title="Productos Vendidos" />
+
+            <item
+                android:id="@+id/nav_share"
+                android:title="Cierre de Caja" />
+            <item
+                android:id="@+id/nav_impuestos"
+                android:title="Impuestos" />
+
+        </menu>
+    </item>
+
+
+        <group android:checkableBehavior="single">
+            <item android:id="@+id/contra"
+                android:title="Contraseña" />
+            <item android:id="@+id/salir"
+                android:title="Salir" />
+        </group>
+
+</menu>-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top">
+        <item android:title="Facturacion">
+            <menu>
+                <item
+                    android:id="@+id/nav_create_fact"
+                    android:title="Crear Factura" />
+                <item
+                    android:id="@+id/nav_fact_recurr"
+                    android:title="Factura Recurrente" />
+                <item
+                    android:id="@+id/nav_cotizaciones"
+                    android:title="Cotizaciones" />
+
+                <item
+                    android:id="@+id/nav_recibos"
+                    android:title="Recibos" />
+                <item
+                    android:id="@+id/nav_recibir"
+                    android:title="Recibir" />
+            </menu>
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/me2u_top">
+        <item
+            android:id="@+id/nav_clientes"
+            android:title="Clientes">
+
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/menu_top2">
+        <item
+            android:id="@+id/nav_productos"
+            android:title="Productos">
+
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom">
+
+        <item android:title="Listados">
+            <menu>
+
+                <item
+                    android:id="@+id/nav_docs"
+                    android:title="Documentos" />
+
+                <item
+                    android:id="@+id/nav_recurrentes"
+                    android:title="Recurrentes" />
+                <item
+                    android:id="@+id/nav_Cotizaciones"
+                    android:title="Cotizaciones" />
+
+                <item
+                    android:id="@+id/nav_Recibos_lis"
+                    android:title="Recibos" />
+                <item
+                    android:id="@+id/nav_recibidos"
+                    android:title="Recibidos" />
+
+
+                <item
+                    android:id="@+id/antiguedad"
+                    android:title="Antiguedad" />
+                <item
+                    android:id="@+id/nav_svendidos"
+                    android:title="Productos Vendidos" />
+
+                <item
+                    android:id="@+id/nav_share"
+                    android:title="Cierre de Caja" />
+                <item
+                    android:id="@+id/nav_impuestos"
+                    android:title="Impuestos" />
+
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/contra"
+            android:title="Contraseña" />
+        <item android:id="@+id/salir"
+            android:title="Salir" />
+    </group>
+</menu>
