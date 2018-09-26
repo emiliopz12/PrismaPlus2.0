@@ -43,6 +43,7 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        preferencesManager = PreferencesManager.getInstance();
 
     }
 
@@ -99,6 +100,7 @@ public class DrawerActivity extends AppCompatActivity
         }*/
 
         if (id == R.id.salir) {
+            preferencesManager.saveString(this, "rememberUser", ""); //log out
             Intent loginpage = new Intent(this, LoginActivity.class);
             startActivity(loginpage);
         }
