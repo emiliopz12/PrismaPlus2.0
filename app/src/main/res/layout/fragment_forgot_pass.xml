@@ -3,12 +3,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ForgotPassFragment">
+    tools:context=".fragments.ForgotPassFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
+        android:background="@drawable/onboarding"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relIamge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relaData"
+            >
+
+            <ImageView
+                android:id="@+id/averiasImagen"
+                android:layout_centerInParent="true"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/prisma_logo"
+                android:padding="10dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relaData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="26dp">
+
+
+
+            <TextView
+                android:id="@+id/username_text_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:text="@string/correo_recu"
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="visible"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/username_recovery"
+                android:layout_below="@+id/username_text_error"
+                android:layout_width="256dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:padding="6dp"
+                android:maxLength="40"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/edittext_rounded"
+                android:hint="Usuario"
+                android:textColor="@color/colorPrimaryDark"
+                android:inputType="textPassword"/>
+
+
+
+            <RelativeLayout
+                android:layout_below="@+id/username_recovery"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/loginUser"
+                    android:layout_width="216dp"
+                    android:layout_height="56dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/recuperar_contras"
+                    android:textColor="#ddd"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:scaleType="fitXY"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/footer_login"/>
+    </RelativeLayout>
 
 </FrameLayout>
