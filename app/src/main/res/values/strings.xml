@@ -9,6 +9,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="correo_recu">Ingrese su usuario y de clic en Recordar Contraseña, un email será enviadoa su cuenta de correo</string>
+    <string name="correo_recu">Ingrese su usuario y de click en Recordar Contraseña, un email será enviados su cuenta de correo</string>
     <string name="recuperar_contras">Recuperar Contraseña</string>
 </resources>
