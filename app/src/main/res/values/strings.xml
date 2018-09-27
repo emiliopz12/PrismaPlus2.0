@@ -11,4 +11,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="correo_recu">Ingrese su usuario y de click en Recordar Contraseña, un email será enviados su cuenta de correo</string>
     <string name="recuperar_contras">Recuperar Contraseña</string>
+    <string name="client_label">Cliente</string>
 </resources>

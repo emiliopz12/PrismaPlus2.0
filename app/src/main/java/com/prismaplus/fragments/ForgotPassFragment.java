@@ -1,4 +1,4 @@
-package com.prismaplus;
+package com.prismaplus.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.prismaplus.R;
 
 
 public class ForgotPassFragment extends Fragment {

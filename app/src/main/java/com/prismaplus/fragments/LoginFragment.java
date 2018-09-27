@@ -38,7 +38,7 @@ public class LoginFragment extends Fragment {
 
     ConnectionInterface connetionService;
     PreferencesManager preferencesManager;
-
+    LoginActivity mActivity;
     View rootView;
     Utils utils;
     @BindView(R.id.loginUser)
@@ -84,7 +84,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        mActivity = (LoginActivity) context ;
     }
 
     @Override
@@ -95,6 +95,11 @@ public class LoginFragment extends Fragment {
     public void goToMain(){
         Intent homepage = new Intent(getActivity(), DrawerActivity.class);
         startActivity(homepage);
+    }
+
+    @OnClick(R.id.textNot)
+    public void forgotPass(){
+        mActivity.setFragment(new ForgotPassFragment());
     }
 
     @OnClick(R.id.loginUser)

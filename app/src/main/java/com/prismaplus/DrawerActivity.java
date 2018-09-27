@@ -17,8 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.LoginActivity;
 import com.prismaplus.fragments.MainFragment;
+import com.prismaplus.fragments.NewBillFragment;
 import com.prismaplus.herlpers.PreferencesManager;
 
 public class DrawerActivity extends AppCompatActivity
@@ -85,9 +87,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       /* if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_create_fact) {
+            Intent i = new Intent(DrawerActivity.this, BillingActivity.class);
+            i.putExtra("nextFragment",1);
+            startActivity(i);
+            finish();
+        } /*else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
