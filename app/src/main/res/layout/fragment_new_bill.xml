@@ -102,6 +102,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="#ffffff"
                 android:orientation="horizontal"
+                android:paddingBottom="2dp"
                 android:weightSum="1">
 
                 <Spinner
@@ -463,16 +464,17 @@
                     android:inputType="number" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/add_row"
                     android:layout_width="2dp"
                     android:layout_height="23dp"
                     android:layout_weight=".05"
-                    android:background="@drawable/add"/>
+                    android:background="@drawable/add" />
 
             </LinearLayout>
 
             <TableLayout
                 style="bor"
+                android:id="@+id/tableProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp">
@@ -612,14 +614,12 @@
                             android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".20"
                             android:text="Observaciones"
                             android:textColor="#000" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".40"
                             android:background="@drawable/edit_text_square"
 
                             android:inputType="textMultiLine"
@@ -641,7 +641,7 @@
                                 android:id="@+id/textView3"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".35"
+                                android:layout_weight=".40"
                                 android:text="Forma Pago"
                                 android:textColor="#000" />
 
@@ -649,7 +649,7 @@
                                 android:id="@+id/spinner_pay"
                                 android:layout_width="0dp"
                                 android:layout_height="30dp"
-                                android:layout_weight=".65"
+                                android:layout_weight=".60"
                                 android:background="@drawable/spinner_format">
 
                             </Spinner>

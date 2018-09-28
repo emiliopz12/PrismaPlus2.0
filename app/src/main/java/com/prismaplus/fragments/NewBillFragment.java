@@ -13,7 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -46,6 +50,13 @@ public class NewBillFragment extends Fragment {
 
     @BindView(R.id.spinner_currency)
     Spinner spinner_currency;
+
+    @BindView(R.id.add_row)
+    ImageButton add_row;
+
+    @BindView(R.id.tableProducts)
+    TableLayout tableProducts;
+
 
     public NewBillFragment() {
         // Required empty public constructor
@@ -119,6 +130,23 @@ public class NewBillFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @OnClick(R.id.add_row)
+    public void addRow(){
+
+        TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+        ((TextView)row.findViewById(R.id.cant)).setText("1");
+        ((TextView)row.findViewById(R.id.descripcion)).setText("hola");
+        ((TextView)row.findViewById(R.id.precio)).setText("9000");
+        ((TextView)row.findViewById(R.id.total)).setText("9000");
+        ((ImageButton)row.findViewById(R.id.del)).setContentDescription("1");
+
+
+        tableProducts.addView(row);
+
+        tableProducts.requestLayout();
+
     }
 
 
