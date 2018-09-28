@@ -35,10 +35,10 @@ public class NewBillFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mActivity.getSupportActionBar().setTitle("Nueva Factura");
-        mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
+//        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+ //       mActivity.getSupportActionBar().setTitle("Nueva Factura");
+ //       mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class NewBillFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (BillingActivity) context;
+//        mActivity = (BillingActivity) context;
     }
 
     @Override

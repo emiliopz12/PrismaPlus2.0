@@ -87,12 +87,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_create_fact) {
+        /*if (id == R.id.nav_create_fact) {
             Intent i = new Intent(DrawerActivity.this, BillingActivity.class);
             i.putExtra("nextFragment",1);
             startActivity(i);
             finish();
-        } /*else if (id == R.id.nav_gallery) {
+        } *//*else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -109,6 +109,10 @@ public class DrawerActivity extends AppCompatActivity
             Intent loginpage = new Intent(this, LoginActivity.class);
             startActivity(loginpage);
         }
+        else if(id == R.id.nav_create_fact) {
+            setFragment(new NewBillFragment());
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
