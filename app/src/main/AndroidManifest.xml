@@ -39,7 +39,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.BillingActivity"></activity>
+        <activity android:name=".activities.BillingActivity" ></activity>
     </application>
 
 </manifest>

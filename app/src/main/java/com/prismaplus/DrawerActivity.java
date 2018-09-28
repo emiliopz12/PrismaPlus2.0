@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.LoginActivity;
@@ -23,18 +24,20 @@ import com.prismaplus.fragments.MainFragment;
 import com.prismaplus.fragments.NewBillFragment;
 import com.prismaplus.herlpers.PreferencesManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private PreferencesManager preferencesManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ButterKnife.bind(this);
         setFragment(new MainFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -46,6 +49,13 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         preferencesManager = PreferencesManager.getInstance();
+
+        View header = navigationView.getHeaderView(0);
+        TextView text = (TextView) header.findViewById(R.id.nameCompany);
+
+        if(!preferencesManager.getStringValue(DrawerActivity.this, "nombre").equals("")){
+            text.setText(preferencesManager.getStringValue(DrawerActivity.this,"nombre"));
+        }
 
     }
 
@@ -87,12 +97,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        /*if (id == R.id.nav_create_fact) {
+        if (id == R.id.nav_create_fact) {
             Intent i = new Intent(DrawerActivity.this, BillingActivity.class);
             i.putExtra("nextFragment",1);
             startActivity(i);
             finish();
-        } *//*else if (id == R.id.nav_gallery) {
+        } /*else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -109,9 +119,7 @@ public class DrawerActivity extends AppCompatActivity
             Intent loginpage = new Intent(this, LoginActivity.class);
             startActivity(loginpage);
         }
-        else if(id == R.id.nav_create_fact) {
-            setFragment(new NewBillFragment());
-        }
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

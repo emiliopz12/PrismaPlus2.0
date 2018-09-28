@@ -9,6 +9,8 @@ import android.os.Bundle;
 import com.prismaplus.R;
 import com.prismaplus.fragments.NewBillFragment;
 
+import java.util.Objects;
+
 public class BillingActivity extends AppCompatActivity {
 
     int nextFragment = 0 ;
@@ -19,13 +21,14 @@ public class BillingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_billing);
         nextFragment = getIntent().getIntExtra("nextFragment",0);
         openFragmentFromBilling(nextFragment);
+        //Objects.requireNonNull(getSupportActionBar()).setLogo(R.drawable.ic_prisma_big);
     }
 
     public void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
-        fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.replace(R.id.contenedorFragmentBillimg, fragment);
         fragmentTransaction.commit();
     }
 

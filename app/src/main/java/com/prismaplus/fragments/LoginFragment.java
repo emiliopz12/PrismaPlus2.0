@@ -95,6 +95,7 @@ public class LoginFragment extends Fragment {
     public void goToMain(){
         Intent homepage = new Intent(getActivity(), DrawerActivity.class);
         startActivity(homepage);
+        getActivity().finish();
     }
 
     @OnClick(R.id.textNot)
@@ -106,6 +107,7 @@ public class LoginFragment extends Fragment {
     public void login(){
         //Toast.makeText(rootView.getContext(), username.getText().toString(), Toast.LENGTH_LONG).show();
         //Log.d("usuario", password.getText().toString());
+        utils.showProgess(getActivity(),"Iniciando sesión");
         connetionService.doLogin(username.getText().toString(), password.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
             @Override
             public void onResponse(Call<List<LoginInfo>> call, Response<List<LoginInfo>> response) {
@@ -117,10 +119,12 @@ public class LoginFragment extends Fragment {
                     //Toast.makeText(rootView.getContext(), "Logged In", Toast.LENGTH_LONG).show();
                     preferencesManager.saveString(getActivity(), "rememberUser", "OK");
                     preferencesManager.saveInt(getActivity(), "IdEmpresa", res.getIdEmpresa());
-
+                    preferencesManager.saveString(getActivity(), "nombre", res.getNombre());
+                    utils.hideProgress();
                     goToMain();
                 }
                 else{
+                    utils.hideProgress();
                     Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
                 }
 
@@ -128,6 +132,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<LoginInfo>> call, Throwable t) {
+                utils.hideProgress();
                 Toast.makeText(rootView.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 
             }

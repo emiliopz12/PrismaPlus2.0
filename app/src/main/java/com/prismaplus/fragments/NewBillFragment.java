@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toolbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
@@ -29,7 +30,7 @@ public class NewBillFragment extends Fragment {
 
     View rootView;
     private final int HOME = 16908332;
-    BillingActivity mActivity;
+    private BillingActivity mActivity;
 
     @BindView(R.id.spinner_pay)
     Spinner spinner_pay;
@@ -54,10 +55,15 @@ public class NewBillFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        /*mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         mActivity.getSupportActionBar().setTitle("Nueva Factura");
-        mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);*/
+        try {
+            mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
+        }catch (Exception e){
+            mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma);
+        }
+
 
 
 
@@ -69,7 +75,6 @@ public class NewBillFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_bill, container, false);
         ButterKnife.bind(this,rootView);
-
         ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.array_condition));
         spinnerCondition.setAdapter(spinnerConditionrrayAdapter);
 
@@ -88,13 +93,12 @@ public class NewBillFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //mActivity = (BillingActivity) context;
+        mActivity = (BillingActivity) getActivity();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
     }
 
 

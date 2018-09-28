@@ -28,6 +28,6 @@
 
     <string-array name="currency">
         <item>Colones</item>
-        <item>Dálares</item>
+        <item>Dólares</item>
     </string-array>
 </resources>
