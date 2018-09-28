@@ -11,12 +11,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.BillingActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class NewBillFragment extends Fragment {
@@ -35,10 +40,10 @@ public class NewBillFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
- //       mActivity.getSupportActionBar().setTitle("Nueva Factura");
- //       mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
+        /*mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mActivity.getSupportActionBar().setTitle("Nueva Factura");
+        mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);*/
     }
 
     @Override
@@ -53,7 +58,7 @@ public class NewBillFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        mActivity = (BillingActivity) context;
+        //mActivity = (BillingActivity) context;
     }
 
     @Override
@@ -81,5 +86,6 @@ public class NewBillFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
 }
