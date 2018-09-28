@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -30,7 +31,20 @@ public class NewBillFragment extends Fragment {
     private final int HOME = 16908332;
     BillingActivity mActivity;
 
+    @BindView(R.id.spinner_pay)
+    Spinner spinner_pay;
 
+    @BindView(R.id.spinner_condition)
+    Spinner spinnerCondition;
+
+    @BindView(R.id.spinner_client)
+    Spinner spinner_client;
+
+    @BindView(R.id.spinner_situation)
+    Spinner spinner_situation;
+
+    @BindView(R.id.spinner_currency)
+    Spinner spinner_currency;
 
     public NewBillFragment() {
         // Required empty public constructor
@@ -44,6 +58,9 @@ public class NewBillFragment extends Fragment {
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         mActivity.getSupportActionBar().setTitle("Nueva Factura");
         mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);*/
+
+
+
     }
 
     @Override
@@ -52,6 +69,19 @@ public class NewBillFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_bill, container, false);
         ButterKnife.bind(this,rootView);
+
+        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.array_condition));
+        spinnerCondition.setAdapter(spinnerConditionrrayAdapter);
+
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.pay_type));
+        spinner_pay.setAdapter(spinnerConditionrrayAdapter);
+
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.currency));
+        spinner_currency.setAdapter(spinnerConditionrrayAdapter);
+
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.situation));
+        spinner_situation.setAdapter(spinnerConditionrrayAdapter);
+
         return  rootView;
     }
 

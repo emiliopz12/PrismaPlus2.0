@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_condition">
+        <item>Contado</item>
+        <item>Crédito</item>
+        <item>Consignacion</item>
+        <item>Apartado</item>
+        <item>Arrendamiento con opción de compra</item>
+        <item>Arrendamiento en función financiera</item>
+        <item>Otros</item>
+    </string-array>
+
+
+    <string-array name="pay_type">
+        <item>Efectivo</item>
+        <item>Tarjeta</item>
+        <item>Recaudado Terceros</item>
+        <item>Deposito Transferencia</item>
+        <item>Cheque</item>
+        <item>Otros</item>
+    </string-array>
+
+    <string-array name="situation">
+        <item>Normal</item>
+        <item>Contingencia</item>
+        <item>Sin Internet</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>Colones</item>
+        <item>Dálares</item>
+    </string-array>
+</resources>

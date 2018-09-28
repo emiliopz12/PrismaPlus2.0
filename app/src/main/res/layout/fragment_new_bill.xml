@@ -368,7 +368,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="0.30"
+                    android:layout_weight="0.35"
                     android:gravity="bottom"
                     android:text="Nat. Descuento"
                     android:textColor="#000" />
@@ -384,7 +384,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight=".10"
+                    android:layout_weight=".05"
                     android:gravity="bottom"
                     android:textColor="#000" />
 
@@ -425,7 +425,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
-                    android:layout_weight=".32"
+                    android:layout_weight=".35"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="text" />
@@ -433,7 +433,6 @@
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:backgroundTint="#aaa"
@@ -446,12 +445,126 @@
 
                 <ImageButton
                     android:id="@+id/imageButton"
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".08"
-                    app:srcCompat="@android:drawable/ic_input_add" />
+                    android:layout_width="2dp"
+                    android:layout_height="23dp"
+                    android:layout_weight=".05"
+                    android:background="@drawable/round_green_button"
+                    app:srcCompat="@drawable/fab_add_clear_selector" />
 
             </LinearLayout>
+
+            <TableLayout
+                style="bor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".10"
+                        android:background="#CCCCCC"
+                        android:text="Co"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".40"
+                        android:background="#CCCCCC"
+                        android:text="Descripción"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".20"
+                        android:background="#CCCCCC"
+                        android:text="Precio"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".20"
+                        android:background="#CCCCCC"
+                        android:text="Total"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".10"
+                        android:background="#CCCCCC"
+                        android:text="De"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".10"
+                        android:background="#E5E5E5"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".40"
+                        android:background="#E5E5E5"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".20"
+                        android:background="#E5E5E5"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".20"
+                        android:background="#E5E5E5"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".10"
+                        android:background="#E5E5E5"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+                </TableRow>
+
+            </TableLayout>
 
             <View
                 android:id="@+id/view2"
