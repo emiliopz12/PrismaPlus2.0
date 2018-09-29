@@ -116,6 +116,9 @@ public class NewBillFragment extends Fragment {
     @BindView(R.id.total)
     TextView total;
 
+    @BindView(R.id.TC)
+    TextView TC;
+
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
 
@@ -307,6 +310,47 @@ public class NewBillFragment extends Fragment {
     @OnClick(R.id.add_row)
     public void addRow(){
 
+        String preci = precio.getText().toString();
+        String canti = cant.getText().toString();
+        String descPorc = descPor.getText().toString();
+        String descrip = description.getText().toString();
+        String natDescu = natDesc.getText().toString();
+        String moneda = spinner_currency.getSelectedItem().toString();
+        String tc = TC.getText().toString();
+        String tot = total.getText().toString();
+
+        if( currencyHash.get(spinner_currency.getSelectedItemPosition()).equals("USD") && tc.equals("")){
+            Toast.makeText(rootView.getContext(), "Debe ingresar TC", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(preci.equals("") || Integer.parseInt(preci) < 1){
+            Toast.makeText(rootView.getContext(), "Valor invalido en precio", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(canti.equals("") || Integer.parseInt(canti) < 1){
+            Toast.makeText(rootView.getContext(), "Valor invalido en cantidad", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(tot.equals("") || Float.parseFloat(tot) < 1){
+            Toast.makeText(rootView.getContext(), "Valor invalido en total", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(descrip.equals("")){
+            Toast.makeText(rootView.getContext(), "Debe ingresar desripcion", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(Integer.parseInt(descPorc) > 0 && natDescu.equals("")){
+            Toast.makeText(rootView.getContext(), "Debe ingresar Nat. Descuento", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
         if(lines == 0){
             tableProducts.removeViewAt(1);
 
@@ -317,11 +361,10 @@ public class NewBillFragment extends Fragment {
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
 
-        ((TextView)row.findViewById(R.id.cant)).setText("1");
-        ((TextView)row.findViewById(R.id.descripcion)).setText("hola");
-        ((TextView)row.findViewById(R.id.precio)).setText("9000");
-        ((TextView)row.findViewById(R.id.total)).setText("9000");
-        del.setContentDescription("1");
+        ((TextView)row.findViewById(R.id.cant)).setText(canti);
+        ((TextView)row.findViewById(R.id.descripcion)).setText(descrip);
+        ((TextView)row.findViewById(R.id.precio)).setText(preci);
+        ((TextView)row.findViewById(R.id.total)).setText(tot);
 
         lines++;
 
@@ -374,10 +417,10 @@ public class NewBillFragment extends Fragment {
             checkIV.setChecked(true);
 
         description.setText(prod.getDescripcion().toString());
-        precio.setText(prod.getPrecio().toString());
+        precio.setText(String.valueOf(prod.getPrecio()));
 
         if(prod.getPorcentajeImpuesto() == 0)
-            neto.setText(prod.getPrecio().toString());
+            neto.setText(String.valueOf(prod.getPrecio()));
 
         else{
 
@@ -388,7 +431,7 @@ public class NewBillFragment extends Fragment {
 
             float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
             float Neto = prod.getPrecio() / PorImpuesto;
-            neto.setText(prod.getPrecio().toString());
+            neto.setText(String.valueOf(prod.getPrecio()));
         }
 
     }
@@ -445,8 +488,6 @@ public class NewBillFragment extends Fragment {
     @OnTextChanged(R.id.descPor)
     public void newDesc(CharSequence text){
 
-        Toast.makeText(rootView.getContext(), "555", Toast.LENGTH_LONG).show();
-
         if(!text.toString().equals("")){
 
             Toast.makeText(rootView.getContext(), "555", Toast.LENGTH_LONG).show();
@@ -458,7 +499,6 @@ public class NewBillFragment extends Fragment {
         }
 
     }
-
 
     public void calculoDescuento(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
@@ -493,9 +533,7 @@ public class NewBillFragment extends Fragment {
         Bill newBill;
 
         Detail tmpDetail;
-
-
-
+        
     }
 
 }

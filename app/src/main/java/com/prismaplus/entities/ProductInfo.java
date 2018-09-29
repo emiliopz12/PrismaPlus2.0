@@ -28,7 +28,7 @@ public class ProductInfo {
     private Integer estado;
     @SerializedName("Precio")
     @Expose
-    private Integer precio;
+    private float precio;
     @SerializedName("TipoCodigo")
     @Expose
     private String tipoCodigo;
@@ -95,11 +95,11 @@ public class ProductInfo {
         this.estado = estado;
     }
 
-    public Integer getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Integer precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
