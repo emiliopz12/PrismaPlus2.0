@@ -18,16 +18,32 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.BillingActivity;
+import com.prismaplus.activities.SplashActivity;
+import com.prismaplus.entities.ClientInfo;
+import com.prismaplus.entities.LoginInfo;
+import com.prismaplus.entities.ProductInfo;
+import com.prismaplus.herlpers.PreferencesManager;
+import com.prismaplus.services.ConnectionInterface;
+import com.prismaplus.services.ConnetionService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewBillFragment extends Fragment {
@@ -35,6 +51,8 @@ public class NewBillFragment extends Fragment {
     View rootView;
     private final int HOME = 16908332;
     private BillingActivity mActivity;
+
+    private int lines = 0;
 
     @BindView(R.id.spinner_pay)
     Spinner spinner_pay;
@@ -51,11 +69,19 @@ public class NewBillFragment extends Fragment {
     @BindView(R.id.spinner_currency)
     Spinner spinner_currency;
 
+    @BindView(R.id.spinner_item)
+    Spinner spinner_item;
+
     @BindView(R.id.add_row)
     ImageButton add_row;
 
     @BindView(R.id.tableProducts)
     TableLayout tableProducts;
+    private PreferencesManager preferencesManager;
+    private ConnectionInterface connetionService;
+
+    Map<Integer, String> clientsHash,
+    conditionHash, situationHash, currencyHash, productsHash;
 
 
     public NewBillFragment() {
@@ -68,7 +94,10 @@ public class NewBillFragment extends Fragment {
         setHasOptionsMenu(true);
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mActivity.getSupportActionBar().setTitle("Nueva Factura");
+        mActivity.getSupportActionBar().setTitle("NUEVO TIQUETE");
+        connetionService = ConnetionService.obtenerServicio();
+        preferencesManager = PreferencesManager.getInstance();
+
         try {
             mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
         }catch (Exception e){
@@ -98,7 +127,44 @@ public class NewBillFragment extends Fragment {
         spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.situation));
         spinner_situation.setAdapter(spinnerConditionrrayAdapter);
 
+        pupulateClients();
+
+        pupulateProducts();
+
+        populateHashes();
+
         return  rootView;
+    }
+
+    public void populateHashes() {
+
+        clientsHash = new HashMap<>();
+        conditionHash= new HashMap<>();
+        situationHash = new HashMap<>();
+        currencyHash = new HashMap<>();
+        productsHash = new HashMap<>();
+
+        /* **** CONDITION HASH ****/
+
+        conditionHash.put(0, "01");
+        conditionHash.put(1, "02");
+        conditionHash.put(2, "03");
+        conditionHash.put(3, "04");
+        conditionHash.put(4, "05");
+        conditionHash.put(5, "06");
+        conditionHash.put(6, "99");
+
+        /* **** SITUATION HASH ****/
+
+        situationHash.put(0, "1");
+        situationHash.put(1, "2");
+        situationHash.put(2, "3");
+
+        /* **** CURRENCY HASH ****/
+
+        currencyHash.put(0, "CRC");
+        currencyHash.put(1, "USD");
+
     }
 
     @Override
@@ -132,15 +198,98 @@ public class NewBillFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    public void pupulateClients() {
+
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+
+        connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
+            private String[] tmpClients;
+
+            @Override
+            public void onResponse(Call<List<ClientInfo>> call, Response<List<ClientInfo>> response) {
+                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                List<ClientInfo> loginResponse = response.body();
+                tmpClients = new String[loginResponse.size()+1];
+                //loginResponse.get(0).getMSJ();
+                tmpClients[0] = "CLIENTE DE TIQUETE";
+                int i = 1;
+                for(ClientInfo c : loginResponse){
+                    tmpClients[i++] = c.getNombre();
+                }
+
+                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpClients);
+                spinner_client.setAdapter(spinnerConditionrrayAdapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ClientInfo>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void pupulateProducts() {
+
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+
+        connetionService.getProduct(IdEmpresa, "0").enqueue(new Callback<List<ProductInfo>>() {
+            private String[] tmpProducts;
+
+            @Override
+            public void onResponse(Call<List<ProductInfo>> call, Response<List<ProductInfo>> response) {
+                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                List<ProductInfo> loginResponse = response.body();
+                tmpProducts = new String[loginResponse.size()];
+                //loginResponse.get(0).getMSJ();
+                int i = 0;
+                for(ProductInfo c : loginResponse){
+                    tmpProducts[i++] = c.getDescripcion();
+                }
+
+                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
+                spinner_item.setAdapter(spinnerConditionrrayAdapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductInfo>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
     @OnClick(R.id.add_row)
     public void addRow(){
 
+        if(lines == 0){
+            tableProducts.removeViewAt(1);
+
+            tableProducts.requestLayout();
+        }
+
         TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+
+        ImageButton del = (ImageButton)row.findViewById(R.id.del);
+
         ((TextView)row.findViewById(R.id.cant)).setText("1");
         ((TextView)row.findViewById(R.id.descripcion)).setText("hola");
         ((TextView)row.findViewById(R.id.precio)).setText("9000");
         ((TextView)row.findViewById(R.id.total)).setText("9000");
-        ((ImageButton)row.findViewById(R.id.del)).setContentDescription("1");
+        del.setContentDescription("1");
+
+        lines++;
+
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableProducts.removeViewAt(Integer.parseInt(v.getContentDescription().toString()));
+
+                tableProducts.requestLayout();
+
+            }
+        });
 
 
         tableProducts.addView(row);
@@ -149,5 +298,22 @@ public class NewBillFragment extends Fragment {
 
     }
 
+    @OnItemSelected(R.id.spinner_client)
+    public void changeTitle(Spinner spinner, int position) {
+
+        if(position == 0){
+            mActivity.getSupportActionBar().setTitle("NUEVO TIQUETE");
+        }
+        else
+            mActivity.getSupportActionBar().setTitle("NUEVA FACTURA");
+
+    }
+
+    @OnItemSelected(R.id.spinner_condition)
+    public void seeVal(Spinner spinner, int position) {
+
+        Toast.makeText(rootView.getContext(), this.conditionHash.get(position), Toast.LENGTH_LONG).show();
+
+    }
 
 }

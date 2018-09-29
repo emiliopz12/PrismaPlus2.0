@@ -23,10 +23,10 @@ public interface ConnectionInterface {
     Call<List<LoginInfo>> doLogin(@Query("usuario") String user, @Query("clave") String pass);
 
     @GET("customersapi")
-    Call<List<ClientInfo>> getClients(@Query("idempresa") int user, @Query("idcliente") int pass);
+    Call<List<ClientInfo>> getClients(@Query("idempresa") String company, @Query("idcliente") int pass);
 
     @GET("productsapi")
-    Call<List<ProductInfo>> getProduct(@Query("idempresa") int company, @Query("CodigoArticulo") String articulo);
+    Call<List<ProductInfo>> getProduct(@Query("idempresa") String company, @Query("CodigoArticulo") String articulo);
 
     @POST("FacturaApi")
     Call<Object> doBill(@Body Bill bill);

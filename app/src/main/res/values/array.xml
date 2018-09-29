@@ -14,8 +14,8 @@
     <string-array name="pay_type">
         <item>Efectivo</item>
         <item>Tarjeta</item>
-        <item>Recaudado Terceros</item>
-        <item>Deposito Transferencia</item>
+        <item>RecaudadoTerceros</item>
+        <item>DepositoTransferencia</item>
         <item>Cheque</item>
         <item>Otros</item>
     </string-array>
