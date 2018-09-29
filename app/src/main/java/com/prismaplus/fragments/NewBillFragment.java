@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -26,7 +27,9 @@ import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.SplashActivity;
+import com.prismaplus.entities.Bill;
 import com.prismaplus.entities.ClientInfo;
+import com.prismaplus.entities.Detail;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
@@ -41,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import butterknife.OnTextChanged;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,12 +81,39 @@ public class NewBillFragment extends Fragment {
 
     @BindView(R.id.tableProducts)
     TableLayout tableProducts;
+
+
+    @BindView(R.id.checkIV)
+    CheckBox checkIV;
+
+    @BindView(R.id.butgenerar)
+    Button butgenerar;
+
+    @BindView(R.id.description)
+    TextView description;
+
+    @BindView(R.id.precio)
+    TextView precio;
+
+    @BindView(R.id.neto)
+    TextView neto;
+
+    @BindView(R.id.cant)
+    TextView cant;
+
+    @BindView(R.id.montoIV)
+    TextView montoIV;
+
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
 
     Map<Integer, String> clientsHash,
     conditionHash, situationHash, currencyHash, productsHash;
 
+    List<ProductInfo> productsList;
+    List<ClientInfo> clientsList;
+
+    ProductInfo actualProduct;
 
     public NewBillFragment() {
         // Required empty public constructor
@@ -240,6 +271,7 @@ public class NewBillFragment extends Fragment {
             public void onResponse(Call<List<ProductInfo>> call, Response<List<ProductInfo>> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                 List<ProductInfo> loginResponse = response.body();
+                productsList = loginResponse;
                 tmpProducts = new String[loginResponse.size()];
                 //loginResponse.get(0).getMSJ();
                 int i = 0;
@@ -312,7 +344,96 @@ public class NewBillFragment extends Fragment {
     @OnItemSelected(R.id.spinner_condition)
     public void seeVal(Spinner spinner, int position) {
 
-        Toast.makeText(rootView.getContext(), this.conditionHash.get(position), Toast.LENGTH_LONG).show();
+        //Toast.makeText(rootView.getContext(), this.conditionHash.get(position), Toast.LENGTH_LONG).show();
+
+    }
+
+    @OnItemSelected(R.id.spinner_item)
+    public void productsChange(Spinner spinner, int position) {
+
+        ProductInfo prod = productsList.get(position);
+
+        actualProduct = prod;
+
+        if(prod.getCodigoImpuesto().equals("00")){
+            checkIV.setChecked(false);
+        }
+        else
+            checkIV.setChecked(true);
+
+        description.setText(prod.getDescripcion().toString());
+        precio.setText(prod.getPrecio().toString());
+
+        if(prod.getPorcentajeImpuesto() == 0)
+            neto.setText(prod.getPrecio().toString());
+
+        else{
+
+//            float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
+//            float ValorImpuesto = prod.getPrecio()  / PorImpuesto;
+//            float IV= (prod.getPrecio() - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
+//            montoIV.setText(String.valueOf(IV));
+
+            float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
+            float Neto = prod.getPrecio() / PorImpuesto;
+            neto.setText(prod.getPrecio().toString());
+        }
+
+    }
+
+    @OnTextChanged(R.id.cant)
+    public void newCant(CharSequence text){
+
+        if(!text.toString().equals("") && !precio.getText().toString().equals("")) {
+
+            actualProduct.setPorcentajeImpuesto(50);
+
+            float preci = Float.parseFloat(precio.getText().toString());
+
+            float PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+            float Neto = preci / PorImpuesto;
+            neto.setText(String.valueOf(Neto));
+
+            PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
+            float ValorImpuesto = preci / PorImpuesto;
+            float IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
+            montoIV.setText(String.valueOf(IV));
+        }
+    }
+
+    @OnTextChanged(R.id.precio)
+    public void newPrecio(CharSequence text){
+
+        if(!text.toString().equals("")){
+
+            actualProduct.setPorcentajeImpuesto(50);
+
+            if(!cant.getText().toString().equals("")){
+                float preci = Float.parseFloat(text.toString());
+
+                float PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+                float Neto = preci / PorImpuesto;
+                neto.setText(String.valueOf(Neto));
+
+                PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
+                float ValorImpuesto = preci / PorImpuesto;
+                float IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
+                montoIV.setText(String.valueOf(IV));
+            }
+
+
+        }
+
+    }
+
+    @OnClick (R.id.butgenerar)
+    public void generar() {
+
+        Bill newBill;
+
+        Detail tmpDetail;
+
+
 
     }
 

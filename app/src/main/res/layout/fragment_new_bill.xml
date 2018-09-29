@@ -292,7 +292,7 @@
                 android:weightSum="1">
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/cant"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -302,7 +302,7 @@
                     android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/neto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -317,7 +317,7 @@
                     android:inputType="none|number" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/precio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
@@ -333,7 +333,7 @@
                     android:layout_weight=".20">
 
                     <CheckBox
-                        android:id="@+id/checkBox"
+                        android:id="@+id/checkIV"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -344,7 +344,7 @@
 
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/montoIV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
@@ -716,7 +716,7 @@
         android:background="@android:color/transparent" >
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/butgenerar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoText="false"
