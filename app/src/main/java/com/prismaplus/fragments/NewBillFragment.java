@@ -104,6 +104,18 @@ public class NewBillFragment extends Fragment {
     @BindView(R.id.montoIV)
     TextView montoIV;
 
+    @BindView(R.id.descPor)
+    TextView descPor;
+
+    @BindView(R.id.desc)
+    TextView desc;
+
+    @BindView(R.id.natDesc)
+    TextView natDesc;
+
+    @BindView(R.id.total)
+    TextView total;
+
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
 
@@ -398,6 +410,9 @@ public class NewBillFragment extends Fragment {
             float ValorImpuesto = preci / PorImpuesto;
             float IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
             montoIV.setText(String.valueOf(IV));
+
+            calculoDescuento();
+            calculoTotalLinea();
         }
     }
 
@@ -419,11 +434,57 @@ public class NewBillFragment extends Fragment {
                 float ValorImpuesto = preci / PorImpuesto;
                 float IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
                 montoIV.setText(String.valueOf(IV));
+
+                calculoDescuento();
+                calculoTotalLinea();
             }
-
-
         }
 
+    }
+
+    @OnTextChanged(R.id.descPor)
+    public void newDesc(CharSequence text){
+
+        Toast.makeText(rootView.getContext(), "555", Toast.LENGTH_LONG).show();
+
+        if(!text.toString().equals("")){
+
+            Toast.makeText(rootView.getContext(), "555", Toast.LENGTH_LONG).show();
+
+            if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")){
+                calculoDescuento();
+                calculoTotalLinea();
+            }
+        }
+
+    }
+
+
+    public void calculoDescuento(){
+        if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
+            float preci = Float.parseFloat(precio.getText().toString());
+            int canti = Integer.parseInt(cant.getText().toString());
+            float descPorc = Float.parseFloat(descPor.getText().toString());
+
+            float subt= preci * canti;
+            subt = subt - Float.parseFloat(montoIV.getText().toString());
+            subt = subt * (descPorc / 100);
+
+            desc.setText(String.valueOf(subt));
+        }
+    }
+
+    public void calculoTotalLinea(){
+        if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")) {
+            float preci = Float.parseFloat(precio.getText().toString());
+            int canti = Integer.parseInt(cant.getText().toString());
+            float descu = 0;
+            if(!desc.getText().toString().equals(""))
+                 descu = Float.parseFloat(desc.getText().toString());
+
+            float tot = (preci * canti) - descu;
+            total.setText(String.valueOf(tot));
+        }
     }
 
     @OnClick (R.id.butgenerar)
