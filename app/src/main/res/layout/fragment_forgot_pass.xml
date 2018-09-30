@@ -67,7 +67,7 @@
                 android:background="@drawable/edittext_rounded"
                 android:hint="Usuario"
                 android:textColor="@color/colorPrimaryDark"
-                android:inputType="textPassword"/>
+                android:inputType="text"/>
 
 
 

@@ -18,7 +18,7 @@ public class Bill {
     @SerializedName("Situacion")
     @Expose
     private String situacion;
-    @SerializedName("Moneda")
+    @SerializedName("CodigoMoneda")
     @Expose
     private String moneda;
     @SerializedName("TipoCambio")
@@ -30,7 +30,7 @@ public class Bill {
     @SerializedName("Observaciones")
     @Expose
     private String observaciones;
-    @SerializedName("Detail")
+    @SerializedName("Detalle_Factura")
     @Expose
     private List<Detail> detail = null;
     @SerializedName("TipoAccion")

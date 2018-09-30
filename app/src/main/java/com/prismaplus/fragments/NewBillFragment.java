@@ -36,6 +36,7 @@ import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
+import com.prismaplus.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +61,8 @@ public class NewBillFragment extends Fragment {
     private BillingActivity mActivity;
 
     private int lines = -1;
+    Utils utils;
+
 
     @BindView(R.id.spinner_pay)
     Spinner spinner_pay;
@@ -158,6 +161,8 @@ public class NewBillFragment extends Fragment {
 
     public NewBillFragment() {
         // Required empty public constructor
+        utils  = new Utils();
+
     }
 
     @Override
@@ -274,6 +279,8 @@ public class NewBillFragment extends Fragment {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
 
+        utils.showProgess(getActivity(),"Iniciando sesión");
+
         connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
             private String[] tmpClients;
 
@@ -296,11 +303,13 @@ public class NewBillFragment extends Fragment {
                 ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpClients);
                 spinner_client.setAdapter(spinnerConditionrrayAdapter);
 
+                utils.hideProgress();
+
             }
 
             @Override
             public void onFailure(Call<List<ClientInfo>> call, Throwable t) {
-
+                utils.hideProgress();
             }
         });
     }
@@ -308,6 +317,8 @@ public class NewBillFragment extends Fragment {
     public void pupulateProducts() {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+
+        utils.showProgess(getActivity(),"Iniciando sesión");
 
         connetionService.getProduct(IdEmpresa, "0").enqueue(new Callback<List<ProductInfo>>() {
             private String[] tmpProducts;
@@ -326,11 +337,13 @@ public class NewBillFragment extends Fragment {
 
                 ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
                 spinner_item.setAdapter(spinnerConditionrrayAdapter);
+                utils.hideProgress();
 
             }
 
             @Override
             public void onFailure(Call<List<ProductInfo>> call, Throwable t) {
+                utils.hideProgress();
 
             }
         });
@@ -615,82 +628,84 @@ public class NewBillFragment extends Fragment {
     @OnClick (R.id.butgenerar)
     public void generar() {
 
-        Bill newBill = new Bill();
+        if (detailsList.size() > 0) {
 
-        String condicionVenta = conditionHash.get(spinnerCondition.getSelectedItemPosition()).toString();
-        String situation = situationHash.get(spinner_situation.getSelectedItemPosition()).toString();
-        String moneda = currencyHash.get(spinner_currency.getSelectedItemPosition()).toString();
-        int IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
+            Bill newBill = new Bill();
 
-        String username = preferencesManager.getStringValue(getActivity(),"username");
-        int IdEmpresa = preferencesManager.getIntValue(getActivity(),"IdEmpresa");
+            String condicionVenta = conditionHash.get(spinnerCondition.getSelectedItemPosition()).toString();
+            String situation = situationHash.get(spinner_situation.getSelectedItemPosition()).toString();
+            String moneda = currencyHash.get(spinner_currency.getSelectedItemPosition()).toString();
+            int IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
 
-        Log.d("USERNAME", username);
+            String username = preferencesManager.getStringValue(getActivity(), "username");
+            int IdEmpresa = preferencesManager.getIntValue(getActivity(), "IdEmpresa");
 
-        int i = 1;
+            Log.d("USERNAME", username);
 
-        for(Detail d: detailsList){
-            d.setNumeroLinea(i++);
-        }
+            int i = 1;
 
-        newBill.setIdempresa(IdEmpresa);
-        newBill.setIdCliente(IdClient);
-        newBill.setCondicionVenta(condicionVenta);
-        newBill.setSituacion(situation);
-        newBill.setMoneda(moneda);
-        newBill.setDetail(detailsList);
-        newBill.setTipoCambio(Double.valueOf(TC.getText().toString()));
-        newBill.setFormaPago(spinner_pay.getSelectedItem().toString());
-        newBill.setObservaciones(observations.getText().toString());
-        newBill.setTipoAccion("");
-        newBill.setIdFactura(0);
-        newBill.setUsuario(username);
+            for (Detail d : detailsList) {
+                d.setNumeroLinea(i++);
+            }
 
-        String msj = String.format("{Empresa: %s, IdCliente: %s, CondicionVenta: %s, Situacion: %s, Moneda: %s, " +
-                "TipoCambio: %s, FormaPago: %s, Observaciones: %s, Detalle: %s, TipoAccion: %s, IdFactura: 0, Usuario: %s}",
-                newBill.getIdempresa(),
-                newBill.getIdCliente(),
-                newBill.getCondicionVenta(),
-                newBill.getSituacion(),
-                newBill.getMoneda(),
-                newBill.getTipoCambio(),
-                newBill.getFormaPago(),
-                newBill.getObservaciones(),
-                newBill.getDetail().toString(),
-                newBill.getTipoAccion(),
-                newBill.getIdFactura(),
-                username);
+            newBill.setIdempresa(IdEmpresa);
+            newBill.setIdCliente(IdClient);
+            newBill.setCondicionVenta(condicionVenta);
+            newBill.setSituacion(situation);
+            newBill.setMoneda(moneda);
+            newBill.setDetail(detailsList);
+            newBill.setTipoCambio(Double.valueOf(TC.getText().toString()));
+            newBill.setFormaPago(spinner_pay.getSelectedItem().toString());
+            newBill.setObservaciones(observations.getText().toString());
+            newBill.setTipoAccion("");
+            newBill.setIdFactura(0);
+            newBill.setUsuario(username);
 
-        Log.d("BILL", msj);
+            String msj = String.format("{Empresa: %s, IdCliente: %s, CondicionVenta: %s, Situacion: %s, Moneda: %s, " +
+                            "TipoCambio: %s, FormaPago: %s, Observaciones: %s, Detalle: %s, TipoAccion: %s, IdFactura: 0, Usuario: %s}",
+                    newBill.getIdempresa(),
+                    newBill.getIdCliente(),
+                    newBill.getCondicionVenta(),
+                    newBill.getSituacion(),
+                    newBill.getMoneda(),
+                    newBill.getTipoCambio(),
+                    newBill.getFormaPago(),
+                    newBill.getObservaciones(),
+                    newBill.getDetail().toString(),
+                    newBill.getTipoAccion(),
+                    newBill.getIdFactura(),
+                    username);
 
-        connetionService.doBill(newBill).enqueue(new Callback<BillInfo>() {
+            Log.d("BILL", msj);
 
-            @Override
-            public void onResponse(Call<BillInfo> call, Response<BillInfo> response) {
-                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
-                BillInfo res = response.body();
+            connetionService.doBill(newBill).enqueue(new Callback<BillInfo>() {
 
-                Log.d("NULL: ", response.message());
-                Log.d("CODE: ", String.valueOf(response.code()));
-                Log.d("IsSuccessful: ", String.valueOf(response.isSuccessful()));
+                @Override
+                public void onResponse(Call<BillInfo> call, Response<BillInfo> response) {
+                    //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                    BillInfo res = response.body();
+
+                    Log.d("NULL: ", response.message());
+                    Log.d("CODE: ", String.valueOf(response.code()));
+                    Log.d("IsSuccessful: ", String.valueOf(response.isSuccessful()));
 
 
-                if(res == null){
-                    Toast.makeText(rootView.getContext(), "NULL", Toast.LENGTH_LONG).show();
+                    if (res == null) {
+                        Toast.makeText(rootView.getContext(), "NULL", Toast.LENGTH_LONG).show();
+
+                    } else
+                        Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
 
                 }
-                else
-                    Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
 
-            }
-
-            @Override
-            public void onFailure(Call<BillInfo> call, Throwable t) {
-                Log.d("ERR: ", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<BillInfo> call, Throwable t) {
+                    Log.d("ERR: ", t.getMessage());
+                }
+            });
 
 
+        }
     }
 
 }

@@ -23,6 +23,9 @@ public interface ConnectionInterface {
     @GET("Loginapi")
     Call<List<LoginInfo>> doLogin(@Query("usuario") String user, @Query("clave") String pass);
 
+    @GET("Loginapi")
+    Call<List<LoginInfo>> forgotPass(@Query("usuario") String user);
+
     @GET("customersapi")
     Call<List<ClientInfo>> getClients(@Query("idempresa") String company, @Query("idcliente") int pass);
 

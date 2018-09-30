@@ -56,10 +56,9 @@ public class Utils {
 
     public void data(Context ctx,String title){
         new MaterialDialog.Builder(ctx)
-                .title("Eliminar Avería")
+                .title(title)
                 .content("Desea eliminar la averia")
                 .positiveText("Aceptar")
-                .negativeText("Cancelar")
                 .onPositive((dialog, which) -> {
 
                 })
