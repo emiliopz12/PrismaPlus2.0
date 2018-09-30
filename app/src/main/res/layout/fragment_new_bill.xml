@@ -121,6 +121,11 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".25"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/spinner_format">
 
                 </Spinner>
@@ -140,6 +145,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight=".25"
+                    android:text="0"
                     android:inputType="numberDecimal"
                     android:background="@drawable/edit_text_square">
 
@@ -298,6 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".20"
+                    android:text="0"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="number" />
@@ -312,6 +319,7 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:text="0"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -337,6 +345,10 @@
                         android:id="@+id/checkIV"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="6dp"/>
 
@@ -354,6 +366,7 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:text="0"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -425,6 +438,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
+                    android:text="0"
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
@@ -433,6 +447,7 @@
                 <EditText
                     android:id="@+id/desc"
                     android:layout_width="0dp"
+                    android:text="0"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".20"
@@ -624,6 +639,7 @@
                             android:textColor="#000" />
 
                         <EditText
+                            android:id="@+id/observations"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_square"
@@ -676,7 +692,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/genSub"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Sub Total: 15,000"
@@ -684,7 +700,7 @@
                             android:textColor="#000" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/genDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Descuento: 0"
@@ -692,7 +708,7 @@
                             android:textColor="#000" />
 
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/genIV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="IV: 0"
@@ -700,7 +716,7 @@
                             android:textColor="#000" />
 
                         <TextView
-                            android:id="@+id/textView7"
+                            android:id="@+id/genTotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Total: 0"

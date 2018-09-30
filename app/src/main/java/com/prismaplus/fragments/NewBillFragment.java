@@ -28,6 +28,7 @@ import com.prismaplus.R;
 import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.SplashActivity;
 import com.prismaplus.entities.Bill;
+import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.Detail;
 import com.prismaplus.entities.LoginInfo;
@@ -36,9 +37,11 @@ import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +59,7 @@ public class NewBillFragment extends Fragment {
     private final int HOME = 16908332;
     private BillingActivity mActivity;
 
-    private int lines = 0;
+    private int lines = -1;
 
     @BindView(R.id.spinner_pay)
     Spinner spinner_pay;
@@ -119,16 +122,39 @@ public class NewBillFragment extends Fragment {
     @BindView(R.id.TC)
     TextView TC;
 
+    @BindView(R.id.genSub)
+    TextView genSubtot;
+
+    @BindView(R.id.genDesc)
+    TextView genDesc;
+
+    @BindView(R.id.genIV)
+    TextView genIV;
+
+    @BindView(R.id.genTotal)
+    TextView genTot;
+
+    @BindView(R.id.observations)
+    TextView observations;
+
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
 
-    Map<Integer, String> clientsHash,
-    conditionHash, situationHash, currencyHash, productsHash;
+    Map<Integer, String> conditionHash, situationHash, currencyHash, productsHash;
+
+    Map<Integer, Integer> clientsHash;
 
     List<ProductInfo> productsList;
     List<ClientInfo> clientsList;
+    List<Detail> detailsList  = new ArrayList<Detail>();
+
+    float localSub, localDesc, localIV, localTotal;
 
     ProductInfo actualProduct;
+
+    List<ProductInfo> productsAddedList = new ArrayList<ProductInfo>();
+
+    List<TableRow> rows = new ArrayList<TableRow>();
 
     public NewBillFragment() {
         // Required empty public constructor
@@ -256,10 +282,14 @@ public class NewBillFragment extends Fragment {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                 List<ClientInfo> loginResponse = response.body();
                 tmpClients = new String[loginResponse.size()+1];
+
+
+                clientsHash.put(0, -1);
                 //loginResponse.get(0).getMSJ();
                 tmpClients[0] = "CLIENTE DE TIQUETE";
                 int i = 1;
                 for(ClientInfo c : loginResponse){
+                    clientsHash.put(i, c.getIdCliente());
                     tmpClients[i++] = c.getNombre();
                 }
 
@@ -319,7 +349,7 @@ public class NewBillFragment extends Fragment {
         String tc = TC.getText().toString();
         String tot = total.getText().toString();
 
-        if( currencyHash.get(spinner_currency.getSelectedItemPosition()).equals("USD") && tc.equals("")){
+        if( currencyHash.get(spinner_currency.getSelectedItemPosition()).equals("USD") && (tc.equals("") || Integer.parseInt(tc) == 0)){
             Toast.makeText(rootView.getContext(), "Debe ingresar TC", Toast.LENGTH_LONG).show();
             return;
         }
@@ -351,13 +381,17 @@ public class NewBillFragment extends Fragment {
 
 
 
-        if(lines == 0){
+        if(lines == -1){
             tableProducts.removeViewAt(1);
 
             tableProducts.requestLayout();
+
+            lines++;
         }
 
         TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+
+        Detail detail = new Detail();
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
 
@@ -366,18 +400,50 @@ public class NewBillFragment extends Fragment {
         ((TextView)row.findViewById(R.id.precio)).setText(preci);
         ((TextView)row.findViewById(R.id.total)).setText(tot);
 
+        rows.add(row);
+
         lines++;
 
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableProducts.removeViewAt(Integer.parseInt(v.getContentDescription().toString()));
+
+                TableRow r = (TableRow) (v.getParent());
+
+                tableProducts.removeView(r);
+
+                int i = rows.lastIndexOf(r);
+
+                detailsList.remove(i);
+
+                rows.remove(r);
+
+                calculoTotalGeneral();
 
                 tableProducts.requestLayout();
 
             }
         });
 
+        detail.setTotalLinea(Double.parseDouble(total.getText().toString()));
+        detail.setMontoImpuesto(Double.parseDouble(montoIV.getText().toString()));
+        detail.setMontoDescuento(Double.parseDouble(desc.getText().toString()));
+        detail.setSubtotal(Double.parseDouble(preci) * Integer.parseInt(canti));
+        detail.setPrecioUnitario(Double.parseDouble(preci));
+        detail.setPorcentajeDescuento(Double.parseDouble(descPorc));
+        detail.setNaturalezaDescuento(natDescu);
+        detail.setCodigoArticulo(actualProduct.getCodigoArticulo());
+        detail.setCantidad(Integer.parseInt(canti));
+        if(detail.getMontoImpuesto() > 0){
+            detail.setEsGravado(1);
+        }
+        else{
+            detail.setEsGravado(0);
+        }
+
+        detailsList.add(detail);
+
+        calculoTotalGeneral();
 
         tableProducts.addView(row);
 
@@ -423,11 +489,6 @@ public class NewBillFragment extends Fragment {
             neto.setText(String.valueOf(prod.getPrecio()));
 
         else{
-
-//            float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
-//            float ValorImpuesto = prod.getPrecio()  / PorImpuesto;
-//            float IV= (prod.getPrecio() - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
-//            montoIV.setText(String.valueOf(IV));
 
             float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
             float Neto = prod.getPrecio() / PorImpuesto;
@@ -490,8 +551,6 @@ public class NewBillFragment extends Fragment {
 
         if(!text.toString().equals("")){
 
-            Toast.makeText(rootView.getContext(), "555", Toast.LENGTH_LONG).show();
-
             if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")){
                 calculoDescuento();
                 calculoTotalLinea();
@@ -520,20 +579,118 @@ public class NewBillFragment extends Fragment {
             int canti = Integer.parseInt(cant.getText().toString());
             float descu = 0;
             if(!desc.getText().toString().equals(""))
-                 descu = Float.parseFloat(desc.getText().toString());
+                descu = Float.parseFloat(desc.getText().toString());
 
             float tot = (preci * canti) - descu;
             total.setText(String.valueOf(tot));
         }
     }
 
+    public void calculoTotalGeneral(){
+        localDesc = localDesc = localIV = localTotal = 0;
+        if(detailsList.size() > 0) {
+
+
+            for(Detail d: detailsList){
+                localDesc += d.getMontoDescuento();
+                localSub += d.getSubtotal();
+                localIV += d.getMontoImpuesto();
+            }
+
+            localTotal = localSub + localIV - localDesc;
+
+            genDesc.setText("Descuento: "+localDesc);
+            genSubtot.setText("Sub total: "+localSub);
+            genIV.setText("IV: "+localIV);
+            genTot.setText("Total: "+localTotal);
+        }
+        else{
+            genDesc.setText("Descuento: 0");
+            genSubtot.setText("Sub total: 0");
+            genIV.setText("IV: 0");
+            genTot.setText("Total: 0");
+        }
+    }
+
     @OnClick (R.id.butgenerar)
     public void generar() {
 
-        Bill newBill;
+        Bill newBill = new Bill();
 
-        Detail tmpDetail;
-        
+        String condicionVenta = conditionHash.get(spinnerCondition.getSelectedItemPosition()).toString();
+        String situation = situationHash.get(spinner_situation.getSelectedItemPosition()).toString();
+        String moneda = currencyHash.get(spinner_currency.getSelectedItemPosition()).toString();
+        int IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
+
+        String username = preferencesManager.getStringValue(getActivity(),"username");
+        int IdEmpresa = preferencesManager.getIntValue(getActivity(),"IdEmpresa");
+
+        Log.d("USERNAME", username);
+
+        int i = 1;
+
+        for(Detail d: detailsList){
+            d.setNumeroLinea(i++);
+        }
+
+        newBill.setIdempresa(IdEmpresa);
+        newBill.setIdCliente(IdClient);
+        newBill.setCondicionVenta(condicionVenta);
+        newBill.setSituacion(situation);
+        newBill.setMoneda(moneda);
+        newBill.setDetail(detailsList);
+        newBill.setTipoCambio(Double.valueOf(TC.getText().toString()));
+        newBill.setFormaPago(spinner_pay.getSelectedItem().toString());
+        newBill.setObservaciones(observations.getText().toString());
+        newBill.setTipoAccion("");
+        newBill.setIdFactura(0);
+        newBill.setUsuario(username);
+
+        String msj = String.format("{Empresa: %s, IdCliente: %s, CondicionVenta: %s, Situacion: %s, Moneda: %s, " +
+                "TipoCambio: %s, FormaPago: %s, Observaciones: %s, Detalle: %s, TipoAccion: %s, IdFactura: 0, Usuario: %s}",
+                newBill.getIdempresa(),
+                newBill.getIdCliente(),
+                newBill.getCondicionVenta(),
+                newBill.getSituacion(),
+                newBill.getMoneda(),
+                newBill.getTipoCambio(),
+                newBill.getFormaPago(),
+                newBill.getObservaciones(),
+                newBill.getDetail().toString(),
+                newBill.getTipoAccion(),
+                newBill.getIdFactura(),
+                username);
+
+        Log.d("BILL", msj);
+
+        connetionService.doBill(newBill).enqueue(new Callback<BillInfo>() {
+
+            @Override
+            public void onResponse(Call<BillInfo> call, Response<BillInfo> response) {
+                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                BillInfo res = response.body();
+
+                Log.d("NULL: ", response.message());
+                Log.d("CODE: ", String.valueOf(response.code()));
+                Log.d("IsSuccessful: ", String.valueOf(response.isSuccessful()));
+
+
+                if(res == null){
+                    Toast.makeText(rootView.getContext(), "NULL", Toast.LENGTH_LONG).show();
+
+                }
+                else
+                    Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<BillInfo> call, Throwable t) {
+                Log.d("ERR: ", t.getMessage());
+            }
+        });
+
+
     }
 
 }

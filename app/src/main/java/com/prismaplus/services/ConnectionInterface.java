@@ -1,6 +1,7 @@
 package com.prismaplus.services;
 
 import com.prismaplus.entities.Bill;
+import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductInfo;
@@ -29,6 +30,6 @@ public interface ConnectionInterface {
     Call<List<ProductInfo>> getProduct(@Query("idempresa") String company, @Query("CodigoArticulo") String articulo);
 
     @POST("FacturaApi")
-    Call<Object> doBill(@Body Bill bill);
+    Call<BillInfo> doBill(@Body Bill bill);
 
 }

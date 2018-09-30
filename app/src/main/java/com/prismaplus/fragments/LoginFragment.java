@@ -120,6 +120,7 @@ public class LoginFragment extends Fragment {
                     preferencesManager.saveString(getActivity(), "rememberUser", "OK");
                     preferencesManager.saveInt(getActivity(), "IdEmpresa", res.getIdEmpresa());
                     preferencesManager.saveString(getActivity(), "nombre", res.getNombre());
+                    preferencesManager.saveString(getActivity(), "username", username.getText().toString());
                     utils.hideProgress();
                     goToMain();
                 }

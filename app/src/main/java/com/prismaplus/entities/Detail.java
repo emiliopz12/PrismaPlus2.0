@@ -8,6 +8,9 @@ public class Detail {
     @SerializedName("NumeroLinea")
     @Expose
     private Integer numeroLinea;
+    @SerializedName("EsGravado")
+    @Expose
+    private Integer esGravado;
     @SerializedName("CodigoArticulo")
     @Expose
     private String codigoArticulo;
@@ -45,6 +48,14 @@ public class Detail {
 
     public void setNumeroLinea(Integer numeroLinea) {
         this.numeroLinea = numeroLinea;
+    }
+
+    public Integer getEsGravado() {
+        return esGravado;
+    }
+
+    public void setEsGravado(Integer esGravado) {
+        this.esGravado = esGravado;
     }
 
     public String getCodigoArticulo() {
