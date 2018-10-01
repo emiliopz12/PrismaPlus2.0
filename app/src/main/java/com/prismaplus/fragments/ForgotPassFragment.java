@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
@@ -94,6 +95,7 @@ public class ForgotPassFragment extends Fragment {
                 new MaterialDialog.Builder(rootView.getContext())
                         .title("Mensaje")
                         .content("Se ha enviado el código al correo "+username.getText().toString()+" satisfactoriamente")
+                        .contentGravity(GravityEnum.CENTER)
                         .positiveText("Aceptar")
                         .onPositive((dialog, which) -> {
                             mActivity.setFragment(new LoginFragment());

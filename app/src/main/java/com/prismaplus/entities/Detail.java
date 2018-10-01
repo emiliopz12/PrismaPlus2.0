@@ -7,56 +7,59 @@ public class Detail {
 
     @SerializedName("NumeroLinea")
     @Expose
-    private Integer numeroLinea;
-    @SerializedName("EsGravado")
-    @Expose
-    private Integer esGravado;
+    private String numeroLinea;
+//    @SerializedName("EsGravado")
+//    @Expose
+//    private String esGravado;
     @SerializedName("CodigoArticulo")
     @Expose
     private String codigoArticulo;
     @SerializedName("Cantidad")
     @Expose
-    private Integer cantidad;
+    private String cantidad;
     @SerializedName("PrecioUnitario")
     @Expose
-    private Double precioUnitario;
+    private String precioUnitario;
     @SerializedName("Subtotal")
     @Expose
-    private Double subtotal;
+    private String subtotal;
     @SerializedName("TotalLinea")
     @Expose
-    private Double totalLinea;
+    private String totalLinea;
     @SerializedName("NaturalezaDescuento")
     @Expose
     private String naturalezaDescuento;
+    @SerializedName("Descripcion")
+    @Expose
+    private String descripcion;
     @SerializedName("PorcentajeDescuento")
     @Expose
-    private Double porcentajeDescuento;
+    private String porcentajeDescuento;
     @SerializedName("MontoDescuento")
     @Expose
-    private Double montoDescuento;
+    private String montoDescuento;
     @SerializedName("MontoImpuesto")
     @Expose
-    private Double montoImpuesto;
+    private String montoImpuesto;
     @SerializedName("MontoTotal")
     @Expose
-    private Double montoTotal;
+    private String montoTotal;
 
-    public Integer getNumeroLinea() {
+    public String getNumeroLinea() {
         return numeroLinea;
     }
 
-    public void setNumeroLinea(Integer numeroLinea) {
+    public void setNumeroLinea(String numeroLinea) {
         this.numeroLinea = numeroLinea;
     }
 
-    public Integer getEsGravado() {
-        return esGravado;
-    }
-
-    public void setEsGravado(Integer esGravado) {
-        this.esGravado = esGravado;
-    }
+//    public String getEsGravado() {
+//        return esGravado;
+//    }
+//
+//    public void setEsGravado(String esGravado) {
+//        this.esGravado = esGravado;
+//    }
 
     public String getCodigoArticulo() {
         return codigoArticulo;
@@ -66,35 +69,35 @@ public class Detail {
         this.codigoArticulo = codigoArticulo;
     }
 
-    public Integer getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioUnitario() {
+    public String getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(String precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public Double getSubtotal() {
+    public String getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(Double subtotal) {
+    public void setSubtotal(String subtotal) {
         this.subtotal = subtotal;
     }
 
-    public Double getTotalLinea() {
+    public String getTotalLinea() {
         return totalLinea;
     }
 
-    public void setTotalLinea(Double totalLinea) {
+    public void setTotalLinea(String totalLinea) {
         this.totalLinea = totalLinea;
     }
 
@@ -106,35 +109,43 @@ public class Detail {
         this.naturalezaDescuento = naturalezaDescuento;
     }
 
-    public Double getPorcentajeDescuento() {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
 
-    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+    public void setPorcentajeDescuento(String porcentajeDescuento) {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    public Double getMontoDescuento() {
+    public String getMontoDescuento() {
         return montoDescuento;
     }
 
-    public void setMontoDescuento(Double montoDescuento) {
+    public void setMontoDescuento(String montoDescuento) {
         this.montoDescuento = montoDescuento;
     }
 
-    public Double getMontoImpuesto() {
+    public String getMontoImpuesto() {
         return montoImpuesto;
     }
 
-    public void setMontoImpuesto(Double montoImpuesto) {
+    public void setMontoImpuesto(String montoImpuesto) {
         this.montoImpuesto = montoImpuesto;
     }
 
-    public Double getMontoTotal() {
+    public String getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(Double montoTotal) {
+    public void setMontoTotal(String montoTotal) {
         this.montoTotal = montoTotal;
     }
 

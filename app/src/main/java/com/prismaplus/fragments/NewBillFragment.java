@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
@@ -151,7 +152,7 @@ public class NewBillFragment extends Fragment {
     List<ClientInfo> clientsList;
     List<Detail> detailsList  = new ArrayList<Detail>();
 
-    float localSub, localDesc, localIV, localTotal;
+    int localSub, localDesc, localIV, localTotal;
 
     ProductInfo actualProduct;
 
@@ -203,6 +204,8 @@ public class NewBillFragment extends Fragment {
 
         spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.situation));
         spinner_situation.setAdapter(spinnerConditionrrayAdapter);
+
+        spinner_situation.setEnabled(false);
 
         pupulateClients();
 
@@ -279,7 +282,7 @@ public class NewBillFragment extends Fragment {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
 
-        utils.showProgess(getActivity(),"Iniciando sesión");
+        //utils.showProgess(getActivity(),"cargando");
 
         connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
             private String[] tmpClients;
@@ -303,13 +306,13 @@ public class NewBillFragment extends Fragment {
                 ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpClients);
                 spinner_client.setAdapter(spinnerConditionrrayAdapter);
 
-                utils.hideProgress();
+               // utils.hideProgress();
 
             }
 
             @Override
             public void onFailure(Call<List<ClientInfo>> call, Throwable t) {
-                utils.hideProgress();
+               // utils.hideProgress();
             }
         });
     }
@@ -318,9 +321,10 @@ public class NewBillFragment extends Fragment {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
 
-        utils.showProgess(getActivity(),"Iniciando sesión");
+        utils.showProgess(getActivity(),"Cargando");
 
-        connetionService.getProduct(IdEmpresa, "0").enqueue(new Callback<List<ProductInfo>>() {
+//        connetionService.getProduct(IdEmpresa, "t").enqueue(new Callback<List<ProductInfo>>() {
+        connetionService.getProduct(IdEmpresa, "t").enqueue(new Callback<List<ProductInfo>>() {
             private String[] tmpProducts;
 
             @Override
@@ -438,21 +442,22 @@ public class NewBillFragment extends Fragment {
             }
         });
 
-        detail.setTotalLinea(Double.parseDouble(total.getText().toString()));
-        detail.setMontoImpuesto(Double.parseDouble(montoIV.getText().toString()));
-        detail.setMontoDescuento(Double.parseDouble(desc.getText().toString()));
-        detail.setSubtotal(Double.parseDouble(preci) * Integer.parseInt(canti));
-        detail.setPrecioUnitario(Double.parseDouble(preci));
-        detail.setPorcentajeDescuento(Double.parseDouble(descPorc));
+        detail.setDescripcion(descrip);
+        detail.setTotalLinea(total.getText().toString());
+        detail.setMontoImpuesto(montoIV.getText().toString());
+        detail.setMontoDescuento(desc.getText().toString());
+        detail.setSubtotal(String.valueOf(Integer.parseInt(preci) * Integer.parseInt(canti)));
+        detail.setPrecioUnitario(preci);
+        detail.setPorcentajeDescuento(descPorc);
         detail.setNaturalezaDescuento(natDescu);
         detail.setCodigoArticulo(actualProduct.getCodigoArticulo());
-        detail.setCantidad(Integer.parseInt(canti));
-        if(detail.getMontoImpuesto() > 0){
-            detail.setEsGravado(1);
-        }
-        else{
-            detail.setEsGravado(0);
-        }
+        detail.setCantidad(canti);
+//        if(Integer.parseInt(detail.getMontoImpuesto()) > 0){
+//            detail.setEsGravado("1");
+//        }
+//        else{
+//            detail.setEsGravado("0");
+//        }
 
         detailsList.add(detail);
 
@@ -503,8 +508,8 @@ public class NewBillFragment extends Fragment {
 
         else{
 
-            float PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
-            float Neto = prod.getPrecio() / PorImpuesto;
+            Integer PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
+            Integer Neto = prod.getPrecio() / PorImpuesto;
             neto.setText(String.valueOf(prod.getPrecio()));
         }
 
@@ -517,15 +522,15 @@ public class NewBillFragment extends Fragment {
 
             actualProduct.setPorcentajeImpuesto(50);
 
-            float preci = Float.parseFloat(precio.getText().toString());
+            Integer preci = Integer.parseInt(precio.getText().toString());
 
-            float PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-            float Neto = preci / PorImpuesto;
+            Integer PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+            Integer Neto = preci / PorImpuesto;
             neto.setText(String.valueOf(Neto));
 
             PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
-            float ValorImpuesto = preci / PorImpuesto;
-            float IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
+            Integer ValorImpuesto = preci / PorImpuesto;
+            Integer IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
             montoIV.setText(String.valueOf(IV));
 
             calculoDescuento();
@@ -541,15 +546,15 @@ public class NewBillFragment extends Fragment {
             actualProduct.setPorcentajeImpuesto(50);
 
             if(!cant.getText().toString().equals("")){
-                float preci = Float.parseFloat(text.toString());
+                Integer preci = Integer.parseInt(text.toString());
 
-                float PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-                float Neto = preci / PorImpuesto;
+                Integer PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+                Integer Neto = preci / PorImpuesto;
                 neto.setText(String.valueOf(Neto));
 
                 PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
-                float ValorImpuesto = preci / PorImpuesto;
-                float IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
+                Integer ValorImpuesto = preci / PorImpuesto;
+                Integer IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
                 montoIV.setText(String.valueOf(IV));
 
                 calculoDescuento();
@@ -574,12 +579,12 @@ public class NewBillFragment extends Fragment {
 
     public void calculoDescuento(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
-            float preci = Float.parseFloat(precio.getText().toString());
-            int canti = Integer.parseInt(cant.getText().toString());
-            float descPorc = Float.parseFloat(descPor.getText().toString());
+            Integer preci = Integer.parseInt(precio.getText().toString());
+            Integer canti = Integer.parseInt(cant.getText().toString());
+            Integer descPorc = Integer.parseInt(descPor.getText().toString());
 
-            float subt= preci * canti;
-            subt = subt - Float.parseFloat(montoIV.getText().toString());
+            Integer subt = preci * canti;
+            subt = subt - Integer.parseInt(montoIV.getText().toString());
             subt = subt * (descPorc / 100);
 
             desc.setText(String.valueOf(subt));
@@ -588,26 +593,26 @@ public class NewBillFragment extends Fragment {
 
     public void calculoTotalLinea(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")) {
-            float preci = Float.parseFloat(precio.getText().toString());
-            int canti = Integer.parseInt(cant.getText().toString());
-            float descu = 0;
+            Integer preci = Integer.parseInt(precio.getText().toString());
+            Integer canti = Integer.parseInt(cant.getText().toString());
+            Integer descu = 0;
             if(!desc.getText().toString().equals(""))
-                descu = Float.parseFloat(desc.getText().toString());
+                descu = Integer.parseInt(desc.getText().toString());
 
-            float tot = (preci * canti) - descu;
+            Integer tot = (preci * canti) - descu;
             total.setText(String.valueOf(tot));
         }
     }
 
     public void calculoTotalGeneral(){
-        localDesc = localDesc = localIV = localTotal = 0;
+        localDesc = localSub = localIV = localTotal = 0;
         if(detailsList.size() > 0) {
 
 
             for(Detail d: detailsList){
-                localDesc += d.getMontoDescuento();
-                localSub += d.getSubtotal();
-                localIV += d.getMontoImpuesto();
+                localDesc += Integer.parseInt(d.getMontoDescuento());
+                localSub += Integer.parseInt(d.getSubtotal());
+                localIV += Integer.parseInt(d.getMontoImpuesto());
             }
 
             localTotal = localSub + localIV - localDesc;
@@ -645,20 +650,20 @@ public class NewBillFragment extends Fragment {
             int i = 1;
 
             for (Detail d : detailsList) {
-                d.setNumeroLinea(i++);
+                d.setNumeroLinea(String.valueOf(i++));
             }
 
-            newBill.setIdempresa(IdEmpresa);
-            newBill.setIdCliente(IdClient);
+            newBill.setIdempresa(String.valueOf(IdEmpresa));
+            newBill.setIdCliente(String.valueOf(IdClient));
             newBill.setCondicionVenta(condicionVenta);
             newBill.setSituacion(situation);
             newBill.setMoneda(moneda);
             newBill.setDetail(detailsList);
-            newBill.setTipoCambio(Double.valueOf(TC.getText().toString()));
+            newBill.setTipoCambio(TC.getText().toString());
             newBill.setFormaPago(spinner_pay.getSelectedItem().toString());
             newBill.setObservaciones(observations.getText().toString());
             newBill.setTipoAccion("");
-            newBill.setIdFactura(0);
+            newBill.setIdFactura("0");
             newBill.setUsuario(username);
 
             String msj = String.format("{Empresa: %s, IdCliente: %s, CondicionVenta: %s, Situacion: %s, Moneda: %s, " +
@@ -678,6 +683,7 @@ public class NewBillFragment extends Fragment {
 
             Log.d("BILL", msj);
 
+            utils.showProgess(getActivity(),"Procesando");
             connetionService.doBill(newBill).enqueue(new Callback<BillInfo>() {
 
                 @Override
@@ -685,22 +691,68 @@ public class NewBillFragment extends Fragment {
                     //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                     BillInfo res = response.body();
 
+                    utils.hideProgress();
+
                     Log.d("NULL: ", response.message());
                     Log.d("CODE: ", String.valueOf(response.code()));
                     Log.d("IsSuccessful: ", String.valueOf(response.isSuccessful()));
 
+                    if(response.code() == 500){
+                        new MaterialDialog.Builder(rootView.getContext())
+                                .title("Error")
+                                .content("Ocurrió un error")
+                                .contentGravity(GravityEnum.CENTER)
+                                .positiveText("Aceptar")
+                                .onPositive((dialog, which) -> {
+                                })
+                                .show();
+                    }
+                    else {
+                        new MaterialDialog.Builder(rootView.getContext())
+                                .title("Mensaje")
+                                .content("Se ha enviado la factura satisfactoriamente")
+                                .contentGravity(GravityEnum.CENTER)
+                                .positiveText("Aceptar")
+                                .onPositive((dialog, which) -> {
+                                })
+                                .show();
+                    }
 
-                    if (res == null) {
-                        Toast.makeText(rootView.getContext(), "NULL", Toast.LENGTH_LONG).show();
-
-                    } else
-                        Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
+//                    if (res == null) {
+//                        Toast.makeText(rootView.getContext(), "NULL", Toast.LENGTH_LONG).show();
+//
+//                    } else
+//                        Toast.makeText(rootView.getContext(), res.getMSJ(), Toast.LENGTH_LONG).show();
 
                 }
 
                 @Override
                 public void onFailure(Call<BillInfo> call, Throwable t) {
+
+                    utils.hideProgress();
+
+                    if(t.getMessage().equals("timeout")){
+                        new MaterialDialog.Builder(rootView.getContext())
+                                .title("Error")
+                                .content("Ocurrió un error")
+                                .contentGravity(GravityEnum.CENTER)
+                                .positiveText("Aceptar")
+                                .onPositive((dialog, which) -> {
+                                })
+                                .show();
+                    }
+                    else{
+                        new MaterialDialog.Builder(rootView.getContext())
+                                .title("Mensaje")
+                                .content("Se ha enviado la factura satisfactoriamente")
+                                .contentGravity(GravityEnum.CENTER)
+                                .positiveText("Aceptar")
+                                .onPositive((dialog, which) -> {
+                                })
+                                .show();
+                    }
                     Log.d("ERR: ", t.getMessage());
+
                 }
             });
 

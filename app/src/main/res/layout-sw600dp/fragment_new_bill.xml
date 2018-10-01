@@ -118,7 +118,7 @@
                 <Spinner
                     android:id="@+id/spinner_situation"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="28dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".25"
                     android:clickable="false"
@@ -133,7 +133,7 @@
                 <Spinner
                     android:id="@+id/spinner_currency"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="28dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".25"
                     android:background="@drawable/spinner_format">
@@ -143,10 +143,10 @@
                 <EditText
                     android:id="@+id/TC"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="28dp"
                     android:layout_weight=".25"
                     android:text="0"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:background="@drawable/edit_text_square">
 
                 </EditText>
@@ -333,7 +333,7 @@
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="number" />
 
                 <RelativeLayout
                     android:layout_marginEnd="2dp"
@@ -695,7 +695,7 @@
                             android:id="@+id/genSub"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Sub Total: 15,000"
+                            android:text="Sub Total: 0"
                             android:textAlignment="textEnd"
                             android:textColor="#000" />
 

@@ -8,10 +8,10 @@ public class Bill {
 
     @SerializedName("Idempresa")
     @Expose
-    private Integer idempresa;
+    private String idempresa;
     @SerializedName("IdCliente")
     @Expose
-    private Integer idCliente;
+    private String idCliente;
     @SerializedName("CondicionVenta")
     @Expose
     private String condicionVenta;
@@ -23,7 +23,7 @@ public class Bill {
     private String moneda;
     @SerializedName("TipoCambio")
     @Expose
-    private Double tipoCambio;
+    private String tipoCambio;
     @SerializedName("FormaPago")
     @Expose
     private String formaPago;
@@ -38,24 +38,24 @@ public class Bill {
     private String tipoAccion;
     @SerializedName("IdFactura")
     @Expose
-    private Integer idFactura;
+    private String idFactura;
     @SerializedName("Usuario")
     @Expose
     private String usuario;
 
-    public Integer getIdempresa() {
+    public String getIdempresa() {
         return idempresa;
     }
 
-    public void setIdempresa(Integer idempresa) {
+    public void setIdempresa(String idempresa) {
         this.idempresa = idempresa;
     }
 
-    public Integer getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -83,11 +83,11 @@ public class Bill {
         this.moneda = moneda;
     }
 
-    public Double getTipoCambio() {
+    public String getTipoCambio() {
         return tipoCambio;
     }
 
-    public void setTipoCambio(Double tipoCambio) {
+    public void setTipoCambio(String tipoCambio) {
         this.tipoCambio = tipoCambio;
     }
 
@@ -123,11 +123,11 @@ public class Bill {
         this.tipoAccion = tipoAccion;
     }
 
-    public Integer getIdFactura() {
+    public String getIdFactura() {
         return idFactura;
     }
 
-    public void setIdFactura(Integer idFactura) {
+    public void setIdFactura(String idFactura) {
         this.idFactura = idFactura;
     }
 
