@@ -579,13 +579,28 @@ public class NewBillFragment extends Fragment {
 
     public void calculoDescuento(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
-            Integer preci = Integer.parseInt(precio.getText().toString());
-            Integer canti = Integer.parseInt(cant.getText().toString());
-            Integer descPorc = Integer.parseInt(descPor.getText().toString());
+            int preci = Integer.parseInt(precio.getText().toString());
+            int canti = Integer.parseInt(cant.getText().toString());
+            float descPorc = Float.parseFloat(descPor.getText().toString());
 
-            Integer subt = preci * canti;
+            Log.d("DESC PRE: ", String.valueOf(preci));
+            Log.d("DESC CANT: ", String.valueOf(canti));
+            Log.d("DESC POR: ", String.valueOf(descPorc));
+
+
+            int subt = preci * canti;
+            Log.d("SUB 1: ", String.valueOf(subt));
+
             subt = subt - Integer.parseInt(montoIV.getText().toString());
-            subt = subt * (descPorc / 100);
+
+            Log.d("SUB 2: ", String.valueOf(subt));
+            float por = (descPorc / 100);
+
+            Log.d("DESC POR 2: ", String.valueOf(por));
+
+            subt = (int)(subt * por);
+
+            Log.d("DESC: ", String.valueOf(subt));
 
             desc.setText(String.valueOf(subt));
         }
