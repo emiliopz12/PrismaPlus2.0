@@ -1,13 +1,20 @@
 package com.prismaplus.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
+import com.prismaplus.activities.BillingActivity;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -16,15 +23,10 @@ import com.prismaplus.R;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
+    @BindView(R.id.relative_fact)
+    RelativeLayout relative_fact;
 
     public MainFragment() {
         // Required empty public constructor
@@ -42,8 +44,6 @@ public class MainFragment extends Fragment {
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,10 +51,15 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+    }
+
+    @OnClick(R.id.relative_fact)
+    public void goTo(){
+        Intent i = new Intent(getActivity(), BillingActivity.class);
+        i.putExtra("nextFragment",1);
+        startActivity(i);
+        getActivity().finish();
     }
 
     @Override
