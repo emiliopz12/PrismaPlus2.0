@@ -13,12 +13,13 @@
         android:layout_height="0dp"
         android:layout_weight=".90"
         android:fillViewport="true"
-        android:padding="16dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp" >
 
 
             <LinearLayout
@@ -109,6 +110,7 @@
                     android:id="@+id/spinner_condition"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:theme="@style/mySpinnerItemStyle"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".25"
                     android:background="@drawable/spinner_format">
@@ -741,13 +743,13 @@
             android:id="@+id/butgenerar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="6dp"
             android:autoText="false"
             android:background="@color/colorAccent"
             android:capitalize="sentences"
             android:text="@string/button_generar"
             android:textColor="#fff"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="6dp"
             android:visibility="visible" />
     </RelativeLayout>
 

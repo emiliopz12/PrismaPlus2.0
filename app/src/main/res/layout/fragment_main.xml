@@ -67,18 +67,19 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relative_clients"
         android:background="@color/colorDarkCyan"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".33">
 
         <TextView
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text="Clientes"
             android:textColor="#ddd"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
     </RelativeLayout>
 

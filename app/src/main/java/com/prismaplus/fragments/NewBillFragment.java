@@ -304,7 +304,11 @@ public class NewBillFragment extends Fragment {
                 }
 
                 ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpClients);
+
+                //spinnerConditionrrayAdapter.setDropDownViewResource(R.layout.spinner_item);
                 spinner_client.setAdapter(spinnerConditionrrayAdapter);
+
+
 
                // utils.hideProgress();
 
@@ -729,6 +733,7 @@ public class NewBillFragment extends Fragment {
                                 .contentGravity(GravityEnum.CENTER)
                                 .positiveText("Aceptar")
                                 .onPositive((dialog, which) -> {
+                                    cleanFields();
                                 })
                                 .show();
                     }
@@ -763,6 +768,7 @@ public class NewBillFragment extends Fragment {
                                 .contentGravity(GravityEnum.CENTER)
                                 .positiveText("Aceptar")
                                 .onPositive((dialog, which) -> {
+                                    cleanFields();
                                 })
                                 .show();
                     }
@@ -773,6 +779,51 @@ public class NewBillFragment extends Fragment {
 
 
         }
+    }
+
+    public void cleanFields(){
+
+        spinner_client.setSelection(0);
+        spinnerCondition.setSelection(0);
+        TC.setText("0");
+        spinner_item.setSelection(0);
+        description.setText("");
+        cant.setText("0");
+//        neto.setText("0");
+//        precio.setText("0");
+        montoIV.setText("0");
+        descPor.setText("0");
+        desc.setText("0");
+        natDesc.setText("");
+        total.setText("0");
+
+        tableProducts.removeViews(1, rows.size());
+
+        detailsList = new ArrayList<>();
+        rows = new ArrayList<>();
+        lines = -1;
+
+        TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+
+        ImageButton del = (ImageButton)row.findViewById(R.id.del);
+
+        ((TextView)row.findViewById(R.id.cant)).setText("");
+        ((TextView)row.findViewById(R.id.descripcion)).setText("");
+        ((TextView)row.findViewById(R.id.precio)).setText("");
+        ((TextView)row.findViewById(R.id.total)).setText("");
+
+        tableProducts.addView(row);
+
+        tableProducts.requestLayout();
+
+        observations.setText("");
+        spinner_pay.setSelection(0);
+        genSubtot.setText("Sub Total: 0");
+        genDesc.setText("Descuento: 0");
+        genIV.setText("IV: 0");
+        genTot.setText("Total: 0");
+
+
     }
 
 }
