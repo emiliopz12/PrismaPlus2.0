@@ -147,9 +147,10 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight=".25"
-                    android:text="0"
+                    android:background="@drawable/edit_text_square"
                     android:inputType="number"
-                    android:background="@drawable/edit_text_square">
+                    android:text="0"
+                    android:textAlignment="textEnd">
 
                 </EditText>
 
@@ -306,10 +307,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".20"
-                    android:text="0"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0"
+                    android:textAlignment="textEnd" />
 
                 <EditText
                     android:id="@+id/neto"
@@ -321,11 +323,12 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
-                    android:text="0"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:inputType="none|number" />
+                    android:inputType="none|number"
+                    android:text="0"
+                    android:textAlignment="textEnd" />
 
                 <EditText
                     android:id="@+id/precio"
@@ -335,7 +338,8 @@
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textAlignment="textEnd" />
 
                 <RelativeLayout
                     android:layout_marginEnd="2dp"
@@ -357,7 +361,6 @@
                 </RelativeLayout>
 
 
-
                 <EditText
                     android:id="@+id/montoIV"
                     android:layout_width="0dp"
@@ -368,11 +371,12 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
-                    android:text="0"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0"
+                    android:textAlignment="textEnd" />
 
             </LinearLayout>
 
@@ -440,16 +444,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:text="0"
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0"
+                    android:textAlignment="textEnd" />
 
                 <EditText
                     android:id="@+id/desc"
                     android:layout_width="0dp"
-                    android:text="0"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".20"
@@ -460,7 +464,9 @@
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0"
+                    android:textAlignment="textEnd" />
 
                 <EditText
                     android:id="@+id/natDesc"
@@ -484,7 +490,8 @@
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textAlignment="textEnd" />
 
                 <ImageButton
                     android:id="@+id/add_row"
@@ -724,6 +731,7 @@
                             android:text="Total: 0"
                             android:textAlignment="textEnd"
                             android:textColor="#000"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>

@@ -788,7 +788,7 @@ public class NewBillFragment extends Fragment {
         TC.setText("0");
         spinner_item.setSelection(0);
         description.setText("");
-        cant.setText("0");
+        cant.setText("1");
 //        neto.setText("0");
 //        precio.setText("0");
         montoIV.setText("0");
