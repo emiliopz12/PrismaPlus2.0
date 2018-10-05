@@ -28,7 +28,7 @@
                 android:text="Facturación"
 
                 android:textColor="#ddd"
-                android:textSize="28sp"/>
+                android:textSize="24sp"/>
 
 
         </RelativeLayout>
@@ -54,7 +54,7 @@
                     android:layout_height="match_parent"
                     android:text="Productos"
                     android:textColor="#000"
-                    android:textSize="28sp"/>
+                    android:textSize="24sp"/>
 
             </RelativeLayout>
 
@@ -70,7 +70,7 @@
                     android:layout_height="match_parent"
                     android:text="Listados"
                     android:textColor="#000"
-                    android:textSize="28sp"/>
+                    android:textSize="24sp"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -89,7 +89,7 @@
                 android:text="Clientes"
                 android:paddingTop="30dp"
                 android:textColor="#ddd"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
 
         </RelativeLayout>

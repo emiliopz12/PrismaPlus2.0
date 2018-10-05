@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.Base64;
 import android.view.Display;
 import android.view.WindowManager;
@@ -27,6 +28,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -122,5 +125,40 @@ public class Utils {
         int width = size.x;
         int height = size.y;
         return height;
+    }
+
+
+    public Observable<String> getStringAlertDialog(Context ctx, String title, String content, String positvetext, String negativetext){
+        return Observable.create(e -> {
+            new MaterialDialog.Builder(ctx)
+                    .title(title)
+                    .content(content)
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .positiveText(positvetext)
+                    .negativeText(negativetext)
+                    .onNegative((dialog, which) -> e.onError(new Throwable()))
+                    .input(null, null, (dialog, input) -> {
+                        e.onNext(input.toString());
+                        e.onComplete();
+                    })
+                    .show();
+        });
+    }
+
+
+    public Observable<Boolean> getAnswerAlertDialog(Context ctx, String title, String content, String positvetext, String negativetext){
+        return Observable.create(e -> {
+            new MaterialDialog.Builder(ctx)
+                    .title(title)
+                    .content(content)
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .positiveText(positvetext)
+                    .negativeText(negativetext)
+                    .onNegative((dialog,which) -> {e.onNext(false);
+                        e.onComplete();})
+                    .onPositive((dialog,which)->  {e.onNext(true);
+                                                    e.onComplete();})
+                    .show();
+        });
     }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ClientListFragment">
 
 
@@ -17,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
+           <!-- <RelativeLayout
                 android:id="@+id/relIamge"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -37,7 +38,7 @@
                     android:background="@color/colorAccent"
                     android:text="Crear"
                     android:textColor="#fff" />
-            </RelativeLayout>
+            </RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/relaData"
@@ -95,5 +96,16 @@
 
 
     </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:background="#fff"
+        android:tint="#fff"
+        android:src="@drawable/ic_action_add"
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_margin="16dp" />
 
 </FrameLayout>

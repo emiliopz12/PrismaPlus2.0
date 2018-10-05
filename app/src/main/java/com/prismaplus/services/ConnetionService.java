@@ -9,6 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConnetionService {
     private static ConnectionInterface singleton;
+    public static String way;
+
+    private static String URL_PROD = "https://www.prismasolucionescr.com/plus/api";
+    private static String URL_PRUEBAS = "https://www.prismasolucionescr.com/plus_test/api";
+
+    public static void val(String a){
+        way = a.contains("pruebas") ?  URL_PROD : URL_PRUEBAS;
+    }
 
     public static ConnectionInterface obtenerServicio(){
 
@@ -19,7 +27,7 @@ public class ConnetionService {
 
             httpClient.addInterceptor(logging);
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://www.prismasolucionescr.com/plus_app/api/")
+                    .baseUrl(way.equals("pruebas") ?  URL_PROD : URL_PRUEBAS )
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
                     .build();

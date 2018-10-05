@@ -108,6 +108,11 @@ public class LoginFragment extends Fragment {
         //Toast.makeText(rootView.getContext(), username.getText().toString(), Toast.LENGTH_LONG).show();
         //Log.d("usuario", password.getText().toString());
         utils.showProgess(getActivity(),"Iniciando sesión");
+
+        if(username.getText().toString().contains("pruebas")){
+          ConnetionService.way = "pruebas";
+        }
+
         connetionService.doLogin(username.getText().toString(), password.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
             @Override
             public void onResponse(Call<List<LoginInfo>> call, Response<List<LoginInfo>> response) {
