@@ -173,8 +173,9 @@ public class NewBillFragment extends Fragment {
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         mActivity.getSupportActionBar().setTitle("NUEVO TIQUETE");
-        connetionService = ConnetionService.obtenerServicio();
         preferencesManager = PreferencesManager.getInstance();
+        connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
+
 
         try {
             mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);

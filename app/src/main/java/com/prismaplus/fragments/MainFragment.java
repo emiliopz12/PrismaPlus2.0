@@ -47,13 +47,13 @@ public class MainFragment extends Fragment {
         getActivity().finish();
     }
 
-    @OnClick(R.id.relative_clients)
+    /*@OnClick(R.id.relative_clients)
     public void goToclients(){
         Intent i = new Intent(getActivity(), ClientsActivity.class);
         i.putExtra("nextFragment",1);
         startActivity(i);
         getActivity().finish();
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

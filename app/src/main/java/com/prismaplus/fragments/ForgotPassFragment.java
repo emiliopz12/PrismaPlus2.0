@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.LoginActivity;
 import com.prismaplus.entities.LoginInfo;
+import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
@@ -42,6 +44,7 @@ public class ForgotPassFragment extends Fragment {
 
     View rootView;
     ConnectionInterface connetionService;
+    PreferencesManager preferencesManager;
     Utils utils;
     LoginActivity mActivity;
 
@@ -55,7 +58,8 @@ public class ForgotPassFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connetionService = ConnetionService.obtenerServicio();
+
+        preferencesManager = PreferencesManager.getInstance();
 
     }
 
@@ -86,11 +90,22 @@ public class ForgotPassFragment extends Fragment {
     public void forgot(){
         //Toast.makeText(rootView.getContext(), username.getText().toString(), Toast.LENGTH_LONG).show();
         //Log.d("usuario", password.getText().toString());
+        String sendUser = "";
+        String user = username.getText().toString().toLowerCase();
+        if(user.contains("test")){
+            String[] data = user.split("test");
+            sendUser = data[1];
+        }else{
+            sendUser = username.getText().toString();
+        }
+
+        connetionService = ConnetionService.obtenerServicio(user.contains("test") ? utils.URL_PRUEBAS : utils.URL_PROD);
+
         utils.showProgess(getActivity(),"Procesando");
-        connetionService.forgotPass(username.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
+        connetionService.forgotPass(sendUser).enqueue(new Callback<List<LoginInfo>>() {
             @Override
             public void onResponse(Call<List<LoginInfo>> call, Response<List<LoginInfo>> response) {
-
+                Log.d("TAG","server contacted at: " + call.request().url());
                 utils.hideProgress();
                 new MaterialDialog.Builder(rootView.getContext())
                         .title("Mensaje")

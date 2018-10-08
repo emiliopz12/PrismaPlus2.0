@@ -37,7 +37,8 @@ public class Utils {
 
     Context context;
    public  MaterialDialog materialDialog;
-
+    public  String URL_PROD = "https://www.prismasolucionescr.com/plus/api/";
+    public  String URL_PRUEBAS = "https://www.prismasolucionescr.com/plus_test/api/";
     public Utils(){
         this.context = context;
     }

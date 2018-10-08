@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connetionService = ConnetionService.obtenerServicio();
+
         preferencesManager = PreferencesManager.getInstance();
     }
 
@@ -108,12 +108,21 @@ public class LoginFragment extends Fragment {
         //Toast.makeText(rootView.getContext(), username.getText().toString(), Toast.LENGTH_LONG).show();
         //Log.d("usuario", password.getText().toString());
         utils.showProgess(getActivity(),"Iniciando sesión");
-
-        if(username.getText().toString().contains("pruebas")){
+        String sendUser = "";
+        String user = username.getText().toString().toLowerCase();
+        if(user.contains("test")){
           ConnetionService.way = "pruebas";
+          preferencesManager.saveString(getActivity(),"url", "pruebas");
+          String[] data = user.split("test");
+          sendUser = data[1];
+        }else{
+            preferencesManager.saveString(getActivity(),"url", "prod");
+            sendUser = username.getText().toString();
         }
 
-        connetionService.doLogin(username.getText().toString(), password.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
+        connetionService = ConnetionService.obtenerServicio(user.contains("test") ? utils.URL_PRUEBAS : utils.URL_PROD);
+
+        connetionService.doLogin(sendUser, password.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
             @Override
             public void onResponse(Call<List<LoginInfo>> call, Response<List<LoginInfo>> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
