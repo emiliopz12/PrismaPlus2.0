@@ -146,13 +146,13 @@ public class NewBillFragment extends Fragment {
 
     Map<Integer, String> conditionHash, situationHash, currencyHash, productsHash;
 
-    Map<Integer, Integer> clientsHash;
+    Map<Integer, String> clientsHash;
 
     List<ProductInfo> productsList;
     List<ClientInfo> clientsList;
     List<Detail> detailsList  = new ArrayList<Detail>();
 
-    int localSub, localDesc, localIV, localTotal;
+    Double localSub, localDesc, localIV, localTotal;
 
     ProductInfo actualProduct;
 
@@ -295,7 +295,7 @@ public class NewBillFragment extends Fragment {
                 tmpClients = new String[loginResponse.size()+1];
 
 
-                clientsHash.put(0, -1);
+                clientsHash.put(0, "-1");
                 //loginResponse.get(0).getMSJ();
                 tmpClients[0] = "CLIENTE DE TIQUETE";
                 int i = 1;
@@ -352,6 +352,8 @@ public class NewBillFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ProductInfo>> call, Throwable t) {
+
+                Log.d("ERR: ", t.getMessage());
                 utils.hideProgress();
 
             }
@@ -376,7 +378,7 @@ public class NewBillFragment extends Fragment {
             return;
         }
 
-        if(preci.equals("") || Integer.parseInt(preci) < 1){
+        if(preci.equals("") || Double.parseDouble(preci) < 1){
             Toast.makeText(rootView.getContext(), "Valor invalido en precio", Toast.LENGTH_LONG).show();
             return;
         }
@@ -417,6 +419,8 @@ public class NewBillFragment extends Fragment {
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
 
+
+
         ((TextView)row.findViewById(R.id.cant)).setText(canti);
         ((TextView)row.findViewById(R.id.descripcion)).setText(descrip);
         ((TextView)row.findViewById(R.id.precio)).setText(preci);
@@ -451,7 +455,7 @@ public class NewBillFragment extends Fragment {
         detail.setTotalLinea(total.getText().toString());
         detail.setMontoImpuesto(montoIV.getText().toString());
         detail.setMontoDescuento(desc.getText().toString());
-        detail.setSubtotal(String.valueOf(Integer.parseInt(preci) * Integer.parseInt(canti)));
+        detail.setSubtotal(String.valueOf((Double.parseDouble(preci) - Double.parseDouble(montoIV.getText().toString()) ) * Integer.parseInt(canti)));
         detail.setPrecioUnitario(preci);
         detail.setPorcentajeDescuento(descPorc);
         detail.setNaturalezaDescuento(natDescu);
@@ -501,22 +505,32 @@ public class NewBillFragment extends Fragment {
 
         if(prod.getCodigoImpuesto().equals("00")){
             checkIV.setChecked(false);
+            neto.setText(String.valueOf(prod.getPrecio()));
+
         }
-        else
+        else {
             checkIV.setChecked(true);
+            Double PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
+            double Neto = prod.getPrecio() / PorImpuesto;
+            neto.setText(String.valueOf(prod.getPrecio()));
+        }
+
+        //Log.d("POR IMPUESTO: ", String.valueOf(prod.getPorcentajeImpuesto()));
+
+        //montoIV.setText(String.valueOf(prod.getPorcentajeImpuesto()));
 
         description.setText(prod.getDescripcion().toString());
         precio.setText(String.valueOf(prod.getPrecio()));
 
-        if(prod.getPorcentajeImpuesto() == 0)
-            neto.setText(String.valueOf(prod.getPrecio()));
-
-        else{
-
-            Integer PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
-            Integer Neto = prod.getPrecio() / PorImpuesto;
-            neto.setText(String.valueOf(prod.getPrecio()));
-        }
+//        if(prod.getPorcentajeImpuesto() < 1)
+//            neto.setText(String.valueOf(prod.getPrecio()));
+//
+//        else{
+//
+//            Double PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
+//            double Neto = prod.getPrecio() / PorImpuesto;
+//            neto.setText(String.valueOf(prod.getPrecio()));
+//        }
 
     }
 
@@ -525,17 +539,17 @@ public class NewBillFragment extends Fragment {
 
         if(!text.toString().equals("") && !precio.getText().toString().equals("")) {
 
-            actualProduct.setPorcentajeImpuesto(50);
+            //actualProduct.setPorcentajeImpuesto((double) 50);
 
-            Integer preci = Integer.parseInt(precio.getText().toString());
+            Double preci = Double.parseDouble(precio.getText().toString());
 
-            Integer PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-            Integer Neto = preci / PorImpuesto;
+            Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+            Double Neto = preci / PorImpuesto;
             neto.setText(String.valueOf(Neto));
 
             PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
-            Integer ValorImpuesto = preci / PorImpuesto;
-            Integer IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
+            Double ValorImpuesto = preci / PorImpuesto;
+            Double IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
             montoIV.setText(String.valueOf(IV));
 
             calculoDescuento();
@@ -548,18 +562,18 @@ public class NewBillFragment extends Fragment {
 
         if(!text.toString().equals("")){
 
-            actualProduct.setPorcentajeImpuesto(50);
+            //actualProduct.setPorcentajeImpuesto((double) 50);
 
             if(!cant.getText().toString().equals("")){
-                Integer preci = Integer.parseInt(text.toString());
+                Double preci = Double.parseDouble(text.toString());
 
-                Integer PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-                Integer Neto = preci / PorImpuesto;
+                Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
+                Double Neto = preci / PorImpuesto;
                 neto.setText(String.valueOf(Neto));
 
                 PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
-                Integer ValorImpuesto = preci / PorImpuesto;
-                Integer IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
+                Double ValorImpuesto = preci / PorImpuesto;
+                Double IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
                 montoIV.setText(String.valueOf(IV));
 
                 calculoDescuento();
@@ -584,7 +598,7 @@ public class NewBillFragment extends Fragment {
 
     public void calculoDescuento(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
-            int preci = Integer.parseInt(precio.getText().toString());
+            Double preci = Double.parseDouble(precio.getText().toString());
             int canti = Integer.parseInt(cant.getText().toString());
             float descPorc = Float.parseFloat(descPor.getText().toString());
 
@@ -593,17 +607,17 @@ public class NewBillFragment extends Fragment {
             Log.d("DESC POR: ", String.valueOf(descPorc));
 
 
-            int subt = preci * canti;
+            Double subt = preci * canti;
             Log.d("SUB 1: ", String.valueOf(subt));
 
-            subt = subt - Integer.parseInt(montoIV.getText().toString());
+            subt = subt - Double.parseDouble(montoIV.getText().toString());
 
             Log.d("SUB 2: ", String.valueOf(subt));
             float por = (descPorc / 100);
 
             Log.d("DESC POR 2: ", String.valueOf(por));
 
-            subt = (int)(subt * por);
+            subt = (subt * por);
 
             Log.d("DESC: ", String.valueOf(subt));
 
@@ -613,26 +627,26 @@ public class NewBillFragment extends Fragment {
 
     public void calculoTotalLinea(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")) {
-            Integer preci = Integer.parseInt(precio.getText().toString());
+            Double preci = Double.parseDouble(precio.getText().toString());
             Integer canti = Integer.parseInt(cant.getText().toString());
-            Integer descu = 0;
+            Double descu = 0.0;
             if(!desc.getText().toString().equals(""))
-                descu = Integer.parseInt(desc.getText().toString());
+                descu = Double.parseDouble(desc.getText().toString());
 
-            Integer tot = (preci * canti) - descu;
+            Double tot = (preci * canti) - descu;
             total.setText(String.valueOf(tot));
         }
     }
 
     public void calculoTotalGeneral(){
-        localDesc = localSub = localIV = localTotal = 0;
+        localDesc = localSub = localIV = localTotal = 0.0;
         if(detailsList.size() > 0) {
 
 
             for(Detail d: detailsList){
-                localDesc += Integer.parseInt(d.getMontoDescuento());
-                localSub += Integer.parseInt(d.getSubtotal());
-                localIV += Integer.parseInt(d.getMontoImpuesto());
+                localDesc += Double.parseDouble(d.getMontoDescuento());
+                localSub += Double.parseDouble(d.getSubtotal());
+                localIV += Double.parseDouble(d.getMontoImpuesto());
             }
 
             localTotal = localSub + localIV - localDesc;
@@ -660,7 +674,7 @@ public class NewBillFragment extends Fragment {
             String condicionVenta = conditionHash.get(spinnerCondition.getSelectedItemPosition()).toString();
             String situation = situationHash.get(spinner_situation.getSelectedItemPosition()).toString();
             String moneda = currencyHash.get(spinner_currency.getSelectedItemPosition()).toString();
-            int IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
+            String IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
 
             String username = preferencesManager.getStringValue(getActivity(), "username");
             int IdEmpresa = preferencesManager.getIntValue(getActivity(), "IdEmpresa");

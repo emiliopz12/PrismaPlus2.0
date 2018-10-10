@@ -7,16 +7,19 @@ public class ClientInfo {
 
     @SerializedName("IdCliente")
     @Expose
-    private Integer idCliente;
+    private String idCliente;
     @SerializedName("Nombre")
     @Expose
     private String nombre;
+    @SerializedName("CorreoElectronico")
+    @Expose
+    private String email;
 
-    public Integer getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -27,5 +30,15 @@ public class ClientInfo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
 
 }

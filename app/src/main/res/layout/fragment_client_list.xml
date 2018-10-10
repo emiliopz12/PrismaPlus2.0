@@ -51,46 +51,60 @@
                 android:padding="16dp">
 
 
-                <TableLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <TableRow
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="0dp"
+                        <TableLayout
+                            android:id="@+id/tableClients"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".25"
-                            android:background="#CCCCCC"
-                            android:text="Cliente"
-                            android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:scrollbars="vertical">
 
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="#CCCCCC"
-                            android:text="ID"
-                            android:textColor="#000"
-                            android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".25"
-                            android:background="#CCCCCC"
-                            android:text="Email"
-                            android:textColor="#000"
-                            android:textStyle="bold" />
-                    </TableRow>
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".25"
+                                    android:background="#CCCCCC"
+                                    android:text="Cliente"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                </TableLayout>
+                                <TextView
+                                    android:id="@+id/textView5"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".50"
+                                    android:background="#CCCCCC"
+                                    android:text="ID"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".25"
+                                    android:background="#CCCCCC"
+                                    android:text="Email"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                        </TableLayout>
+                    </LinearLayout>
+                </ScrollView>
+
             </RelativeLayout>
         </LinearLayout>
 

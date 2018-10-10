@@ -28,7 +28,7 @@ public class ProductInfo {
     private Integer estado;
     @SerializedName("Precio")
     @Expose
-    private Integer precio;
+    private Double precio;
     @SerializedName("TipoCodigo")
     @Expose
     private String tipoCodigo;
@@ -37,7 +37,7 @@ public class ProductInfo {
     private String codigoImpuesto;
     @SerializedName("PorcentajeImpuesto")
     @Expose
-    private Integer porcentajeImpuesto;
+    private Double porcentajeImpuesto;
 
     public Integer getEsServicio() {
         return esServicio;
@@ -95,11 +95,11 @@ public class ProductInfo {
         this.estado = estado;
     }
 
-    public Integer getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Integer precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -119,11 +119,11 @@ public class ProductInfo {
         this.codigoImpuesto = codigoImpuesto;
     }
 
-    public Integer getPorcentajeImpuesto() {
+    public Double getPorcentajeImpuesto() {
         return porcentajeImpuesto;
     }
 
-    public void setPorcentajeImpuesto(Integer porcentajeImpuesto) {
+    public void setPorcentajeImpuesto(Double porcentajeImpuesto) {
         this.porcentajeImpuesto = porcentajeImpuesto;
     }
 
