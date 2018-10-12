@@ -471,12 +471,14 @@ public class NewBillFragment extends Fragment {
         detail.setTotalLinea(total.getText().toString());
         detail.setMontoImpuesto(montoIV.getText().toString());
         detail.setMontoDescuento(desc.getText().toString());
-        detail.setSubtotal(String.valueOf((Double.parseDouble(preci) - Double.parseDouble(montoIV.getText().toString()) ) * Integer.parseInt(canti)));
+        //detail.setSubtotal(String.valueOf((Double.parseDouble(preci) - Double.parseDouble(montoIV.getText().toString()) ) * Integer.parseInt(canti)));
+        detail.setSubtotal(String.valueOf(neto.getText().toString()));
         detail.setPrecioUnitario(preci);
         detail.setPorcentajeDescuento(descPorc);
         detail.setNaturalezaDescuento(natDescu);
         detail.setCodigoArticulo(actualProduct.getCodigoArticulo());
         detail.setCantidad(canti);
+        detail.setMontoTotal(total.getText().toString());
 //        if(Integer.parseInt(detail.getMontoImpuesto()) > 0){
 //            detail.setEsGravado("1");
 //        }
@@ -527,7 +529,7 @@ public class NewBillFragment extends Fragment {
         else {
             checkIV.setChecked(true);
             Double PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
-            double Neto = prod.getPrecio() / PorImpuesto;
+            double Neto = (prod.getPrecio() / PorImpuesto) * Integer.valueOf(cant.getText().toString());
 
             Log.d("ROunded ", String.valueOf(roundAvoid(Neto, 2)));
 
@@ -563,7 +565,7 @@ public class NewBillFragment extends Fragment {
             Double preci = Double.parseDouble(precio.getText().toString());
 
             Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-            Double Neto = preci / PorImpuesto;
+            Double Neto = (preci / PorImpuesto) * Integer.valueOf(text.toString());
             neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
             PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
@@ -587,7 +589,7 @@ public class NewBillFragment extends Fragment {
                 Double preci = Double.parseDouble(text.toString());
 
                 Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-                Double Neto = preci / PorImpuesto;
+                Double Neto = (preci / PorImpuesto) * Integer.valueOf(cant.getText().toString());
                 //neto.setText(String.valueOf(Neto));
                 neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
