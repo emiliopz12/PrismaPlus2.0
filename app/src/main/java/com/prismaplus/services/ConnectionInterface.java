@@ -35,4 +35,7 @@ public interface ConnectionInterface {
     @POST("FacturaApi")
     Call<BillInfo> doBill(@Body Bill bill);
 
+    @POST("customersapi")
+    Call<ClientInfo> saveClient(@Body ClientInfo client);
+
 }

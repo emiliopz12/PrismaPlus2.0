@@ -38,6 +38,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:padding="8dp"
                     android:text="" />
             </LinearLayout>
 
@@ -64,7 +65,8 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:padding="8dp"
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,6 +91,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:padding="8dp"
                     android:text="" />
             </LinearLayout>
 
@@ -112,7 +115,8 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight=".6"
-                    android:background="@drawable/spinner_format" />
+                    android:background="@drawable/spinner_format"
+                    android:padding="8dp" />
 
             </LinearLayout>
 
@@ -138,6 +142,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:padding="8dp"
                     android:text="" />
             </LinearLayout>
 
@@ -160,7 +165,8 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight=".6"
-                    android:background="@drawable/spinner_format" />
+                    android:background="@drawable/spinner_format"
+                    android:padding="8dp" />
 
             </LinearLayout>
 
@@ -169,7 +175,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"

@@ -39,6 +39,7 @@ import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -361,6 +362,12 @@ public class NewBillFragment extends Fragment {
 
     }
 
+    public static float roundAvoid(double number, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(number);
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
+
     @OnClick(R.id.add_row)
     public void addRow(){
 
@@ -413,8 +420,17 @@ public class NewBillFragment extends Fragment {
             lines++;
         }
 
-        TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+        TableRow row;
 
+        int r = mod(lines, 2);
+
+        Log.d("2: ", String.valueOf(r));
+
+
+        if(r == 0)
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+        else
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowwhite, null);
         Detail detail = new Detail();
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
@@ -512,7 +528,10 @@ public class NewBillFragment extends Fragment {
             checkIV.setChecked(true);
             Double PorImpuesto= (1+ (prod.getPorcentajeImpuesto()/100));
             double Neto = prod.getPrecio() / PorImpuesto;
-            neto.setText(String.valueOf(prod.getPrecio()));
+
+            Log.d("ROunded ", String.valueOf(roundAvoid(Neto, 2)));
+
+            neto.setText(String.valueOf(roundAvoid(Neto, 2)));
         }
 
         //Log.d("POR IMPUESTO: ", String.valueOf(prod.getPorcentajeImpuesto()));
@@ -545,12 +564,12 @@ public class NewBillFragment extends Fragment {
 
             Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
             Double Neto = preci / PorImpuesto;
-            neto.setText(String.valueOf(Neto));
+            neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
             PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
             Double ValorImpuesto = preci / PorImpuesto;
             Double IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
-            montoIV.setText(String.valueOf(IV));
+            montoIV.setText(String.valueOf(roundAvoid(IV, 2)));
 
             calculoDescuento();
             calculoTotalLinea();
@@ -569,12 +588,14 @@ public class NewBillFragment extends Fragment {
 
                 Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
                 Double Neto = preci / PorImpuesto;
-                neto.setText(String.valueOf(Neto));
+                //neto.setText(String.valueOf(Neto));
+                neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
                 PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
                 Double ValorImpuesto = preci / PorImpuesto;
                 Double IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
-                montoIV.setText(String.valueOf(IV));
+                //montoIV.setText(String.valueOf(IV));
+                montoIV.setText(String.valueOf(roundAvoid(IV, 2)));
 
                 calculoDescuento();
                 calculoTotalLinea();
@@ -620,8 +641,8 @@ public class NewBillFragment extends Fragment {
             subt = (subt * por);
 
             Log.d("DESC: ", String.valueOf(subt));
-
-            desc.setText(String.valueOf(subt));
+            desc.setText(String.valueOf(roundAvoid(subt, 2)));
+            //desc.setText(String.valueOf(subt));
         }
     }
 
@@ -629,12 +650,12 @@ public class NewBillFragment extends Fragment {
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")) {
             Double preci = Double.parseDouble(precio.getText().toString());
             Integer canti = Integer.parseInt(cant.getText().toString());
-            Double descu = 0.0;
+            double descu = 0.0;
             if(!desc.getText().toString().equals(""))
-                descu = Double.parseDouble(desc.getText().toString());
+                descu = roundAvoid(Double.parseDouble(desc.getText().toString()), 2);
 
             Double tot = (preci * canti) - descu;
-            total.setText(String.valueOf(tot));
+            total.setText(String.valueOf(roundAvoid(tot, 2)));
         }
     }
 
@@ -644,17 +665,17 @@ public class NewBillFragment extends Fragment {
 
 
             for(Detail d: detailsList){
-                localDesc += Double.parseDouble(d.getMontoDescuento());
-                localSub += Double.parseDouble(d.getSubtotal());
-                localIV += Double.parseDouble(d.getMontoImpuesto());
+                localDesc += roundAvoid(Double.parseDouble(d.getMontoDescuento()),2);
+                localSub += roundAvoid(Double.parseDouble(d.getSubtotal()), 2);
+                localIV += roundAvoid(Double.parseDouble(d.getMontoImpuesto()), 2);
             }
 
             localTotal = localSub + localIV - localDesc;
 
-            genDesc.setText("Descuento: "+localDesc);
-            genSubtot.setText("Sub total: "+localSub);
-            genIV.setText("IV: "+localIV);
-            genTot.setText("Total: "+localTotal);
+            genDesc.setText("Descuento: "+roundAvoid(localDesc, 2));
+            genSubtot.setText("Sub total: "+roundAvoid(localSub, 2));
+            genIV.setText("IV: "+roundAvoid(localIV, 2));
+            genTot.setText("Total: "+roundAvoid(localTotal, 2));
         }
         else{
             genDesc.setText("Descuento: 0");
@@ -796,6 +817,13 @@ public class NewBillFragment extends Fragment {
         }
     }
 
+    private int mod(int x, int y)
+    {
+        int result = x % y;
+        Log.d("!: ", String.valueOf(result));
+        return result < 0? result + y : result;
+    }
+
     public void cleanFields(){
 
         spinner_client.setSelection(0);
@@ -818,7 +846,17 @@ public class NewBillFragment extends Fragment {
         rows = new ArrayList<>();
         lines = -1;
 
-        TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+        TableRow row;
+
+        int r = mod(lines+1, 2);
+
+        Log.d("2: ", String.valueOf(r));
+
+
+        if(r == 0)
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+        else
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowwhite, null);
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
 

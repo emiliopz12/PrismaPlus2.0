@@ -3,6 +3,8 @@ package com.prismaplus.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,12 +28,14 @@ import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,8 +55,16 @@ public class ClientListFragment extends Fragment {
 
     Map<Integer, String> clientsHash = new HashMap<>();;
 
+    List<ClientInfo> clientsList = new ArrayList<>();
+    List<TableRow> rows = new ArrayList<TableRow>();
+
+
     @BindView(R.id.tableClients)
     TableLayout tableClients;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,6 +74,10 @@ public class ClientListFragment extends Fragment {
 
     }
 
+    @OnClick(R.id.fab)
+    public void goNewClient() {
+        mActivity.setFragment(new ClientFragment(), 2);
+    }
 
     // TODO: Rename and change types and number of parameters
 //    public static ClientListFragment newInstance(String param1, String param2) {
@@ -99,6 +115,9 @@ public class ClientListFragment extends Fragment {
         ButterKnife.bind(this,rootView);
 
         pupulateClients();
+
+
+
 
         return  rootView;
     }
@@ -142,7 +161,7 @@ public class ClientListFragment extends Fragment {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
 
-        //utils.showProgess(getActivity(),"cargando");
+        utils.showProgess(getActivity(),"Cargando");
 
         connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
             private String[] tmpClients;
@@ -161,51 +180,66 @@ public class ClientListFragment extends Fragment {
                 for(ClientInfo c : loginResponse){
                     clientsHash.put(i, c.getIdCliente());
                     addRow(c);
-
+                    clientsList.add(c);
                     //tmpClients[i++] = c.getNombre();
                 }
 
 
-                // utils.hideProgress();
+                 utils.hideProgress();
 
             }
 
             @Override
             public void onFailure(Call<List<ClientInfo>> call, Throwable t) {
-                // utils.hideProgress();
+                 utils.hideProgress();
             }
         });
     }
 
+    private int mod(int x, int y)
+    {
+        int result = x % y;
+        Log.d("!: ", String.valueOf(result));
+        return result < 0? result + y : result;
+    }
+
+    int lines = 0;
 
     public void addRow(ClientInfo client){
 
-        TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowclientlist, null);
+        TableRow row;
+
+        int r = mod(lines, 2);
+
+        lines++;
+
+        if(r == 0)
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowclientlist, null);
+        else
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowclientlistwhite, null);
 
         ((TextView)row.findViewById(R.id.codigo)).setText(client.getIdCliente());
         ((TextView)row.findViewById(R.id.id)).setText(client.getNombre());
         ((TextView)row.findViewById(R.id.email)).setText(client.getEmail());
 
+        rows.add(row);
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                mActivity.setFragment(new ClientFragment());
-//
-//                TableRow r = (TableRow) (v.getParent());
-//
-//                tableProducts.removeView(r);
-//
-//                int i = rows.lastIndexOf(r);
-//
-//                detailsList.remove(i);
-//
-//                rows.remove(r);
-//
-//                calculoTotalGeneral();
-//
-//                tableProducts.requestLayout();
+                TableRow r = (TableRow) (v);
+
+                int i = rows.lastIndexOf(r);
+
+                rows.remove(r);
+
+                Fragment fragment = new ClientFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("client",  clientsList.get(i));
+                fragment.setArguments(bundle);
+
+                mActivity.setFragment(fragment, 2);
 
             }
         });
