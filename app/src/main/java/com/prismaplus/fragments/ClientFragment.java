@@ -122,9 +122,9 @@ public class ClientFragment extends Fragment {
             email.setText(client.getEmail());
 
             if (client.getEstado() == 1)
-                spinner_state.setSelection(1);
-            else
                 spinner_state.setSelection(0);
+            else
+                spinner_state.setSelection(1);
 
             if (client.getTipoCedula() == "01")
                 spinner_id.setSelection(0);
@@ -165,20 +165,28 @@ public class ClientFragment extends Fragment {
 
         String typeId = spinner_id.getSelectedItem().toString();
 
-        if(typeId == "Fisico")
+        Log.d("TypeID: ", typeId);
+
+        if(typeId.equals("Fisico"))
             client.setTipoCedula("01");
-        else if(typeId == "Juridica")
+        else if(typeId.equals("Juridica"))
             client.setTipoCedula("02");
-        else if(typeId == "Dimex")
+        else if(typeId.equals("Dimex"))
             client.setTipoCedula("03");
-        else if(typeId == "Nise")
+        else if(typeId.equals("Nise"))
             client.setTipoCedula("04");
 
         //client.setTipoCedula(name.getText().toString());
         client.setNombreComercial(namecomm.getText().toString());
-        client.setEstado(spinner_state.getSelectedItemPosition());
+        client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1: 0);
         client.setEmail(email.getText().toString());
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+        client.setIdEmpresa(IdEmpresa);
 
+        if(client.getIdentificacion() == null)
+            client.setIdentificacion("");
+        if(client.getOtrasSenas() == null)
+            client.setOtrasSenas("");
 
         connetionService.saveClient(client).enqueue(new Callback<ClientInfo>() {
 
