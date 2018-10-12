@@ -94,8 +94,8 @@ public class NewBillFragment extends Fragment {
     @BindView(R.id.checkIV)
     CheckBox checkIV;
 
-    @BindView(R.id.butgenerar)
-    Button butgenerar;
+    /*@BindView(R.id.butgenerar)
+    Button butgenerar;*/
 
     @BindView(R.id.description)
     TextView description;
@@ -687,7 +687,7 @@ public class NewBillFragment extends Fragment {
         }
     }
 
-    @OnClick (R.id.butgenerar)
+    @OnClick (R.id.fabCreate)
     public void generar() {
 
         if (detailsList.size() > 0) {

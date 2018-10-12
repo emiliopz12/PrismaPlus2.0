@@ -215,7 +215,7 @@
                     android:inputType="textMultiLine"
                     android:lines="2"
                     android:maxLength="160"
-                    android:padding="2dp">
+                    android:padding="4dp">
 
                 </EditText>
 
@@ -308,6 +308,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="number"
+                    android:padding="4dp"
                     android:text="1"
                     android:textAlignment="textEnd" />
 
@@ -323,6 +324,7 @@
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusable="false"
+                    android:padding="4dp"
                     android:focusableInTouchMode="false"
                     android:inputType="none|number"
                     android:text="0"
@@ -337,6 +339,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="number"
+                    android:padding="4dp"
                     android:textAlignment="textEnd" />
 
                 <RelativeLayout
@@ -373,6 +376,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:inputType="number"
+                    android:padding="4dp"
                     android:text="0"
                     android:textAlignment="textEnd" />
 
@@ -435,6 +439,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:orientation="horizontal"
+
                 android:weightSum="1">
 
                 <EditText
@@ -446,6 +451,7 @@
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="number"
+                    android:padding="4dp"
                     android:text="0"
                     android:textAlignment="textEnd" />
 
@@ -459,6 +465,7 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:padding="4dp"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -472,6 +479,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight=".35"
+                    android:padding="4dp"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
                     android:inputType="text" />
@@ -485,6 +493,7 @@
                     android:backgroundTint="#aaa"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:padding="4dp"
                     android:ems="10"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -493,9 +502,10 @@
 
                 <ImageButton
                     android:id="@+id/add_row"
-                    android:layout_width="2dp"
+                    android:layout_width="4dp"
                     android:layout_height="23dp"
                     android:layout_weight=".05"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/add" />
 
             </LinearLayout>
@@ -505,6 +515,7 @@
                 android:id="@+id/tableProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:paddingBottom="10dp">
 
                 <TableRow
@@ -518,6 +529,7 @@
                         android:layout_weight=".10"
                         android:background="#CCCCCC"
                         android:text="Cant"
+                        android:textAlignment="center"
                         android:textColor="#000"
                         android:textStyle="bold" />
 
@@ -528,6 +540,7 @@
                         android:layout_weight=".40"
                         android:background="#CCCCCC"
                         android:text="Descripción"
+                        android:textAlignment="center"
                         android:textColor="#000"
                         android:textStyle="bold" />
 
@@ -537,6 +550,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".20"
                         android:background="#CCCCCC"
+                        android:textAlignment="center"
                         android:text="Precio"
                         android:textColor="#000"
                         android:textStyle="bold" />
@@ -548,6 +562,7 @@
                         android:layout_weight=".20"
                         android:background="#CCCCCC"
                         android:text="Total"
+                        android:textAlignment="center"
                         android:textColor="#000"
                         android:textStyle="bold" />
 
@@ -625,6 +640,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:baselineAligned="true"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -654,7 +670,7 @@
                             android:inputType="textMultiLine"
                             android:lines="2"
                             android:maxLength="160"
-                            android:padding="2dp"
+                            android:padding="4dp"
                             android:singleLine="true"
                             android:textColor="#000">
 
@@ -739,7 +755,7 @@
 
     </ScrollView>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".10"
@@ -757,7 +773,17 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="6dp"
             android:visibility="visible" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_send"
+        android:tint="#fff"
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_margin="16dp" />
 
 </LinearLayout>

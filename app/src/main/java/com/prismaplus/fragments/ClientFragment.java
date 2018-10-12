@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -45,7 +46,7 @@ public class ClientFragment extends Fragment {
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
     Utils utils;
-    private OnFragmentInteractionListener mListener;
+    private final int HOME = 16908332;
 
     @BindView(R.id.spinner_id)
     Spinner spinner_id;
@@ -53,8 +54,7 @@ public class ClientFragment extends Fragment {
     @BindView(R.id.spinner_state)
     Spinner spinner_state;
 
-    @BindView(R.id.update)
-    Button update;
+
 
     @BindView(R.id.name)
     EditText name;
@@ -143,7 +143,18 @@ public class ClientFragment extends Fragment {
         return  rootView;
     }
 
-    @OnClick(R.id.update)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case HOME:
+                mActivity.setFragment(new ClientListFragment(), 1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @OnClick(R.id.fabAdd)
     public void saveClient() {
 
 
@@ -193,13 +204,7 @@ public class ClientFragment extends Fragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
 
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -210,21 +215,8 @@ public class ClientFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

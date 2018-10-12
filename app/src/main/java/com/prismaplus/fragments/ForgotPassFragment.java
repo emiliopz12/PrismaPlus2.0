@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,6 +37,7 @@ import retrofit2.Response;
 
 public class ForgotPassFragment extends Fragment {
 
+    private final int HOME = 16908332;
     @BindView(R.id.loginUser)
     Button loginUser;
 
@@ -58,7 +60,7 @@ public class ForgotPassFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         preferencesManager = PreferencesManager.getInstance();
 
     }
@@ -73,6 +75,16 @@ public class ForgotPassFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case HOME:
+                this.mActivity.setFragment(new LoginFragment());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
     @Override

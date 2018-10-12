@@ -118,7 +118,7 @@
         android:layout_gravity="end|bottom"
         android:background="#fff"
         android:tint="#fff"
-        android:src="@drawable/ic_action_add"
+        android:src="@drawable/ic_add_circle_outline"
         app:backgroundTint="@color/colorPrimary"
         android:layout_margin="16dp" />
 
