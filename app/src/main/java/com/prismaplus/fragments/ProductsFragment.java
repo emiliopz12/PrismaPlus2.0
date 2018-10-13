@@ -18,12 +18,14 @@ import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.activities.ProductsActivity;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.ProductInfo;
+import com.prismaplus.entities.UnidadInfo;
 import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +41,7 @@ public class ProductsFragment extends Fragment {
     private ConnectionInterface connetionService;
     Utils utils;
     private final int HOME = 16908332;
+    List<UnidadInfo> unitList;
 
     @BindView(R.id.spinner_id)
     Spinner spinner_id;
@@ -68,7 +71,7 @@ public class ProductsFragment extends Fragment {
     EditText imp;
 
     ProductInfo client;
-    private HashMap<Object,Object> tipoCodigoHash, tipoImpuestoHash, invTipoCodigoHash, invTipoImpuestoHash;
+    private HashMap<Object,Object> tipoCodigoHash, tipoImpuestoHash, invTipoCodigoHash, invTipoImpuestoHash, unitHash;
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -78,7 +81,7 @@ public class ProductsFragment extends Fragment {
 
     public void populateHashes() {
 
-        tipoCodigoHash = invTipoCodigoHash = invTipoImpuestoHash = new HashMap<>();
+        tipoCodigoHash = invTipoCodigoHash = invTipoImpuestoHash =  unitHash = new HashMap<>();
         tipoImpuestoHash= new HashMap<>();
 
         /* **** CONDITION HASH ****/
@@ -161,6 +164,12 @@ public class ProductsFragment extends Fragment {
         spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.typeimp));
         spinner_imp.setAdapter(spinnerConditionrrayAdapter);
 
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.servicio));
+        spinner_es_servicio.setAdapter(spinnerConditionrrayAdapter);
+
+
+
+
 //
 //
         if(this.getArguments() != null && !this.getArguments().isEmpty()) {
@@ -174,9 +183,9 @@ public class ProductsFragment extends Fragment {
             precio.setText(String.valueOf(client.getPrecio()));
             imp.setText(String.valueOf(client.getPorcentajeImpuesto()));
 
+            spinner_es_servicio.setSelection( client.getEsServicio() == 0 ? 1 : 0);
             spinner_imp.setSelection( (Integer) invTipoImpuestoHash.get( client.getCodigoImpuesto() ));
             spinner_id.setSelection( (Integer) invTipoCodigoHash.get( client.getTipoCodigo() ));
-
 
             if (client.getEstado() == 1)
                 spinner_state.setSelection(0);
@@ -187,6 +196,40 @@ public class ProductsFragment extends Fragment {
         }
         else
             client = new ProductInfo();
+
+        connetionService.getUnidad().enqueue(new Callback<List<UnidadInfo>>() {
+            private String[] tmpProducts;
+
+            @Override
+            public void onResponse(Call<List<UnidadInfo>> call, Response<List<UnidadInfo>> response) {
+                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                List<UnidadInfo> loginResponse = response.body();
+                unitList = loginResponse;
+                tmpProducts = new String[loginResponse.size()];
+                //loginResponse.get(0).getMSJ();
+                int i = 0;
+                for(UnidadInfo c : loginResponse){
+                    tmpProducts[i++] = c.getDescripcion();
+                    unitHash.put(c.getCodigoUnidad(), i-1);
+                }
+
+                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
+                spinner_uni.setAdapter(spinnerConditionrrayAdapter);
+                // utils.hideProgress();
+                if(client.getUnidadDeMedida() != null)
+                    spinner_uni.setSelection( (Integer) unitHash.get( client.getUnidadDeMedida() ));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<UnidadInfo>> call, Throwable t) {
+
+                Log.d("ERR: ", t.getMessage());
+                //utils.hideProgress();
+
+            }
+        });
+
 
         return  rootView;
     }
@@ -215,7 +258,11 @@ public class ProductsFragment extends Fragment {
         client.setCodigoImpuesto(String.valueOf(tipoImpuestoHash.get(spinner_imp.getSelectedItemPosition())));
         client.setPorcentajeImpuesto(Double.parseDouble(imp.getText().toString()));
 
-        client.setEsServicio(1);
+        client.setEsServicio(spinner_es_servicio.getSelectedItemPosition() == 0 ? 1 : 0);
+
+        client.setUnidadDeMedida(unitList.get(spinner_uni.getSelectedItemPosition()).getCodigoUnidad());
+        client.setUnidadMedidaDsc(unitList.get(spinner_uni.getSelectedItemPosition()).getDescripcion());
+
 
         String typeId = spinner_id.getSelectedItem().toString();
 

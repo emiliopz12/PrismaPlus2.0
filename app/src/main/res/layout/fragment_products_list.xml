@@ -7,8 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/onboarding">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -45,18 +44,19 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="26dp"
-                android:layout_weight=".80"
-                android:padding="16dp">
+                android:layout_weight=".80">
 
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:clipToPadding="true"
+                    android:fillViewport="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <TableLayout
                             android:id="@+id/tableClients"
@@ -74,6 +74,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".4"
                                     android:background="#CCCCCC"
+                                    android:paddingLeft="16dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="16dp"
+                                    android:paddingBottom="16dp"
                                     android:text="Código"
                                     android:textColor="#000"
                                     android:textStyle="bold" />
@@ -84,6 +88,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".60"
                                     android:background="#CCCCCC"
+                                    android:paddingLeft="16dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="16dp"
+                                    android:paddingBottom="16dp"
                                     android:text="Descripción"
                                     android:textColor="#000"
                                     android:textStyle="bold" />

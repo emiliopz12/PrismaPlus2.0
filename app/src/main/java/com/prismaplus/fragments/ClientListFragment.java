@@ -51,7 +51,7 @@ public class ClientListFragment extends Fragment {
 
     View rootView;
     private final int HOME = 16908332;
-    private ProductsActivity mActivity;
+    private ClientsActivity mActivity;
 
     private PreferencesManager preferencesManager;
     private ConnectionInterface connetionService;
@@ -134,7 +134,7 @@ public class ClientListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (ProductsActivity) getActivity();
+        mActivity = (ClientsActivity) getActivity();
 
     }
 

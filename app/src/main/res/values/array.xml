@@ -61,5 +61,9 @@
         <item>Imp Espec Cemento</item>
         <item>Otros</item>
     </string-array>
+    <string-array name="servicio">
+        <item>Si</item>
+        <item>No</item>
+    </string-array>
 
 </resources>

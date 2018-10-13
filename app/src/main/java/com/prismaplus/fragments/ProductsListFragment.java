@@ -71,7 +71,7 @@ public class ProductsListFragment extends Fragment {
 
     @OnClick(R.id.fab)
     public void goNewClient() {
-        mActivity.setFragment(new ClientFragment(), 2);
+        mActivity.setFragment(new ProductsFragment(), 2);
     }
 
 

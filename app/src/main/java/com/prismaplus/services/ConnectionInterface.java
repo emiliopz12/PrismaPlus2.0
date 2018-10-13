@@ -5,6 +5,7 @@ import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductInfo;
+import com.prismaplus.entities.UnidadInfo;
 
 import java.util.List;
 
@@ -40,5 +41,8 @@ public interface ConnectionInterface {
 
     @POST("productsapi")
     Call<ProductInfo> saveProduct(@Body ProductInfo client);
+
+    @GET("Unidadesapi")
+    Call<List<UnidadInfo>> getUnidad();
 
 }
