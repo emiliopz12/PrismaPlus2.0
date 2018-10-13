@@ -17,8 +17,7 @@
             android:padding="2dp"
             android:text=""
             android:textColor="#000"
-            android:textStyle="bold"
-            app:lineHeight="@dimen/keyline_1_minus_8dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descripcion"
