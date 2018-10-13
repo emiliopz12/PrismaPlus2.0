@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.prismaplus.R;
 import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.ClientsActivity;
+import com.prismaplus.activities.ProductsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +51,14 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.relative_clients)
     public void goToclients(){
         Intent i = new Intent(getActivity(), ClientsActivity.class);
+        i.putExtra("nextFragment",1);
+        startActivity(i);
+        getActivity().finish();
+    }
+
+    @OnClick(R.id.relative_prod)
+    public void goToProducts(){
+        Intent i = new Intent(getActivity(), ProductsActivity.class);
         i.putExtra("nextFragment",1);
         startActivity(i);
         getActivity().finish();

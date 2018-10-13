@@ -49,12 +49,13 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:gravity="center"
+                    android:id="@+id/relative_prod"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Productos"
                     android:textColor="#000"
-                    android:textSize="28sp"/>
+                    android:textSize="28sp" />
 
             </RelativeLayout>
 

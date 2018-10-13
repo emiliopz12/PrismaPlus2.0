@@ -1,9 +1,12 @@
 package com.prismaplus.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProductInfo {
+public class ProductInfo implements Parcelable {
 
     @SerializedName("EsServicio")
     @Expose
@@ -38,6 +41,37 @@ public class ProductInfo {
     @SerializedName("PorcentajeImpuesto")
     @Expose
     private Double porcentajeImpuesto;
+
+    public final static Parcelable.Creator<ProductInfo> CREATOR = new Creator<ProductInfo>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public ProductInfo createFromParcel(Parcel in) {
+            return new ProductInfo(in);
+        }
+
+        public ProductInfo[] newArray(int size) {
+            return (new ProductInfo[size]);
+        }
+
+    }
+            ;
+
+    protected ProductInfo(Parcel in) {
+        this.idEmpresa = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.codigoArticulo = ((String) in.readValue((String.class.getClassLoader())));
+        this.codigoImpuesto = ((String) in.readValue((String.class.getClassLoader())));
+        this.descripcion = ((String) in.readValue((String.class.getClassLoader())));
+        this.esServicio = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.porcentajeImpuesto = ((Double) in.readValue((Double.class.getClassLoader())));
+        this.precio = ((Double) in.readValue((Double.class.getClassLoader())));
+        this.tipoCodigo = ((String) in.readValue((String.class.getClassLoader())));
+        this.unidadDeMedida = ((String) in.readValue((String.class.getClassLoader())));
+        this.unidadMedidaDsc = ((String) in.readValue((String.class.getClassLoader())));
+        this.estado = ((Integer) in.readValue((Integer.class.getClassLoader())));
+    }
 
     public Integer getEsServicio() {
         return esServicio;
@@ -125,6 +159,24 @@ public class ProductInfo {
 
     public void setPorcentajeImpuesto(Double porcentajeImpuesto) {
         this.porcentajeImpuesto = porcentajeImpuesto;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(idEmpresa);
+        dest.writeValue(codigoArticulo);
+        dest.writeValue(descripcion);
+        dest.writeValue(codigoArticulo);
+        dest.writeValue(esServicio);
+        dest.writeValue(porcentajeImpuesto);
+        dest.writeValue(precio);
+        dest.writeValue(estado);
+        dest.writeValue(unidadDeMedida);
+        dest.writeValue(unidadMedidaDsc);
+        dest.writeValue(tipoCodigo);
+    }
+
+    public int describeContents() {
+        return 0;
     }
 
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,20 +11,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
-import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.activities.ProductsActivity;
 import com.prismaplus.entities.ClientInfo;
-import com.prismaplus.entities.Detail;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
@@ -45,10 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ClientListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
+public class ProductsListFragment extends Fragment {
     View rootView;
     private final int HOME = 16908332;
     private ProductsActivity mActivity;
@@ -59,7 +50,7 @@ public class ClientListFragment extends Fragment {
 
     Map<Integer, String> clientsHash = new HashMap<>();;
 
-    List<ClientInfo> clientsList = new ArrayList<>();
+    List<ProductInfo> productsList = new ArrayList<>();
     List<TableRow> rows = new ArrayList<TableRow>();
 
 
@@ -72,7 +63,7 @@ public class ClientListFragment extends Fragment {
 
 
 
-    public ClientListFragment() {
+    public ProductsListFragment() {
         // Required empty public constructor
         utils  = new Utils();
 
@@ -91,7 +82,7 @@ public class ClientListFragment extends Fragment {
         setHasOptionsMenu(true);
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mActivity.getSupportActionBar().setTitle("CLIENTES");
+        mActivity.getSupportActionBar().setTitle("PRODUCTOS");
 
         preferencesManager = PreferencesManager.getInstance();
         connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
@@ -109,9 +100,9 @@ public class ClientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_client_list, container, false);
+        rootView = inflater.inflate(R.layout.fragment_products_list, container, false);
         ButterKnife.bind(this,rootView);
-        pupulateClients();
+        pupulateProducts();
         return  rootView;
     }
 
@@ -146,19 +137,19 @@ public class ClientListFragment extends Fragment {
 
 
 
-    public void pupulateClients() {
+    public void pupulateProducts() {
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
 
         utils.showProgess(getActivity(),"Cargando");
 
-        connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
+        connetionService.getProduct(IdEmpresa, "t").enqueue(new Callback<List<ProductInfo>>() {
             private String[] tmpClients;
 
             @Override
-            public void onResponse(Call<List<ClientInfo>> call, Response<List<ClientInfo>> response) {
+            public void onResponse(Call<List<ProductInfo>> call, Response<List<ProductInfo>> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
-                List<ClientInfo> loginResponse = response.body();
+                List<ProductInfo> loginResponse = response.body();
                 tmpClients = new String[loginResponse.size()+1];
 
 
@@ -166,21 +157,21 @@ public class ClientListFragment extends Fragment {
 //                //loginResponse.get(0).getMSJ();
 //                tmpClients[0] = "CLIENTE DE TIQUETE";
                 int i = 1;
-                for(ClientInfo c : loginResponse){
-                    clientsHash.put(i, c.getIdCliente());
+                for(ProductInfo c : loginResponse){
+                    clientsHash.put(i, c.getCodigoArticulo());
                     addRow(c);
-                    clientsList.add(c);
+                    productsList.add(c);
                     //tmpClients[i++] = c.getNombre();
                 }
 
 
-                 utils.hideProgress();
+                utils.hideProgress();
 
             }
 
             @Override
-            public void onFailure(Call<List<ClientInfo>> call, Throwable t) {
-                 utils.hideProgress();
+            public void onFailure(Call<List<ProductInfo>> call, Throwable t) {
+                utils.hideProgress();
             }
         });
     }
@@ -194,7 +185,7 @@ public class ClientListFragment extends Fragment {
 
     int lines = 0;
 
-    public void addRow(ClientInfo client){
+    public void addRow(ProductInfo client){
 
         TableRow row;
 
@@ -203,13 +194,12 @@ public class ClientListFragment extends Fragment {
         lines++;
 
         if(r == 0)
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowclientlist, null);
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowproductlist, null);
         else
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowclientlistwhite, null);
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowproductlistwhite, null);
 
-        ((TextView)row.findViewById(R.id.codigo)).setText(client.getIdCliente());
-        ((TextView)row.findViewById(R.id.id)).setText(client.getNombre());
-        ((TextView)row.findViewById(R.id.email)).setText(client.getEmail());
+        ((TextView)row.findViewById(R.id.codigo)).setText(client.getCodigoArticulo());
+        ((TextView)row.findViewById(R.id.desc)).setText(client.getDescripcion());
 
         rows.add(row);
 
@@ -223,9 +213,9 @@ public class ClientListFragment extends Fragment {
 
                 rows.remove(r);
 
-                Fragment fragment = new ClientFragment();
+                Fragment fragment = new ProductsFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("client",  clientsList.get(i));
+                bundle.putParcelable("client",  productsList.get(i));
                 fragment.setArguments(bundle);
 
                 mActivity.setFragment(fragment, 2);
