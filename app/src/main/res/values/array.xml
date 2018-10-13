@@ -42,4 +42,24 @@
         <item>Activo</item>
         <item>Inactivo</item>
     </string-array>
+    <string-array name="typeid">
+        <item>Codigo Prod Vendedor</item>
+        <item>Codigo Prod Coprados</item>
+        <item>Codigo Asignado Industria</item>
+        <item>Codigo Uso Interno</item>
+        <item>Otros</item>
+    </string-array>
+    <string-array name="typeimp">
+        <item>Excento</item>
+        <item>Imp Sobre ventas</item>
+        <item>Imp Selectivo Consumo</item>
+        <item>Imp Unico a Combustibles</item>
+        <item>Imp espec bebidas Alcoholicas</item>
+        <item>Imp espec. Bebidas embasadas sin alcohol y jabones de tocador</item>
+        <item>Imp Productos Tabaco</item>
+        <item>Servicio</item>
+        <item>Imp Espec Cemento</item>
+        <item>Otros</item>
+    </string-array>
+
 </resources>

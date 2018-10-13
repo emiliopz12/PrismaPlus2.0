@@ -23,6 +23,8 @@ import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -66,10 +68,58 @@ public class ProductsFragment extends Fragment {
     EditText imp;
 
     ProductInfo client;
+    private HashMap<Object,Object> tipoCodigoHash, tipoImpuestoHash, invTipoCodigoHash, invTipoImpuestoHash;
 
     public ProductsFragment() {
         // Required empty public constructor
         utils  = new Utils();
+
+    }
+
+    public void populateHashes() {
+
+        tipoCodigoHash = invTipoCodigoHash = invTipoImpuestoHash = new HashMap<>();
+        tipoImpuestoHash= new HashMap<>();
+
+        /* **** CONDITION HASH ****/
+
+        tipoCodigoHash.put(0, "01");
+        tipoCodigoHash.put(1, "02");
+        tipoCodigoHash.put(2, "03");
+        tipoCodigoHash.put(3, "04");
+        tipoCodigoHash.put(4, "99");
+
+        invTipoCodigoHash.put("99", 4);
+        invTipoCodigoHash.put("04", 3);
+        invTipoCodigoHash.put("03", 2);
+        invTipoCodigoHash.put("02", 1);
+        invTipoCodigoHash.put("01", 0);
+
+        /* **** SITUATION HASH ****/
+
+        tipoImpuestoHash.put(0, "00");
+        tipoImpuestoHash.put(1, "01");
+        tipoImpuestoHash.put(2, "02");
+        tipoImpuestoHash.put(3, "03");
+        tipoImpuestoHash.put(4, "04");
+        tipoImpuestoHash.put(5, "05");
+        tipoImpuestoHash.put(6, "06");
+        tipoImpuestoHash.put(7, "07");
+        tipoImpuestoHash.put(8, "12");
+        tipoImpuestoHash.put(9, "98");
+
+        invTipoImpuestoHash.put("98", 9);
+        invTipoImpuestoHash.put("12", 8);
+        invTipoImpuestoHash.put("07", 7);
+        invTipoImpuestoHash.put("06", 6);
+        invTipoImpuestoHash.put("05", 5);
+        invTipoImpuestoHash.put("04", 4);
+        invTipoImpuestoHash.put("03", 3);
+        invTipoImpuestoHash.put("02", 2);
+        invTipoImpuestoHash.put("01", 1);
+        invTipoImpuestoHash.put("00", 0);
+
+
 
     }
 
@@ -81,11 +131,11 @@ public class ProductsFragment extends Fragment {
         setHasOptionsMenu(true);
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mActivity.getSupportActionBar().setTitle("CERAR PRODUCTO");
+        mActivity.getSupportActionBar().setTitle("CREAR PRODUCTO");
 
         preferencesManager = PreferencesManager.getInstance();
         connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
-
+        populateHashes();
 
         try {
             mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
@@ -102,40 +152,41 @@ public class ProductsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_products, container, false);
         ButterKnife.bind(this,rootView);
 
-//        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.idType));
-//        spinner_id.setAdapter(spinnerConditionrrayAdapter);
+        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.typeid));
+        spinner_id.setAdapter(spinnerConditionrrayAdapter);
+
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.state));
+        spinner_state.setAdapter(spinnerConditionrrayAdapter);
+
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.typeimp));
+        spinner_imp.setAdapter(spinnerConditionrrayAdapter);
+
 //
-//        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.state));
-//        spinner_state.setAdapter(spinnerConditionrrayAdapter);
 //
-//
-//        if(this.getArguments() != null && !this.getArguments().isEmpty()) {
-//            client = this.getArguments().getParcelable("client");
-//
-//
-//            name.setText(client.getNombre());
-//            id.setText(client.getIdCliente());
-//            namecomm.setText(client.getNombreComercial());
-//            email.setText(client.getEmail());
-//
-//            if (client.getEstado() == 1)
-//                spinner_state.setSelection(0);
-//            else
-//                spinner_state.setSelection(1);
-//
-//            if (client.getTipoCedula() == "01")
-//                spinner_id.setSelection(0);
-//            else if (client.getTipoCedula() == "02")
-//                spinner_id.setSelection(1);
-//            else if (client.getTipoCedula() == "03")
-//                spinner_id.setSelection(2);
-//            else if (client.getTipoCedula() == "04")
-//                spinner_id.setSelection(3);
-//
-//            Log.d("Client", client.getIdCliente());
-//        }
-//        else
-//            client = new ClientInfo();
+        if(this.getArguments() != null && !this.getArguments().isEmpty()) {
+            mActivity.getSupportActionBar().setTitle("ACTUALIZAR PRODUCTO");
+
+            client = this.getArguments().getParcelable("client");
+
+
+            desc.setText(client.getDescripcion());
+            id.setText(client.getCodigoArticulo());
+            precio.setText(String.valueOf(client.getPrecio()));
+            imp.setText(String.valueOf(client.getPorcentajeImpuesto()));
+
+            spinner_imp.setSelection( (Integer) invTipoImpuestoHash.get( client.getCodigoImpuesto() ));
+            spinner_id.setSelection( (Integer) invTipoCodigoHash.get( client.getTipoCodigo() ));
+
+
+            if (client.getEstado() == 1)
+                spinner_state.setSelection(0);
+            else
+                spinner_state.setSelection(1);
+
+            Log.d("Client", client.getCodigoArticulo());
+        }
+        else
+            client = new ProductInfo();
 
         return  rootView;
     }
@@ -144,7 +195,7 @@ public class ProductsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case HOME:
-                mActivity.setFragment(new ClientListFragment(), 1);
+                mActivity.setFragment(new ProductsListFragment(), 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -154,44 +205,34 @@ public class ProductsFragment extends Fragment {
     @OnClick(R.id.fabAdd)
     public void saveClient() {
 
-/*
+
         utils.showProgess(getActivity(),"Procesando");
 
-        client.setIdCliente(id.getText().toString());
-        client.setNombre(name.getText().toString());
+        client.setDescripcion(desc.getText().toString());
+        client.setCodigoArticulo(id.getText().toString());
+        client.setPrecio(Double.valueOf(precio.getText().toString()));
+        client.setTipoCodigo(String.valueOf(tipoCodigoHash.get(spinner_id.getSelectedItemPosition())));
+        client.setCodigoImpuesto(String.valueOf(tipoImpuestoHash.get(spinner_imp.getSelectedItemPosition())));
+        client.setPorcentajeImpuesto(Double.parseDouble(imp.getText().toString()));
+
+        client.setEsServicio(1);
 
         String typeId = spinner_id.getSelectedItem().toString();
 
         Log.d("TypeID: ", typeId);
 
-        if(typeId.equals("Fisico"))
-            client.setTipoCedula("01");
-        else if(typeId.equals("Juridica"))
-            client.setTipoCedula("02");
-        else if(typeId.equals("Dimex"))
-            client.setTipoCedula("03");
-        else if(typeId.equals("Nise"))
-            client.setTipoCedula("04");
-
-        //client.setTipoCedula(name.getText().toString());
-        client.setNombreComercial(namecomm.getText().toString());
         client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1: 0);
-        client.setEmail(email.getText().toString());
+
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
-        client.setIdEmpresa(IdEmpresa);
+        //client.setIdEmpresa(IdEmpresa);
 
-        if(client.getIdentificacion() == null)
-            client.setIdentificacion("");
-        if(client.getOtrasSenas() == null)
-            client.setOtrasSenas("");
-
-        connetionService.saveClient(client).enqueue(new Callback<ClientInfo>() {
+        connetionService.saveProduct(client).enqueue(new Callback<ProductInfo>() {
 
             @Override
-            public void onResponse(Call<ClientInfo> call, Response<ClientInfo> response) {
+            public void onResponse(Call<ProductInfo> call, Response<ProductInfo> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
 
-                mActivity.setFragment(new ClientListFragment(), 1);
+                mActivity.setFragment(new ProductsListFragment(), 1);
 
                 utils.hideProgress();
 
@@ -199,14 +240,14 @@ public class ProductsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ClientInfo> call, Throwable t) {
+            public void onFailure(Call<ProductInfo> call, Throwable t) {
 
-                mActivity.setFragment(new ClientListFragment(), 1);
+                mActivity.setFragment(new ProductsListFragment(), 1);
 
                 utils.hideProgress();
             }
         });
-*/
+
     }
 
 

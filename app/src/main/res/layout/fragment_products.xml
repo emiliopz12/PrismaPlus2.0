@@ -25,7 +25,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Código"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -51,7 +51,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Descripción"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Precio I.I"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -123,7 +123,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Tipo Codigo"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -147,7 +147,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Tipo Impuesto"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -157,7 +157,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".2"
+                    android:layout_weight=".25"
                     android:background="@drawable/spinner_format"
                     android:padding="8dp" />
 
@@ -191,7 +191,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Unidad"
                     android:textColor="#000"
                     android:textStyle="normal" />
@@ -215,7 +215,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".3"
                     android:text="Estado"
                     android:textColor="#000"
                     android:textStyle="normal" />

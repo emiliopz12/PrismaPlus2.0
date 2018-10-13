@@ -113,6 +113,9 @@ public class ClientFragment extends Fragment {
 
 
         if(this.getArguments() != null && !this.getArguments().isEmpty()) {
+
+            mActivity.getSupportActionBar().setTitle("ACTUALIZAR CLIENTE");
+
             client = this.getArguments().getParcelable("client");
 
 

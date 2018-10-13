@@ -59,6 +59,9 @@ public class ProductInfo implements Parcelable {
     }
             ;
 
+    public ProductInfo() {
+    }
+
     protected ProductInfo(Parcel in) {
         this.idEmpresa = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.codigoArticulo = ((String) in.readValue((String.class.getClassLoader())));

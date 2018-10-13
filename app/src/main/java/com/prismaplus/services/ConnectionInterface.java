@@ -38,4 +38,7 @@ public interface ConnectionInterface {
     @POST("customersapi")
     Call<ClientInfo> saveClient(@Body ClientInfo client);
 
+    @POST("productsapi")
+    Call<ProductInfo> saveProduct(@Body ProductInfo client);
+
 }
