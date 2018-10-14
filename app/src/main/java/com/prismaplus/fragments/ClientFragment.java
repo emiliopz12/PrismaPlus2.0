@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.R;
 import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.entities.ClientInfo;
@@ -143,6 +145,7 @@ public class ClientFragment extends Fragment {
         else {
             client = new ClientInfo();
             client.setIdCliente("0");
+            id.setText("");
         }
 
         return  rootView;
@@ -163,57 +166,73 @@ public class ClientFragment extends Fragment {
     public void saveClient() {
 
 
-        utils.showProgess(getActivity(),"Procesando");
+        if(!id.getText().toString().equals("") && !name.getText().toString().equals("") && !namecomm.getText().toString().equals("") && !email.getText().toString().equals("")) {
 
-        client.setIdentificacion(id.getText().toString());
-        client.setNombre(name.getText().toString());
 
-        String typeId = spinner_id.getSelectedItem().toString();
+            utils.showProgess(getActivity(),"Procesando");
 
-        Log.d("TypeID: ", typeId);
 
-        if(typeId.equals("Fisico"))
-            client.setTipoCedula("01");
-        else if(typeId.equals("Juridica"))
-            client.setTipoCedula("02");
-        else if(typeId.equals("Dimex"))
-            client.setTipoCedula("03");
-        else if(typeId.equals("Nise"))
-            client.setTipoCedula("04");
+            client.setIdentificacion(id.getText().toString());
+            client.setNombre(name.getText().toString());
 
-        //client.setTipoCedula(name.getText().toString());
-        client.setNombreComercial(namecomm.getText().toString());
-        client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1: 0);
-        client.setEmail(email.getText().toString());
-        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
-        client.setIdEmpresa(IdEmpresa);
+            String typeId = spinner_id.getSelectedItem().toString();
+
+            Log.d("TypeID: ", typeId);
+
+            if (typeId.equals("Fisico"))
+                client.setTipoCedula("01");
+            else if (typeId.equals("Juridica"))
+                client.setTipoCedula("02");
+            else if (typeId.equals("Dimex"))
+                client.setTipoCedula("03");
+            else if (typeId.equals("Nise"))
+                client.setTipoCedula("04");
+
+            //client.setTipoCedula(name.getText().toString());
+            client.setNombreComercial(namecomm.getText().toString());
+            client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1 : 0);
+            client.setEmail(email.getText().toString());
+            String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(), "IdEmpresa"));
+            client.setIdEmpresa(IdEmpresa);
 
 //        if(client.getIdentificacion() == null)
 //            client.setIdentificacion("");
-        if(client.getOtrasSenas() == null)
-            client.setOtrasSenas("");
+            if (client.getOtrasSenas() == null)
+                client.setOtrasSenas("");
 
-        connetionService.saveClient(client).enqueue(new Callback<ClientInfo>() {
+            connetionService.saveClient(client).enqueue(new Callback<ClientInfo>() {
 
-            @Override
-            public void onResponse(Call<ClientInfo> call, Response<ClientInfo> response) {
-                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                @Override
+                public void onResponse(Call<ClientInfo> call, Response<ClientInfo> response) {
+                    //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
 
-                mActivity.setFragment(new ClientListFragment(), 1);
+                    mActivity.setFragment(new ClientListFragment(), 1);
 
-                utils.hideProgress();
+                    utils.hideProgress();
 
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<ClientInfo> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ClientInfo> call, Throwable t) {
 
-                mActivity.setFragment(new ClientListFragment(), 1);
+                    mActivity.setFragment(new ClientListFragment(), 1);
 
-                utils.hideProgress();
-            }
-        });
+                    utils.hideProgress();
+                }
+            });
+
+        }
+        else{
+            new MaterialDialog.Builder(rootView.getContext())
+                    .title("Error")
+                    .content("Debe completar todos los campos")
+                    .contentGravity(GravityEnum.CENTER)
+                    .positiveText("Aceptar")
+                    .onPositive((dialog, which) -> {
+                    })
+                    .show();
+        }
 
     }
 

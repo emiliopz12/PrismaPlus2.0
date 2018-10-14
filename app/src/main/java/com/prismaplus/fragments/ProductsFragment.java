@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.R;
 import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.activities.ProductsActivity;
@@ -249,51 +251,63 @@ public class ProductsFragment extends Fragment {
     public void saveClient() {
 
 
-        utils.showProgess(getActivity(),"Procesando");
+        if(!desc.getText().toString().equals("") && !precio.getText().toString().equals("") && !id.getText().toString().equals("")) {
 
-        client.setDescripcion(desc.getText().toString());
-        client.setCodigoArticulo(id.getText().toString());
-        client.setPrecio(Double.valueOf(precio.getText().toString()));
-        client.setTipoCodigo(String.valueOf(tipoCodigoHash.get(spinner_id.getSelectedItemPosition())));
-        client.setCodigoImpuesto(String.valueOf(tipoImpuestoHash.get(spinner_imp.getSelectedItemPosition())));
-        client.setPorcentajeImpuesto(Double.parseDouble(imp.getText().toString()));
-        client.setTipoAccion("");
-        client.setEsServicio(spinner_es_servicio.getSelectedItemPosition() == 0 ? 1 : 0);
+            utils.showProgess(getActivity(), "Procesando");
 
-        client.setUnidadDeMedida(unitList.get(spinner_uni.getSelectedItemPosition()).getCodigoUnidad());
-        client.setUnidadMedidaDsc(unitList.get(spinner_uni.getSelectedItemPosition()).getDescripcion());
+            client.setDescripcion(desc.getText().toString());
+            client.setCodigoArticulo(id.getText().toString());
+            client.setPrecio(Double.valueOf(precio.getText().toString()));
+            client.setTipoCodigo(String.valueOf(tipoCodigoHash.get(spinner_id.getSelectedItemPosition())));
+            client.setCodigoImpuesto(String.valueOf(tipoImpuestoHash.get(spinner_imp.getSelectedItemPosition())));
+            client.setPorcentajeImpuesto(Double.parseDouble(imp.getText().toString()));
+            client.setTipoAccion("");
+            client.setEsServicio(spinner_es_servicio.getSelectedItemPosition() == 0 ? 1 : 0);
 
-        String typeId = spinner_id.getSelectedItem().toString();
+            client.setUnidadDeMedida(unitList.get(spinner_uni.getSelectedItemPosition()).getCodigoUnidad());
+            client.setUnidadMedidaDsc(unitList.get(spinner_uni.getSelectedItemPosition()).getDescripcion());
 
-        Log.d("TypeID: ", typeId);
+            String typeId = spinner_id.getSelectedItem().toString();
 
-        client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1: 0);
+            Log.d("TypeID: ", typeId);
 
-        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
-        client.setIdEmpresa(Integer.valueOf(IdEmpresa));
+            client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1 : 0);
 
-        connetionService.saveProduct(client).enqueue(new Callback<ProductInfo>() {
+            String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(), "IdEmpresa"));
+            client.setIdEmpresa(Integer.valueOf(IdEmpresa));
 
-            @Override
-            public void onResponse(Call<ProductInfo> call, Response<ProductInfo> response) {
-                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+            connetionService.saveProduct(client).enqueue(new Callback<ProductInfo>() {
 
-                mActivity.setFragment(new ProductsListFragment(), 1);
+                @Override
+                public void onResponse(Call<ProductInfo> call, Response<ProductInfo> response) {
+                    //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
 
-                utils.hideProgress();
+                    mActivity.setFragment(new ProductsListFragment(), 1);
+
+                    utils.hideProgress();
 
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<ProductInfo> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ProductInfo> call, Throwable t) {
 
-                mActivity.setFragment(new ProductsListFragment(), 1);
+                    mActivity.setFragment(new ProductsListFragment(), 1);
 
-                utils.hideProgress();
-            }
-        });
-
+                    utils.hideProgress();
+                }
+            });
+        }
+        else{
+            new MaterialDialog.Builder(rootView.getContext())
+                    .title("Error")
+                    .content("Debe completar todos los campos")
+                    .contentGravity(GravityEnum.CENTER)
+                    .positiveText("Aceptar")
+                    .onPositive((dialog, which) -> {
+                    })
+                    .show();
+        }
     }
 
 

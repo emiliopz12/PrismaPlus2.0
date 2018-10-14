@@ -179,7 +179,7 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:padding="8dp"
-                    android:text="" />
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
