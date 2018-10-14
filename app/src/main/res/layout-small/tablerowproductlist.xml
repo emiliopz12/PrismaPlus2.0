@@ -11,7 +11,10 @@
             android:layout_height="wrap_content"
             android:layout_weight=".4"
             android:background="#E5E5E5"
-            android:padding="2dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             android:text="Código"
             android:textColor="#000" />
 
@@ -21,7 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_weight=".60"
             android:background="#E5E5E5"
-            android:padding="2dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             android:text="Descripción"
             android:textColor="#000" />
 
