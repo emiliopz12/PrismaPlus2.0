@@ -22,6 +22,7 @@ import com.prismaplus.activities.BillingActivity;
 import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.activities.ListDocActivity;
 import com.prismaplus.activities.LoginActivity;
+import com.prismaplus.activities.ProductsActivity;
 import com.prismaplus.fragments.MainFragment;
 import com.prismaplus.fragments.NewBillFragment;
 import com.prismaplus.herlpers.PreferencesManager;
@@ -111,6 +112,12 @@ public class DrawerActivity extends AppCompatActivity
             finish();
         }else if(id == R.id.nav_docs){
             Intent i = new Intent(DrawerActivity.this,ListDocActivity.class);
+            i.putExtra("nextFragment",1);
+            startActivity(i);
+            finish();
+        }
+        else if(id == R.id.nav_productos){
+            Intent i = new Intent(DrawerActivity.this, ProductsActivity.class);
             i.putExtra("nextFragment",1);
             startActivity(i);
             finish();

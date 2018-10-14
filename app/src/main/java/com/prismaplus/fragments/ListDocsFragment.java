@@ -226,10 +226,11 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         else
             row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.whitelistdetails, null);
 
-        ((TextView)row.findViewById(R.id.numberDoc)).setText(client.NombreEmisor);
+        ((TextView)row.findViewById(R.id.numberDoc)).setText(client.getConsecutivo());
         ((TextView)row.findViewById(R.id.type)).setText(client.TipoDocumentoDsc);
         ((TextView)row.findViewById(R.id.state)).setText(client.Estado);
-        ((TextView)row.findViewById(R.id.date)).setText(client.Descripcion != null ? client.Descripcion : "");
+        //((TextView)row.findViewById(R.id.date)).setText(client.Descripcion != null ? client.Descripcion : "");
+        ((TextView)row.findViewById(R.id.date)).setText(client.getFecha());
         ((TextView)row.findViewById(R.id.client)).setText(client.NombreCliente);
         ((TextView)row.findViewById(R.id.totaA)).setText(String.valueOf(client.TotalFactura));
 

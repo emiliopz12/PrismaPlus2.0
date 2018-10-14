@@ -1,5 +1,6 @@
 package com.prismaplus.activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.fragments.ClientListFragment;
 import com.prismaplus.fragments.ListDocsFragment;
@@ -44,6 +46,15 @@ public class ListDocActivity extends AppCompatActivity {
             case 1 : setFragment(new ListDocsFragment(), 1); break;
             default: break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+            Intent i = new Intent(ListDocActivity.this, DrawerActivity.class);
+            startActivity(i);
+            finish();
+
     }
 
 }

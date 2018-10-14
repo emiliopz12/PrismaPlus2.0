@@ -84,7 +84,7 @@ public class ClientFragment extends Fragment {
         setHasOptionsMenu(true);
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mActivity.getSupportActionBar().setTitle("CERAR CLIENTE");
+        mActivity.getSupportActionBar().setTitle("CREAR CLIENTE");
 
         preferencesManager = PreferencesManager.getInstance();
         connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
@@ -129,13 +129,13 @@ public class ClientFragment extends Fragment {
             else
                 spinner_state.setSelection(1);
 
-            if (client.getTipoCedula() == "01")
+            if (client.getTipoCedula().equals("01"))
                 spinner_id.setSelection(0);
-            else if (client.getTipoCedula() == "02")
+            else if (client.getTipoCedula().equals("02"))
                 spinner_id.setSelection(1);
-            else if (client.getTipoCedula() == "03")
+            else if (client.getTipoCedula().equals("03"))
                 spinner_id.setSelection(2);
-            else if (client.getTipoCedula() == "04")
+            else if (client.getTipoCedula().equals("04"))
                 spinner_id.setSelection(3);
 
             Log.d("Client", client.getIdCliente());
