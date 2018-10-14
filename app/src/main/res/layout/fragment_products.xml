@@ -90,7 +90,7 @@
                     android:layout_weight=".25"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="numberDecimal"
                     android:padding="8dp"
                     android:text="0" />
 

@@ -380,7 +380,7 @@ public class NewBillFragment extends Fragment {
         String tc = TC.getText().toString();
         String tot = total.getText().toString();
 
-        if( currencyHash.get(spinner_currency.getSelectedItemPosition()).equals("USD") && (tc.equals("") || Integer.parseInt(tc) == 0)){
+        if( currencyHash.get(spinner_currency.getSelectedItemPosition()).equals("USD") && (tc.equals("") || Double.parseDouble(tc) < 1)){
             Toast.makeText(rootView.getContext(), "Debe ingresar TC", Toast.LENGTH_LONG).show();
             return;
         }
@@ -390,7 +390,7 @@ public class NewBillFragment extends Fragment {
             return;
         }
 
-        if(canti.equals("") || Integer.parseInt(canti) < 1){
+        if(canti.equals("") || Double.parseDouble(canti) < 1){
             Toast.makeText(rootView.getContext(), "Valor invalido en cantidad", Toast.LENGTH_LONG).show();
             return;
         }
@@ -405,7 +405,7 @@ public class NewBillFragment extends Fragment {
             return;
         }
 
-        if(Integer.parseInt(descPorc) > 0 && natDescu.equals("")){
+        if(Double.parseDouble(descPorc) > 0 && natDescu.equals("")){
             Toast.makeText(rootView.getContext(), "Debe ingresar Nat. Descuento", Toast.LENGTH_LONG).show();
             return;
         }
@@ -565,12 +565,12 @@ public class NewBillFragment extends Fragment {
             Double preci = Double.parseDouble(precio.getText().toString());
 
             Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-            Double Neto = (preci / PorImpuesto) * Integer.valueOf(text.toString());
+            Double Neto = (preci / PorImpuesto) * Double.valueOf(text.toString());
             neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
             PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
             Double ValorImpuesto = preci / PorImpuesto;
-            Double IV = (preci - ValorImpuesto) * Integer.parseInt(text.toString());
+            Double IV = (preci - ValorImpuesto) * Double.parseDouble(text.toString());
             montoIV.setText(String.valueOf(roundAvoid(IV, 2)));
 
             calculoDescuento();
@@ -589,13 +589,13 @@ public class NewBillFragment extends Fragment {
                 Double preci = Double.parseDouble(text.toString());
 
                 Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
-                Double Neto = (preci / PorImpuesto) * Integer.valueOf(cant.getText().toString());
+                Double Neto = (preci / PorImpuesto) * Double.valueOf(cant.getText().toString());
                 //neto.setText(String.valueOf(Neto));
                 neto.setText(String.valueOf(roundAvoid(Neto, 2)));
 
                 PorImpuesto = (1 + (actualProduct.getPorcentajeImpuesto() / 100));
                 Double ValorImpuesto = preci / PorImpuesto;
-                Double IV = (preci - ValorImpuesto) * Integer.parseInt(cant.getText().toString());
+                Double IV = (preci - ValorImpuesto) * Double.parseDouble(cant.getText().toString());
                 //montoIV.setText(String.valueOf(IV));
                 montoIV.setText(String.valueOf(roundAvoid(IV, 2)));
 
@@ -622,7 +622,7 @@ public class NewBillFragment extends Fragment {
     public void calculoDescuento(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && !descPor.getText().toString().equals("") ){
             Double preci = Double.parseDouble(precio.getText().toString());
-            int canti = Integer.parseInt(cant.getText().toString());
+            Double canti = Double.parseDouble(cant.getText().toString());
             float descPorc = Float.parseFloat(descPor.getText().toString());
 
             Log.d("DESC PRE: ", String.valueOf(preci));
@@ -651,7 +651,7 @@ public class NewBillFragment extends Fragment {
     public void calculoTotalLinea(){
         if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")) {
             Double preci = Double.parseDouble(precio.getText().toString());
-            Integer canti = Integer.parseInt(cant.getText().toString());
+            Double canti = Double.parseDouble(cant.getText().toString());
             double descu = 0.0;
             if(!desc.getText().toString().equals(""))
                 descu = roundAvoid(Double.parseDouble(desc.getText().toString()), 2);

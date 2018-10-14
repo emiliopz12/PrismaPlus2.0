@@ -120,7 +120,7 @@ public class ClientFragment extends Fragment {
 
 
             name.setText(client.getNombre());
-            id.setText(client.getIdCliente());
+            id.setText(client.getIdentificacion());
             namecomm.setText(client.getNombreComercial());
             email.setText(client.getEmail());
 
@@ -140,8 +140,10 @@ public class ClientFragment extends Fragment {
 
             Log.d("Client", client.getIdCliente());
         }
-        else
+        else {
             client = new ClientInfo();
+            client.setIdCliente("0");
+        }
 
         return  rootView;
     }
@@ -163,7 +165,7 @@ public class ClientFragment extends Fragment {
 
         utils.showProgess(getActivity(),"Procesando");
 
-        client.setIdCliente(id.getText().toString());
+        client.setIdentificacion(id.getText().toString());
         client.setNombre(name.getText().toString());
 
         String typeId = spinner_id.getSelectedItem().toString();
@@ -186,8 +188,8 @@ public class ClientFragment extends Fragment {
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
         client.setIdEmpresa(IdEmpresa);
 
-        if(client.getIdentificacion() == null)
-            client.setIdentificacion("");
+//        if(client.getIdentificacion() == null)
+//            client.setIdentificacion("");
         if(client.getOtrasSenas() == null)
             client.setOtrasSenas("");
 

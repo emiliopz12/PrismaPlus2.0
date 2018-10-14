@@ -38,9 +38,15 @@ public class ProductInfo implements Parcelable {
     @SerializedName("CodigoImpuesto")
     @Expose
     private String codigoImpuesto;
+    @SerializedName("TipoImpuesto")
+    @Expose
+    private String tipoImpuesto;
     @SerializedName("PorcentajeImpuesto")
     @Expose
     private Double porcentajeImpuesto;
+    @SerializedName("TipoAccion")
+    @Expose
+    private String tipoAccion = "";
 
     public final static Parcelable.Creator<ProductInfo> CREATOR = new Creator<ProductInfo>() {
 
@@ -64,6 +70,7 @@ public class ProductInfo implements Parcelable {
 
     protected ProductInfo(Parcel in) {
         this.idEmpresa = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.tipoImpuesto = ((String) in.readValue((String.class.getClassLoader())));
         this.codigoArticulo = ((String) in.readValue((String.class.getClassLoader())));
         this.codigoImpuesto = ((String) in.readValue((String.class.getClassLoader())));
         this.descripcion = ((String) in.readValue((String.class.getClassLoader())));
@@ -74,6 +81,7 @@ public class ProductInfo implements Parcelable {
         this.unidadDeMedida = ((String) in.readValue((String.class.getClassLoader())));
         this.unidadMedidaDsc = ((String) in.readValue((String.class.getClassLoader())));
         this.estado = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.tipoAccion = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public Integer getEsServicio() {
@@ -90,6 +98,14 @@ public class ProductInfo implements Parcelable {
 
     public void setCodigoArticulo(String codigoArticulo) {
         this.codigoArticulo = codigoArticulo;
+    }
+
+    public String getTipoAccion() {
+        return tipoAccion;
+    }
+
+    public void setTipoAccion(String tipoAccion) {
+        this.tipoAccion = tipoAccion;
     }
 
     public String getDescripcion() {
@@ -166,6 +182,7 @@ public class ProductInfo implements Parcelable {
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(idEmpresa);
+        dest.writeValue(tipoImpuesto);
         dest.writeValue(codigoArticulo);
         dest.writeValue(descripcion);
         dest.writeValue(codigoArticulo);
@@ -176,6 +193,7 @@ public class ProductInfo implements Parcelable {
         dest.writeValue(unidadDeMedida);
         dest.writeValue(unidadMedidaDsc);
         dest.writeValue(tipoCodigo);
+        dest.writeValue(tipoAccion);
     }
 
     public int describeContents() {

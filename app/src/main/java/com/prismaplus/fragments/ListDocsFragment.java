@@ -18,6 +18,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.ClientsActivity;
@@ -175,7 +177,15 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         if(!fechaFin.equals("") && !fechaIncio.equals("")){
             pupulateListDocs();
         }else {
-            Toast.makeText(mActivity,"Las fechas no pueden ser vacías", Toast.LENGTH_LONG).show();
+            //Toast.makeText(mActivity,"Las fechas no pueden ser vacías", Toast.LENGTH_LONG).show();
+            new MaterialDialog.Builder(rootView.getContext())
+                    .title("Error")
+                    .content("Las fechas no pueden ser vacías")
+                    .contentGravity(GravityEnum.CENTER)
+                    .positiveText("Aceptar")
+                    .onPositive((dialog, which) -> {
+                    })
+                    .show();
         }
     }
 

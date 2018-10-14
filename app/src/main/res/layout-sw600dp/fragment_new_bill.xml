@@ -146,9 +146,9 @@
                     android:layout_width="0dp"
                     android:layout_height="28dp"
                     android:layout_weight=".25"
-                    android:text="0"
-                    android:inputType="number"
-                    android:background="@drawable/edit_text_square">
+                    android:background="@drawable/edit_text_square"
+                    android:inputType="numberDecimal"
+                    android:text="0">
 
                 </EditText>
 
@@ -307,7 +307,7 @@
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:padding="4dp"
                     android:text="1"
                     android:textAlignment="textEnd" />
@@ -338,7 +338,7 @@
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:padding="4dp"
                     android:textAlignment="textEnd" />
 
@@ -450,7 +450,7 @@
                     android:layout_weight=".20"
                     android:background="@drawable/edit_text_square"
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:padding="4dp"
                     android:text="0"
                     android:textAlignment="textEnd" />

@@ -63,6 +63,7 @@ public class ClientInfo implements Parcelable
     @SerializedName("DiasCredito")
     @Expose
     private Integer diasCredito;
+
     public final static Parcelable.Creator<ClientInfo> CREATOR = new Creator<ClientInfo>() {
 
 

@@ -257,12 +257,11 @@ public class ProductsFragment extends Fragment {
         client.setTipoCodigo(String.valueOf(tipoCodigoHash.get(spinner_id.getSelectedItemPosition())));
         client.setCodigoImpuesto(String.valueOf(tipoImpuestoHash.get(spinner_imp.getSelectedItemPosition())));
         client.setPorcentajeImpuesto(Double.parseDouble(imp.getText().toString()));
-
+        client.setTipoAccion("");
         client.setEsServicio(spinner_es_servicio.getSelectedItemPosition() == 0 ? 1 : 0);
 
         client.setUnidadDeMedida(unitList.get(spinner_uni.getSelectedItemPosition()).getCodigoUnidad());
         client.setUnidadMedidaDsc(unitList.get(spinner_uni.getSelectedItemPosition()).getDescripcion());
-
 
         String typeId = spinner_id.getSelectedItem().toString();
 
@@ -271,7 +270,7 @@ public class ProductsFragment extends Fragment {
         client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1: 0);
 
         String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
-        //client.setIdEmpresa(IdEmpresa);
+        client.setIdEmpresa(Integer.valueOf(IdEmpresa));
 
         connetionService.saveProduct(client).enqueue(new Callback<ProductInfo>() {
 
