@@ -59,6 +59,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relative_listado"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/onboarding"

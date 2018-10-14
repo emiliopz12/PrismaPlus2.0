@@ -4,7 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ListDocActivity"
+    tools:context="com.prismaplus.activities.ListDocActivity"
     tools:layout_editor_absoluteY="25dp">
+
+    <FrameLayout
+        android:id="@+id/contenedorFragmentListaProductosA"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

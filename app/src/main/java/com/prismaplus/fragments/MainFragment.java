@@ -66,7 +66,7 @@ public class MainFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.relative_prod)
+    @OnClick(R.id.relative_listado)
     public void goToListado(){
         Intent i = new Intent(getActivity(),ListDocActivity.class);
         i.putExtra("nextFragment",1);

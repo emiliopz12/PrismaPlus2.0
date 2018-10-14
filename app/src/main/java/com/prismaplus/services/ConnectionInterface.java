@@ -3,6 +3,7 @@ package com.prismaplus.services;
 import com.prismaplus.entities.Bill;
 import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
+import com.prismaplus.entities.ListDocsInfo;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductInfo;
 
@@ -31,6 +32,11 @@ public interface ConnectionInterface {
 
     @GET("productsapi")
     Call<List<ProductInfo>> getProduct(@Query("idempresa") String company, @Query("CodigoArticulo") String articulo);
+
+    @GET("facturasapi")
+    Call<List<ListDocsInfo>> getFacturasListado(@Query("idempresa") String company, @Query("inicio") String inicio, @Query("fin")
+            String fin, @Query("TipoDocumento") String tipoDocumento , @Query("PuntodeVenta") int puntodeVenta);
+
 
     @POST("FacturaApi")
     Call<BillInfo> doBill(@Body Bill bill);
