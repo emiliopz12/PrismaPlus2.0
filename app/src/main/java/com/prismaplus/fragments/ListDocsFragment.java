@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
@@ -173,11 +174,10 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
     public void cfind(){
         if(!fechaFin.equals("") && !fechaIncio.equals("")){
             pupulateListDocs();
+        }else {
+            Toast.makeText(mActivity,"Las fechas no pueden ser vacías", Toast.LENGTH_LONG).show();
         }
     }
-
-
-
 
     public void pupulateListDocs() {
 
@@ -222,12 +222,16 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         lines++;
 
         if(r == 0)
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowproductlist, null);
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.listdetails, null);
         else
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowproductlistwhite, null);
+            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.whitelistdetails, null);
 
-        ((TextView)row.findViewById(R.id.codigo)).setText(client.getCodigoArticulo());
-        ((TextView)row.findViewById(R.id.desc)).setText(client.getDescripcion());
+        ((TextView)row.findViewById(R.id.numberDoc)).setText(client.NombreEmisor);
+        ((TextView)row.findViewById(R.id.type)).setText(client.TipoDocumentoDsc);
+        ((TextView)row.findViewById(R.id.state)).setText(client.Estado);
+        ((TextView)row.findViewById(R.id.date)).setText(client.Descripcion != null ? client.Descripcion : "");
+        ((TextView)row.findViewById(R.id.client)).setText(client.NombreCliente);
+        ((TextView)row.findViewById(R.id.totaA)).setText(String.valueOf(client.TotalFactura));
 
         rows.add(row);
 
