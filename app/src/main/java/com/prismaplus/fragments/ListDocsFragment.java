@@ -242,7 +242,7 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         //((TextView)row.findViewById(R.id.date)).setText(client.Descripcion != null ? client.Descripcion : "");
         ((TextView)row.findViewById(R.id.date)).setText(client.getFecha());
         ((TextView)row.findViewById(R.id.client)).setText(client.NombreCliente);
-        ((TextView)row.findViewById(R.id.totaA)).setText(String.valueOf(client.TotalFactura));
+        ((TextView)row.findViewById(R.id.totaA)).setText(String.valueOf(client.getTotalComprobante()));
 
         rows.add(row);
 
