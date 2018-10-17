@@ -206,21 +206,23 @@ public class ProductsFragment extends Fragment {
             public void onResponse(Call<List<UnidadInfo>> call, Response<List<UnidadInfo>> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                 List<UnidadInfo> loginResponse = response.body();
-                unitList = loginResponse;
-                tmpProducts = new String[loginResponse.size()];
-                //loginResponse.get(0).getMSJ();
-                int i = 0;
-                for(UnidadInfo c : loginResponse){
-                    tmpProducts[i++] = c.getDescripcion();
-                    unitHash.put(c.getCodigoUnidad(), i-1);
+                if(loginResponse != null) {
+
+                    unitList = loginResponse;
+                    tmpProducts = new String[loginResponse.size()];
+                    //loginResponse.get(0).getMSJ();
+                    int i = 0;
+                    for (UnidadInfo c : loginResponse) {
+                        tmpProducts[i++] = c.getDescripcion();
+                        unitHash.put(c.getCodigoUnidad(), i - 1);
+                    }
+
+                    ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
+                    spinner_uni.setAdapter(spinnerConditionrrayAdapter);
+                    // utils.hideProgress();
+                    if (client.getUnidadDeMedida() != null)
+                        spinner_uni.setSelection((Integer) unitHash.get(client.getUnidadDeMedida()));
                 }
-
-                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
-                spinner_uni.setAdapter(spinnerConditionrrayAdapter);
-                // utils.hideProgress();
-                if(client.getUnidadDeMedida() != null)
-                    spinner_uni.setSelection( (Integer) unitHash.get( client.getUnidadDeMedida() ));
-
             }
 
             @Override

@@ -175,7 +175,9 @@ public class NewBillFragment extends Fragment {
         mActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         mActivity.getSupportActionBar().setTitle("NUEVO TIQUETE");
         preferencesManager = PreferencesManager.getInstance();
-        connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
+        connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(mActivity,"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
+
+        pupulateClients();
 
 
         try {
@@ -195,21 +197,20 @@ public class NewBillFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_bill, container, false);
         ButterKnife.bind(this,rootView);
-        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.array_condition));
+        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.array_condition));
         spinnerCondition.setAdapter(spinnerConditionrrayAdapter);
 
-        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.pay_type));
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.pay_type));
         spinner_pay.setAdapter(spinnerConditionrrayAdapter);
 
-        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.currency));
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.currency));
         spinner_currency.setAdapter(spinnerConditionrrayAdapter);
 
-        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.situation));
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.situation));
         spinner_situation.setAdapter(spinnerConditionrrayAdapter);
 
         spinner_situation.setEnabled(false);
 
-        pupulateClients();
 
         pupulateProducts();
 
@@ -282,9 +283,9 @@ public class NewBillFragment extends Fragment {
 
     public void pupulateClients() {
 
-        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
 
-        //utils.showProgess(getActivity(),"cargando");
+        //utils.showProgess(mActivity,"cargando");
 
         connetionService.getClients(IdEmpresa, 0).enqueue(new Callback<List<ClientInfo>>() {
             private String[] tmpClients;
@@ -305,7 +306,7 @@ public class NewBillFragment extends Fragment {
                     tmpClients[i++] = c.getNombre();
                 }
 
-                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpClients);
+                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, tmpClients);
 
                 //spinnerConditionrrayAdapter.setDropDownViewResource(R.layout.spinner_item);
                 spinner_client.setAdapter(spinnerConditionrrayAdapter);
@@ -325,9 +326,9 @@ public class NewBillFragment extends Fragment {
 
     public void pupulateProducts() {
 
-        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(),"IdEmpresa"));
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
 
-        utils.showProgess(getActivity(),"Cargando");
+        utils.showProgess(mActivity,"Cargando");
 
 //        connetionService.getProduct(IdEmpresa, "t").enqueue(new Callback<List<ProductInfo>>() {
         connetionService.getProduct(IdEmpresa, "t").enqueue(new Callback<List<ProductInfo>>() {
@@ -345,7 +346,7 @@ public class NewBillFragment extends Fragment {
                     tmpProducts[i++] = c.getDescripcion();
                 }
 
-                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tmpProducts);
+                ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, tmpProducts);
                 spinner_item.setAdapter(spinnerConditionrrayAdapter);
                 utils.hideProgress();
 
@@ -428,9 +429,9 @@ public class NewBillFragment extends Fragment {
 
 
         if(r == 0)
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+            row = (TableRow)LayoutInflater.from(mActivity).inflate(R.layout.tablerow, null);
         else
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowwhite, null);
+            row = (TableRow)LayoutInflater.from(mActivity).inflate(R.layout.tablerowwhite, null);
         Detail detail = new Detail();
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
@@ -699,8 +700,8 @@ public class NewBillFragment extends Fragment {
             String moneda = currencyHash.get(spinner_currency.getSelectedItemPosition()).toString();
             String IdClient = clientsHash.get(spinner_client.getSelectedItemPosition());
 
-            String username = preferencesManager.getStringValue(getActivity(), "username");
-            int IdEmpresa = preferencesManager.getIntValue(getActivity(), "IdEmpresa");
+            String username = preferencesManager.getStringValue(mActivity, "username");
+            int IdEmpresa = preferencesManager.getIntValue(mActivity, "IdEmpresa");
 
             Log.d("USERNAME", username);
 
@@ -740,7 +741,7 @@ public class NewBillFragment extends Fragment {
 
             Log.d("BILL", msj);
 
-            utils.showProgess(getActivity(),"Procesando");
+            utils.showProgess(mActivity,"Procesando");
             connetionService.doBill(newBill).enqueue(new Callback<BillInfo>() {
 
                 @Override
@@ -856,9 +857,9 @@ public class NewBillFragment extends Fragment {
 
 
         if(r == 0)
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerow, null);
+            row = (TableRow)LayoutInflater.from(mActivity).inflate(R.layout.tablerow, null);
         else
-            row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.tablerowwhite, null);
+            row = (TableRow)LayoutInflater.from(mActivity).inflate(R.layout.tablerowwhite, null);
 
         ImageButton del = (ImageButton)row.findViewById(R.id.del);
 

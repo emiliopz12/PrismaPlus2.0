@@ -89,7 +89,7 @@ public class ClientFragment extends Fragment {
         mActivity.getSupportActionBar().setTitle("CREAR CLIENTE");
 
         preferencesManager = PreferencesManager.getInstance();
-        connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
+        connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(mActivity,"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
 
 
         try {
@@ -107,10 +107,10 @@ public class ClientFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_client, container, false);
         ButterKnife.bind(this,rootView);
 
-        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.idType));
+        ArrayAdapter<String> spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.idType));
         spinner_id.setAdapter(spinnerConditionrrayAdapter);
 
-        spinnerConditionrrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.state));
+        spinnerConditionrrayAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.state));
         spinner_state.setAdapter(spinnerConditionrrayAdapter);
 
 
@@ -169,7 +169,7 @@ public class ClientFragment extends Fragment {
         if(!id.getText().toString().equals("") && !name.getText().toString().equals("") && !namecomm.getText().toString().equals("") && !email.getText().toString().equals("")) {
 
 
-            utils.showProgess(getActivity(),"Procesando");
+            utils.showProgess(mActivity,"Procesando");
 
 
             client.setIdentificacion(id.getText().toString());
@@ -192,7 +192,7 @@ public class ClientFragment extends Fragment {
             client.setNombreComercial(namecomm.getText().toString());
             client.setEstado(spinner_state.getSelectedItemPosition() == 0 ? 1 : 0);
             client.setEmail(email.getText().toString());
-            String IdEmpresa = String.valueOf(preferencesManager.getIntValue(getActivity(), "IdEmpresa"));
+            String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity, "IdEmpresa"));
             client.setIdEmpresa(IdEmpresa);
 
 //        if(client.getIdentificacion() == null)
