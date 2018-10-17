@@ -106,6 +106,7 @@
                     android:text="Ingresar"
                     android:textColor="#ddd"
                     android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorPrimaryDark"
                     />
 
                 <TextView
