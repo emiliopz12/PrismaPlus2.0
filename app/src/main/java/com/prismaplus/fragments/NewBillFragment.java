@@ -33,6 +33,7 @@ import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.Detail;
 import com.prismaplus.entities.LoginInfo;
+import com.prismaplus.entities.ProductCalc;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
 import com.prismaplus.services.ConnectionInterface;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import butterknife.BindView;
@@ -556,13 +559,76 @@ public class NewBillFragment extends Fragment {
 
     }
 
+    public String lastPrice = "", lastCant = "", lastDes = "";
+    public static boolean canChanged = true;
+
+
+    public void setCalc(int time){
+
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
+        canChanged = false;
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                connetionService.getProductCalc(IdEmpresa, actualProduct.getCodigoArticulo(), cant.getText().toString(), precio.getText().toString(), descPor.getText().toString()).enqueue(new Callback<List<ProductCalc>>() {
+                    private String[] tmpProducts;
+
+
+                    @Override
+                    public void onResponse(Call<List<ProductCalc>> call, Response<List<ProductCalc>> response) {
+                        //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+
+                        List<ProductCalc> loginResponse = response.body();
+                        //productsList = loginResponse;
+                        if(loginResponse != null) {
+                            ProductCalc a = loginResponse.get(0);
+
+
+                            neto.setText(a.getPrecioSI().toString());
+                            montoIV.setText(a.getMontoImpuesto().toString());
+                            desc.setText(a.getDescuento().toString());
+                            total.setText(a.getTotalLinea().toString());
+                            precio.setText(a.getPrecio().toString());
+                            descPor.setText(a.getPorcentajeDescuento().toString());
+
+                            canChanged = true;
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<ProductCalc>> call, Throwable t) {
+
+                        Log.d("ERR: ", t.getMessage());
+                        //utils.hideProgress();
+
+                    }
+                });
+
+
+            }
+        }, time); // 600ms delay before the timer executes the „run“ method from TimerTask
+
+    }
+
+    private Timer timer;
+
     @OnTextChanged(R.id.cant)
     public void newCant(CharSequence text){
 
-        if(!text.toString().equals("") && !precio.getText().toString().equals("")) {
+        if(!text.toString().equals("") && !precio.getText().toString().equals("") && actualProduct != null && !lastCant.equals(text.toString()) && canChanged) {
+
+            lastCant = text.toString();
+            canChanged = false;
+
+            setCalc(1000);
+
 
             //actualProduct.setPorcentajeImpuesto((double) 50);
-
+/*
             Double preci = Double.parseDouble(precio.getText().toString());
 
             Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
@@ -576,6 +642,8 @@ public class NewBillFragment extends Fragment {
 
             calculoDescuento();
             calculoTotalLinea();
+            */
+
         }
     }
 
@@ -586,8 +654,14 @@ public class NewBillFragment extends Fragment {
 
             //actualProduct.setPorcentajeImpuesto((double) 50);
 
-            if(!cant.getText().toString().equals("")){
-                Double preci = Double.parseDouble(text.toString());
+            if(!cant.getText().toString().equals("") && actualProduct != null && !lastPrice.equals(text.toString()) && canChanged){
+
+                lastPrice = text.toString();
+                canChanged = false;
+
+                setCalc(3500);
+
+               /* Double preci = Double.parseDouble(text.toString());
 
                 Double PorImpuesto= (1+ (actualProduct.getPorcentajeImpuesto()/100));
                 Double Neto = (preci / PorImpuesto) * Double.valueOf(cant.getText().toString());
@@ -601,7 +675,7 @@ public class NewBillFragment extends Fragment {
                 montoIV.setText(String.valueOf(roundAvoid(IV, 2)));
 
                 calculoDescuento();
-                calculoTotalLinea();
+                calculoTotalLinea();*/
             }
         }
 
@@ -612,9 +686,14 @@ public class NewBillFragment extends Fragment {
 
         if(!text.toString().equals("")){
 
-            if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("")){
-                calculoDescuento();
-                calculoTotalLinea();
+            if(!cant.getText().toString().equals("") && !precio.getText().toString().equals("") && actualProduct != null && !lastDes.equals(text.toString()) && canChanged ){
+
+                lastDes = text.toString();
+                canChanged = false;
+
+                setCalc(2000);
+                /*calculoDescuento();
+                calculoTotalLinea();*/
             }
         }
 

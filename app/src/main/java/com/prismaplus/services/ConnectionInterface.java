@@ -5,6 +5,7 @@ import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.ListDocsInfo;
 import com.prismaplus.entities.LoginInfo;
+import com.prismaplus.entities.ProductCalc;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.entities.UnidadInfo;
 
@@ -33,6 +34,10 @@ public interface ConnectionInterface {
 
     @GET("productsapi")
     Call<List<ProductInfo>> getProduct(@Query("idempresa") String company, @Query("CodigoArticulo") String articulo);
+
+    @GET("productsapi")
+    Call<List<ProductCalc>> getProductCalc(@Query("idempresa") String company, @Query("CodigoArticulo") String articulo
+            , @Query("Cantidad") String Cantidad, @Query("precio") String precio, @Query("descuento") String descuento);
 
     @GET("facturasapi")
     Call<List<ListDocsInfo>> getFacturasListado(@Query("idempresa") String company, @Query("inicio") String inicio, @Query("fin")

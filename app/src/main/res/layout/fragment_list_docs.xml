@@ -29,27 +29,30 @@
 
              <LinearLayout
                  android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center_vertical"
+                 android:layout_marginTop="0dp"
                  android:layout_weight="0.8"
-                 android:layout_height="match_parent"
-                 android:layout_marginTop="35dp"
                  android:orientation="vertical">
 
 
                  <LinearLayout
                      android:layout_width="match_parent"
-                     android:layout_weight="0.8"
                      android:layout_height="match_parent"
+                     android:layout_gravity="center_vertical"
+                     android:layout_weight="0.8"
                      android:orientation="horizontal">
 
                      <RelativeLayout
                          android:id="@+id/relativeInit"
                          android:layout_width="0dp"
-                         android:layout_weight="0.5"
                          android:layout_height="wrap_content"
-                         android:background="@drawable/edittext_rounded"
-                         android:layout_marginEnd="6dp"
+                         android:layout_gravity="center_horizontal"
                          android:layout_marginStart="6dp"
-                         android:layout_marginTop="8dp"
+                         android:layout_marginTop="0dp"
+                         android:layout_marginEnd="6dp"
+                         android:layout_weight="0.5"
+                         android:background="@drawable/edittext_rounded"
                          android:padding="8dp">
 
                          <TextView
@@ -64,8 +67,8 @@
                          <ImageView
                              android:layout_width="18dp"
                              android:layout_height="18dp"
-                             android:layout_alignParentEnd="true"
                              android:layout_alignParentTop="true"
+                             android:layout_alignParentEnd="true"
                              android:src="@drawable/ic_date" />
 
                      </RelativeLayout>
@@ -74,12 +77,13 @@
                      <RelativeLayout
                          android:id="@+id/relativeFin"
                          android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center_horizontal"
+                         android:layout_marginStart="6dp"
+                         android:layout_marginTop="0dp"
+                         android:layout_marginEnd="6dp"
                          android:layout_weight="0.5"
                          android:background="@drawable/edittext_rounded"
-                         android:layout_height="wrap_content"
-                         android:layout_marginEnd="6dp"
-                         android:layout_marginTop="8dp"
-                         android:layout_marginStart="6dp"
                          android:padding="8dp">
 
                          <TextView
@@ -94,8 +98,8 @@
                          <ImageView
                              android:layout_width="18dp"
                              android:layout_height="18dp"
-                             android:layout_alignParentEnd="true"
                              android:layout_alignParentTop="true"
+                             android:layout_alignParentEnd="true"
                              android:src="@drawable/ic_date" />
 
                      </RelativeLayout>
@@ -111,7 +115,8 @@
                  android:layout_height="wrap_content"
                  android:layout_alignParentTop="true"
                  android:layout_alignParentEnd="true"
-                 android:layout_marginTop="35dp"
+                 android:layout_gravity="center_vertical"
+                 android:layout_marginTop="0dp"
                  android:layout_marginEnd="16dp"
                  android:background="@color/colorAccent"
                  android:text="Buscar"

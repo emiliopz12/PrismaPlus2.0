@@ -1,11 +1,13 @@
 package com.prismaplus.activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.fragments.NewBillFragment;
 
@@ -38,6 +40,17 @@ public class BillingActivity extends AppCompatActivity {
             case 1 : setFragment(new NewBillFragment()); break;
             default: break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+
+            Intent i = new Intent(BillingActivity.this, DrawerActivity.class);
+            startActivity(i);
+            finish();
+
+
     }
 
 }
