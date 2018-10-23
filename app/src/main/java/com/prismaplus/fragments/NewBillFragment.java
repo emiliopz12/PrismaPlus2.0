@@ -372,6 +372,12 @@ public class NewBillFragment extends Fragment {
         return bd.floatValue();
     }
 
+    public static String roundAvoidN(String number, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(number);
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return String.valueOf(bd.floatValue());
+    }
+
     @OnClick(R.id.add_row)
     public void addRow(){
 
@@ -389,17 +395,17 @@ public class NewBillFragment extends Fragment {
             return;
         }
 
-        if(preci.equals("") || Double.parseDouble(preci) < 1){
+        if(preci.equals("") || Double.parseDouble(preci) <= 0){
             Toast.makeText(rootView.getContext(), "Valor invalido en precio", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(canti.equals("") || Double.parseDouble(canti) < 1){
+        if(canti.equals("") || Double.parseDouble(canti) <= 0){
             Toast.makeText(rootView.getContext(), "Valor invalido en cantidad", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(tot.equals("") || Float.parseFloat(tot) < 1){
+        if(tot.equals("") || Float.parseFloat(tot) <= 0){
             Toast.makeText(rootView.getContext(), "Valor invalido en total", Toast.LENGTH_LONG).show();
             return;
         }
@@ -474,7 +480,7 @@ public class NewBillFragment extends Fragment {
         detail.setDescripcion(descrip);
         detail.setTotalLinea(total.getText().toString());
         detail.setMontoImpuesto(montoIV.getText().toString());
-        detail.setMontoDescuento(desc.getText().toString());
+        detail.setMontoDescuento(roundAvoidN(desc.getText().toString(), 5));
         //detail.setSubtotal(String.valueOf((Double.parseDouble(preci) - Double.parseDouble(montoIV.getText().toString()) ) * Integer.parseInt(canti)));
         detail.setSubtotal(String.valueOf(neto.getText().toString()));
         detail.setPrecioUnitario(preci);
@@ -573,42 +579,50 @@ public class NewBillFragment extends Fragment {
             @Override
             public void run() {
 
-                connetionService.getProductCalc(IdEmpresa, actualProduct.getCodigoArticulo(), cant.getText().toString(), precio.getText().toString(), descPor.getText().toString()).enqueue(new Callback<List<ProductCalc>>() {
-                    private String[] tmpProducts;
+                try {
+                    Log.d("PREICO: ", String.valueOf(precio.getText().length()));
+                    if (precio.getText().length() > 0 && cant.getText().length() > 0 && descPor.getText().length() > 0) {
+                        connetionService.getProductCalc(IdEmpresa, actualProduct.getCodigoArticulo(), roundAvoidN(cant.getText().toString(), 5), roundAvoidN(precio.getText().toString(), 5), roundAvoidN(descPor.getText().toString(), 5)).enqueue(new Callback<List<ProductCalc>>() {
+                            private String[] tmpProducts;
 
 
-                    @Override
-                    public void onResponse(Call<List<ProductCalc>> call, Response<List<ProductCalc>> response) {
-                        //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                            @Override
+                            public void onResponse(Call<List<ProductCalc>> call, Response<List<ProductCalc>> response) {
+                                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
 
-                        List<ProductCalc> loginResponse = response.body();
-                        //productsList = loginResponse;
-                        if(loginResponse != null) {
-                            ProductCalc a = loginResponse.get(0);
+                                List<ProductCalc> loginResponse = response.body();
+                                //productsList = loginResponse;
+                                if (loginResponse != null) {
+                                    ProductCalc a = loginResponse.get(0);
 
+                                    neto.setText(a.getPrecioSI().toString());
+                                    montoIV.setText(a.getMontoImpuesto().toString());
+                                    desc.setText(a.getMontoDescuento().toString());
+                                    total.setText(a.getTotalLinea().toString());
+                                    precio.setText(a.getPrecio().toString());
+                                    descPor.setText(a.getPorcentajeDescuento().toString());
 
-                            neto.setText(a.getPrecioSI().toString());
-                            montoIV.setText(a.getMontoImpuesto().toString());
-                            desc.setText(a.getDescuento().toString());
-                            total.setText(a.getTotalLinea().toString());
-                            precio.setText(a.getPrecio().toString());
-                            descPor.setText(a.getPorcentajeDescuento().toString());
+                                    canChanged = true;
+                                }
 
-                            canChanged = true;
-                        }
+                            }
 
+                            @Override
+                            public void onFailure(Call<List<ProductCalc>> call, Throwable t) {
+
+                                Log.d("ERR: ", t.getMessage());
+                                //utils.hideProgress();
+
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onFailure(Call<List<ProductCalc>> call, Throwable t) {
-
-                        Log.d("ERR: ", t.getMessage());
-                        //utils.hideProgress();
-
+                    else{
+                        canChanged = true;
                     }
-                });
-
-
+                } catch (NumberFormatException e) {
+                    Log.d("Exception", "No Number");
+                    canChanged = true;
+                }
             }
         }, time); // 600ms delay before the timer executes the „run“ method from TimerTask
 
@@ -650,16 +664,17 @@ public class NewBillFragment extends Fragment {
     @OnTextChanged(R.id.precio)
     public void newPrecio(CharSequence text){
 
-        if(!text.toString().equals("")){
+            Log.d("Pre: ", text.toString());
+            if (!text.toString().equals("") && !text.toString().equals(" ")) {
+                //Double a = Double.parseDouble(text.toString());
+                //actualProduct.setPorcentajeImpuesto((double) 50);
 
-            //actualProduct.setPorcentajeImpuesto((double) 50);
+                if (!cant.getText().toString().equals("") && actualProduct != null && !lastPrice.equals(text.toString()) && canChanged) {
 
-            if(!cant.getText().toString().equals("") && actualProduct != null && !lastPrice.equals(text.toString()) && canChanged){
+                    lastPrice = text.toString();
+                    canChanged = false;
 
-                lastPrice = text.toString();
-                canChanged = false;
-
-                setCalc(3500);
+                    setCalc(3500);
 
                /* Double preci = Double.parseDouble(text.toString());
 
@@ -676,8 +691,9 @@ public class NewBillFragment extends Fragment {
 
                 calculoDescuento();
                 calculoTotalLinea();*/
+                }
             }
-        }
+
 
     }
 
