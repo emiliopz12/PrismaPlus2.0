@@ -31,6 +31,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
 
+    private int nextFragment = 0;
 
 
     public  LoginActivity(){
@@ -43,12 +44,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
-        setFragment(new LoginFragment());
+        setFragment(new LoginFragment(), 1);
         //connetionService = ConnetionService.obtenerServicio();
     }
 
 
-    public void setFragment(Fragment fragment) {
+    public void setFragment(Fragment fragment, int i) {
+        nextFragment = i;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
@@ -56,7 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if(nextFragment != 1){
+            setFragment( new LoginFragment(), 1);
+        }
+else {
+            super.onBackPressed();
+        }
+    }
 
 
 }

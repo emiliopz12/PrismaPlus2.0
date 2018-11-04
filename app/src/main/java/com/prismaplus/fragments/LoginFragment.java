@@ -93,14 +93,16 @@ public class LoginFragment extends Fragment {
     }
 
     public void goToMain(){
-        Intent homepage = new Intent(getActivity(), DrawerActivity.class);
-        startActivity(homepage);
-        getActivity().finish();
+        mActivity.setFragment(new CompanyLoginFragment(), 2);
+
+//        Intent homepage = new Intent(getActivity(), DrawerActivity.class);
+//        startActivity(homepage);
+//        getActivity().finish();
     }
 
     @OnClick(R.id.textNot)
     public void forgotPass(){
-        mActivity.setFragment(new ForgotPassFragment());
+        mActivity.setFragment(new ForgotPassFragment(), 3);
     }
 
     @OnClick(R.id.loginUser)
@@ -115,9 +117,12 @@ public class LoginFragment extends Fragment {
           preferencesManager.saveString(getActivity(),"url", "pruebas");
           String[] data = user.split("test");
           sendUser = data[1];
+          Log.d("mode", "test");
         }else{
             preferencesManager.saveString(getActivity(),"url", "prod");
             sendUser = username.getText().toString();
+            Log.d("mode", "prod");
+
         }
 
         connetionService = ConnetionService.obtenerServicio(user.contains("test") ? utils.URL_PRUEBAS : utils.URL_PROD);

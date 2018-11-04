@@ -79,7 +79,7 @@ public class ForgotPassFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case HOME:
-                this.mActivity.setFragment(new LoginFragment());
+                this.mActivity.setFragment(new LoginFragment(), 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -125,7 +125,7 @@ public class ForgotPassFragment extends Fragment {
                         .contentGravity(GravityEnum.CENTER)
                         .positiveText("Aceptar")
                         .onPositive((dialog, which) -> {
-                            mActivity.setFragment(new LoginFragment());
+                            mActivity.setFragment(new LoginFragment(), 1);
                         })
                         .show();
             }

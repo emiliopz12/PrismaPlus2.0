@@ -31,6 +31,7 @@ import com.prismaplus.activities.SplashActivity;
 import com.prismaplus.entities.Bill;
 import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
+import com.prismaplus.entities.CompanyLoginInfo;
 import com.prismaplus.entities.Detail;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductCalc;
@@ -870,6 +871,10 @@ public class NewBillFragment extends Fragment {
                                     cleanFields();
                                 })
                                 .show();
+
+
+
+
                     }
 
 //                    if (res == null) {
@@ -905,6 +910,29 @@ public class NewBillFragment extends Fragment {
                                     cleanFields();
                                 })
                                 .show();
+
+                        connetionService.printFact("http://www.prismasolucionescr.com/PLUS/Index/Fact_Print", "15959", "210/facturabase", "1").enqueue(new Callback<Object>() {
+
+                            @Override
+                            public void onResponse(Call<Object> call, Response<Object> response) {
+                                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                                Object loginResponse = response.body();
+
+                                if(loginResponse != null) {
+
+                                }
+                                utils.hideProgress();
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Object> call, Throwable t) {
+                                utils.hideProgress();
+                            }
+                        });
+
+
+
                     }
                     Log.d("ERR: ", t.getMessage());
 

@@ -3,6 +3,7 @@ package com.prismaplus.services;
 import com.prismaplus.entities.Bill;
 import com.prismaplus.entities.BillInfo;
 import com.prismaplus.entities.ClientInfo;
+import com.prismaplus.entities.CompanyLoginInfo;
 import com.prismaplus.entities.ListDocsInfo;
 import com.prismaplus.entities.LoginInfo;
 import com.prismaplus.entities.ProductCalc;
@@ -20,6 +21,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface ConnectionInterface {
 
@@ -43,7 +45,6 @@ public interface ConnectionInterface {
     Call<List<ListDocsInfo>> getFacturasListado(@Query("idempresa") String company, @Query("inicio") String inicio, @Query("fin")
             String fin, @Query("TipoDocumento") String tipoDocumento , @Query("PuntodeVenta") int puntodeVenta);
 
-
     @POST("FacturaApi")
     Call<BillInfo> doBill(@Body Bill bill);
 
@@ -58,5 +59,12 @@ public interface ConnectionInterface {
 
     @POST("ReenviarApi")
     Call<Object> reenviarApi(@Query("IdEmpresa") String IdEmpresa, @Query("IdFactura") String IdFactura, @Query("IdCliente") String IdCliente);
+
+
+    @GET("Ciasapi")
+    Call<List<CompanyLoginInfo>> getCompaniesLogin(@Query("usuario") String user);
+
+    @GET
+    Call<Object> printFact(@Url String url, @Query("IdFactura") String IdFactura, @Query("Informe") String empresa, @Query("reimpresion") String reimpresion);
 
 }

@@ -139,6 +139,7 @@ public class DrawerActivity extends AppCompatActivity
             preferencesManager.saveString(this, "rememberUser", ""); //log out
             Intent loginpage = new Intent(this, LoginActivity.class);
             startActivity(loginpage);
+            finish();
         }
 
 

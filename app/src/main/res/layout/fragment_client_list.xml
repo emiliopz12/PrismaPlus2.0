@@ -17,28 +17,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-           <!-- <RelativeLayout
-                android:id="@+id/relIamge"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_above="@+id/relaData"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="0dp"
-                android:layout_weight=".20">
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginEnd="38dp"
-                    android:background="@color/colorAccent"
-                    android:text="Crear"
-                    android:textColor="#fff" />
-            </RelativeLayout>-->
-
             <RelativeLayout
                 android:id="@+id/relaData"
                 android:layout_width="match_parent"
