@@ -59,7 +59,7 @@
             android:layout_span="1"
             android:layout_weight=".10"
             android:background="#E5E5E5"
-            app:srcCompat="@drawable/del"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            app:srcCompat="@drawable/del" />
 
 </TableRow>

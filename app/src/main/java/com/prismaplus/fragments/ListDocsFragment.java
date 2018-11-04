@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.activities.ClientsActivity;
 import com.prismaplus.activities.ListDocActivity;
+import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.ListDocsInfo;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
@@ -32,6 +34,8 @@ import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.sql.ClientInfoStatus;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -202,6 +206,7 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
             public void onResponse(Call<List<ListDocsInfo>> call, Response<List<ListDocsInfo>> response) {
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                 List<ListDocsInfo> loginResponse = response.body();
+
 //                tmpClients = new String[loginResponse.size()+1];
                 int i = 1;
                 for(ListDocsInfo c : loginResponse){
@@ -246,11 +251,69 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
         rows.add(row);
 
+        ImageButton send = (ImageButton)row.findViewById(R.id.send);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TableRow r = (TableRow) (v.getParent());
+
+                int i = rows.lastIndexOf(r);
+
+
+                String idFacturar = ((TextView)(r.getChildAt(0))).getText().toString();
+
+                String cliente = ((TextView)(r.getChildAt(4))).getText().toString();
+
+                ListDocsInfo a = lisDocList.get(i);
+                Log.d("Factura: ", String.valueOf(a.getIdFactura()));
+                Log.d("cliente: ", String.valueOf(a.getIdCliente()));
+
+                reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
+
+            }
+        });
+
+
 
 
         tableClients.addView(row);
 
         tableClients.requestLayout();
+
+    }
+
+
+    private void reenviarApi(String idFactura, String idCiente){
+
+        String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
+
+        connetionService.reenviarApi(IdEmpresa, idFactura,idCiente).enqueue(new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+                Object loginResponse = response.body();
+
+                new MaterialDialog.Builder(rootView.getContext())
+                        .title("Mensaje")
+                        .content("Se ha enviado satisfactoriamente")
+                        .contentGravity(GravityEnum.CENTER)
+                        .positiveText("Aceptar")
+                        .onPositive((dialog, which) -> {
+                        })
+                        .show();
+
+
+                utils.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                utils.hideProgress();
+            }
+        });
 
     }
 

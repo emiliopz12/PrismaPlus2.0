@@ -56,4 +56,7 @@ public interface ConnectionInterface {
     @GET("Unidadesapi")
     Call<List<UnidadInfo>> getUnidad();
 
+    @POST("ReenviarApi")
+    Call<Object> reenviarApi(@Query("IdEmpresa") String IdEmpresa, @Query("IdFactura") String IdFactura, @Query("IdCliente") String IdCliente);
+
 }
