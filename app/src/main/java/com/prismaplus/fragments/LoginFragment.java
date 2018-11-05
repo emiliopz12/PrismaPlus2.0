@@ -127,6 +127,7 @@ public class LoginFragment extends Fragment {
 
         connetionService = ConnetionService.obtenerServicio(user.contains("test") ? utils.URL_PRUEBAS : utils.URL_PROD);
 
+        String finalSendUser = sendUser;
         connetionService.doLogin(sendUser, password.getText().toString()).enqueue(new Callback<List<LoginInfo>>() {
             @Override
             public void onResponse(Call<List<LoginInfo>> call, Response<List<LoginInfo>> response) {
@@ -139,7 +140,7 @@ public class LoginFragment extends Fragment {
                     preferencesManager.saveString(getActivity(), "rememberUser", "OK");
                     preferencesManager.saveInt(getActivity(), "IdEmpresa", res.getIdEmpresa());
                     preferencesManager.saveString(getActivity(), "nombre", res.getNombre());
-                    preferencesManager.saveString(getActivity(), "username", username.getText().toString());
+                    preferencesManager.saveString(getActivity(), "username", finalSendUser);
                     utils.hideProgress();
                     goToMain();
                 }
