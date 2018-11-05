@@ -911,25 +911,25 @@ public class NewBillFragment extends Fragment {
                                 })
                                 .show();
 
-                        connetionService.printFact("http://www.prismasolucionescr.com/PLUS/Index/Fact_Print", "15959", "210/facturabase", "1").enqueue(new Callback<Object>() {
-
-                            @Override
-                            public void onResponse(Call<Object> call, Response<Object> response) {
-                                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
-                                Object loginResponse = response.body();
-
-                                if(loginResponse != null) {
-
-                                }
-                                utils.hideProgress();
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<Object> call, Throwable t) {
-                                utils.hideProgress();
-                            }
-                        });
+//                        connetionService.printFact("http://www.prismasolucionescr.com/PLUS/Index/Fact_Print", "15959", "210/facturabase", "1").enqueue(new Callback<Object>() {
+//
+//                            @Override
+//                            public void onResponse(Call<Object> call, Response<Object> response) {
+//                                //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
+//                                Object loginResponse = response.body();
+//
+//                                if(loginResponse != null) {
+//
+//                                }
+//                                utils.hideProgress();
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<Object> call, Throwable t) {
+//                                utils.hideProgress();
+//                            }
+//                        });
 
 
 

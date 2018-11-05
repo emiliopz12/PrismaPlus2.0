@@ -6,5 +6,6 @@
     <color name="colorDarkBlue">#052C49</color>
     <color name="colorDCyan">#6fa8de</color>
     <color name="colorDarkCyan">#5a7eaa</color>
+    <color name="white">#fff</color>
 
 </resources>

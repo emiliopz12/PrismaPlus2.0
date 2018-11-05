@@ -12,6 +12,7 @@ import com.prismaplus.entities.UnidadInfo;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -65,6 +66,6 @@ public interface ConnectionInterface {
     Call<List<CompanyLoginInfo>> getCompaniesLogin(@Query("usuario") String user);
 
     @GET
-    Call<Object> printFact(@Url String url, @Query("IdFactura") String IdFactura, @Query("Informe") String empresa, @Query("reimpresion") String reimpresion);
+    Call<ResponseBody> printFact(@Url String url, @Query("IdFactura") String IdFactura, @Query("Informe") String empresa, @Query("reimpresion") String reimpresion);
 
 }

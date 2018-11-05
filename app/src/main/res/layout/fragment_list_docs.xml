@@ -7,267 +7,267 @@
 
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff">
-
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-         <LinearLayout
-             android:id="@+id/relIamge"
-             android:layout_width="match_parent"
-             android:layout_height="0dp"
-             android:layout_above="@+id/relaData"
-             android:layout_alignParentStart="true"
-             android:layout_marginStart="0dp"
-             android:orientation="horizontal"
-             android:layout_weight=".20">
-
-             <LinearLayout
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="center_vertical"
-                 android:layout_marginTop="0dp"
-                 android:layout_weight="0.8"
-                 android:orientation="vertical">
+        android:background="#fff">
 
 
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:layout_gravity="center_vertical"
-                     android:layout_weight="0.8"
-                     android:orientation="horizontal">
-
-                     <RelativeLayout
-                         android:id="@+id/relativeInit"
-                         android:layout_width="0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginStart="6dp"
-                         android:layout_marginTop="0dp"
-                         android:layout_marginEnd="6dp"
-                         android:layout_weight="0.5"
-                         android:background="@drawable/edittext_rounded"
-                         android:padding="8dp">
-
-                         <TextView
-                             android:id="@+id/textInicio"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:layout_alignParentStart="true"
-                             android:layout_alignParentTop="true"
-                             android:layout_marginStart="0dp"
-                             android:text="Fecha inicio" />
-
-                         <ImageView
-                             android:layout_width="18dp"
-                             android:layout_height="18dp"
-                             android:layout_alignParentTop="true"
-                             android:layout_alignParentEnd="true"
-                             android:src="@drawable/ic_date" />
-
-                     </RelativeLayout>
-
-
-                     <RelativeLayout
-                         android:id="@+id/relativeFin"
-                         android:layout_width="0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginStart="6dp"
-                         android:layout_marginTop="0dp"
-                         android:layout_marginEnd="6dp"
-                         android:layout_weight="0.5"
-                         android:background="@drawable/edittext_rounded"
-                         android:padding="8dp">
-
-                         <TextView
-                             android:id="@+id/textFin"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:layout_alignParentStart="true"
-                             android:layout_alignParentTop="true"
-                             android:layout_marginStart="0dp"
-                             android:text="Fecha fin" />
-
-                         <ImageView
-                             android:layout_width="18dp"
-                             android:layout_height="18dp"
-                             android:layout_alignParentTop="true"
-                             android:layout_alignParentEnd="true"
-                             android:src="@drawable/ic_date" />
-
-                     </RelativeLayout>
-
-                 </LinearLayout>
-
-
-             </LinearLayout>
-
-             <Button
-                 android:id="@+id/buttonFind"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentTop="true"
-                 android:layout_alignParentEnd="true"
-                 android:layout_gravity="center_vertical"
-                 android:layout_marginTop="0dp"
-                 android:layout_marginEnd="16dp"
-                 android:background="@color/colorAccent"
-                 android:text="Buscar"
-                 android:textColor="#fff" />
-
-         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/relaData"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_weight=".80">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/relIamge"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_above="@+id/relaData"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:orientation="horizontal"
+                android:layout_weight=".20">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
 
-                    <TableLayout
-                        android:id="@+id/tableClients"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.8"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/relativeInit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/edittext_rounded"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/textInicio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginStart="0dp"
+                                android:text="Fecha inicio" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_date" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/relativeFin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/edittext_rounded"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/textFin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginStart="0dp"
+                                android:text="Fecha fin" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_date" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonFind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="Buscar"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaData"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_weight=".80">
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scrollbars="vertical">
+                        android:orientation="vertical" >
 
-                        <TableRow
+                        <TableLayout
+                            android:id="@+id/tableClients"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#CCCCCC">
+                            android:layout_height="wrap_content"
+                            android:scrollbars="vertical">
 
-                            <TextView
-                                android:id="@+id/textViewL1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="# Documento"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#CCCCCC">
 
-                            <TextView
-                                android:id="@+id/textViewL2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="Tipo"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".5"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="# Documento"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/textViewL3"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".4"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="Estado"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Tipo"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/textViewL4"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="Fecha"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".4"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Estado"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/textViewL5"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".4"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="Cliente"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Fecha"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/textViewL6"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".60"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:text="Total"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL5"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".4"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Cliente"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/send"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:background="#CCCCCC"
-                                android:paddingStart="2dp"
-                                android:paddingTop="16dp"
-                                android:paddingRight="2dp"
-                                android:paddingBottom="16dp"
-                                android:textAlignment="center"
-                                android:textColor="#000"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/textViewL6"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".60"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Total"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                        </TableRow>
+                                <TextView
+                                    android:id="@+id/send"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:background="#CCCCCC"
+                                    android:paddingStart="2dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:textAlignment="center"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
 
-                    </TableLayout>
-                </LinearLayout>
-            </ScrollView>
+                            </TableRow>
 
-        </RelativeLayout>
-    </LinearLayout>
+                        </TableLayout>
+                    </LinearLayout>
+                </ScrollView>
+
+            </RelativeLayout>
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
 
         android:text="@string/hello_blank_fragment" />
 

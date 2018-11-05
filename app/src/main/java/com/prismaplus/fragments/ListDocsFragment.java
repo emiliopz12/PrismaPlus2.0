@@ -257,6 +257,11 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
 
+                //mActivity.setFragment(new PDFFragment(), 4);
+
+
+
+
                 TableRow r = (TableRow) (v.getParent());
 
                 int i = rows.lastIndexOf(r);
@@ -268,9 +273,21 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
                 ListDocsInfo a = lisDocList.get(i);
                 Log.d("Factura: ", String.valueOf(a.getIdFactura()));
+
                 Log.d("cliente: ", String.valueOf(a.getIdCliente()));
 
-                reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
+                Fragment fragment = new PDFFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("idFactura", String.valueOf(a.getIdFactura()));
+                String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
+
+                bundle.putString("informe", IdEmpresa);
+
+                fragment.setArguments(bundle);
+
+                mActivity.setFragment(fragment, 4);
+//
+//                reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
 
             }
         });

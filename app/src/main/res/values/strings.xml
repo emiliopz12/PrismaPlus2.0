@@ -13,5 +13,6 @@
     <string name="recuperar_contras">Recuperar Contraseña</string>
     <string name="client_label">Cliente</string>
     <string name="button_generar">Generar</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
