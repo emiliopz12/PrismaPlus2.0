@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
 import com.prismaplus.fragments.ClientListFragment;
 import com.prismaplus.fragments.ListDocsFragment;
 
-public class ListDocActivity extends AppCompatActivity {
+public class ListDocActivity extends AppCompatActivity implements OnPageChangeListener {
 
     int nextFragment = 0 ;
 
@@ -57,4 +58,8 @@ public class ListDocActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onPageChanged(int page, int pageCount) {
+
+    }
 }

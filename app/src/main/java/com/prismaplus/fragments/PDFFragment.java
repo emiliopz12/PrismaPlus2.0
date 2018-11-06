@@ -106,7 +106,7 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
 
     private String IdFactura  = "15959";
     String Informe  = "210/facturabase";
-    //PDFView pdfView;
+    PDFView pdfView;
     String lastPdfName = "";
     File lastPDF;
     public static final int MY_WRITE_LOCATION = 98;
@@ -127,8 +127,8 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     @BindView(R.id.action_c)
     View actionC;
 
-    @BindView(R.id.pdfview)
-    PDFView pdfView;
+//    @BindView(R.id.pdfview)
+//    PDFView pdfView;
 
     public PDFFragment(){
         utils  = new Utils();
@@ -249,9 +249,14 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
 
 
     public void preview(String path){
+
+        Log.d("PREVIEW", path);
+
         lastPDF  = new File(path);
         lastPdfName = path;
-        pdfView.fromFile(new File(path)).defaultPage(1).enableSwipe(true).onPageChange(this).load();
+        pdfView.fromFile(new File(path)).defaultPage(1).enableSwipe(true).onPageChange(mActivity).load();
+
+        Log.d("PREVIEW", "TRUE 2");
 
         progressBar.setVisibility(View.GONE);
     }
@@ -323,7 +328,7 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
 //        final View actionC = findViewById(R.id.action_c);
         actionC.setOnClickListener(view -> saveInDownload());
 
-        //pdfView = (PDFView) findViewById(R.id.pdfview);
+        pdfView = (PDFView) rootView.findViewById(R.id.pdfview);
         //connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(this.getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
 
         IdFactura = this.getArguments().getString("idFactura");

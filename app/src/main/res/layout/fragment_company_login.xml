@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CompanyLoginFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relaData"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="26dp"
+                android:layout_weight=".80">
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TableLayout
+                            android:id="@+id/tableCompanies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="vertical">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#CCCCCC">
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".7"
+                                    android:background="#CCCCCC"
+                                    android:paddingLeft="16dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="16dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Empresa"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView5"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:background="#CCCCCC"
+                                    android:paddingLeft="16dp"
+                                    android:paddingTop="16dp"
+                                    android:paddingRight="16dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="Ingresar"
+                                    android:textColor="#000"
+                                    android:textStyle="bold" />
+
+                            </TableRow>
+
+                        </TableLayout>
+                    </LinearLayout>
+                </ScrollView>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

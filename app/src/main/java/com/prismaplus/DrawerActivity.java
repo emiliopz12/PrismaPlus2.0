@@ -2,6 +2,7 @@ package com.prismaplus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,8 @@ import com.prismaplus.activities.ProductsActivity;
 import com.prismaplus.fragments.MainFragment;
 import com.prismaplus.fragments.NewBillFragment;
 import com.prismaplus.herlpers.PreferencesManager;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,5 +159,16 @@ public class DrawerActivity extends AppCompatActivity
                 fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorFragment, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 }
