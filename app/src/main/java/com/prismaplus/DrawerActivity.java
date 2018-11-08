@@ -145,6 +145,15 @@ public class DrawerActivity extends AppCompatActivity
             finish();
         }
 
+        if (id == R.id.changeCompany) {
+            //preferencesManager.saveString(this, "rememberUser", ""); //log out
+            Intent loginpage = new Intent(this, LoginActivity.class);
+            loginpage.putExtra("fragment", 2);
+            startActivity(loginpage);
+            finish();
+        }
+
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

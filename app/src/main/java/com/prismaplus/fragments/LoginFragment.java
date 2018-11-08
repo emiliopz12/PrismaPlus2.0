@@ -137,7 +137,7 @@ public class LoginFragment extends Fragment {
                 LoginInfo res = loginResponse.get(0);
                 if(res.getMSJ().equals("OK")){
                     //Toast.makeText(rootView.getContext(), "Logged In", Toast.LENGTH_LONG).show();
-                    preferencesManager.saveString(getActivity(), "rememberUser", "OK");
+//                    preferencesManager.saveString(getActivity(), "rememberUser", "OK");
                     preferencesManager.saveInt(getActivity(), "IdEmpresa", res.getIdEmpresa());
                     preferencesManager.saveString(getActivity(), "nombre", res.getNombre());
                     preferencesManager.saveString(getActivity(), "username", finalSendUser);

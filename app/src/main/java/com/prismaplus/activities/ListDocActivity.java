@@ -37,6 +37,8 @@ public class ListDocActivity extends AppCompatActivity implements OnPageChangeLi
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorFragmentListaProductosA, fragment);
+        if(id == 4)
+            fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -52,10 +54,23 @@ public class ListDocActivity extends AppCompatActivity implements OnPageChangeLi
     @Override
     public void onBackPressed() {
 
+        if(nextFragment == 4){
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                getFragmentManager().popBackStack();
+                nextFragment = 1;
+            } else {
+                getFragmentManager().popBackStack();
+                nextFragment = 1;
+
+            }        }
+        else {
             Intent i = new Intent(ListDocActivity.this, DrawerActivity.class);
             startActivity(i);
             finish();
-
+        }
     }
 
     @Override

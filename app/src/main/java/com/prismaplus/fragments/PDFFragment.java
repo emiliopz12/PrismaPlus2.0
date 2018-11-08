@@ -87,7 +87,7 @@ import java.io.File;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
-public class PDFFragment extends Fragment implements OnPageChangeListener{
+public class PDFFragment extends Fragment implements OnPageChangeListener {
 
     View rootView;
     private final int HOME = 16908332;
@@ -98,7 +98,7 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     Utils utils;
 
     /*HAY QUE CONTRIUR EL URL, PARA MOSTRARLOS EN DOWNLOAS*/
-    private  String URL = "http://www.prismasolucionescr.com/PLUS/Index/Fact_Print?IdFactura=15959&Informe=210/facturabase&reimpresion=1";
+    private  String URL = "http://www.prismasolucionescr.com/PLUS/Index/Fact_Print?IdFactura=%s&Informe=%s&reimpresion=1";
 
     public String getIdFactura() {
         return IdFactura;
@@ -112,8 +112,8 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     public static final int MY_WRITE_LOCATION = 98;
     Response<ResponseBody> responseBody;
 
-    @BindView(R.id.webview)
-    WebView webView;
+//    @BindView(R.id.webview)
+//    WebView webView;
 
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
@@ -209,7 +209,7 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     }
 
     public void savePDFFromWEB(){
-        connetionService.printFact("http://www.prismasolucionescr.com/PLUS/Index/Fact_Print",IdFactura,Informe, "1").enqueue(new Callback<ResponseBody>() {
+        connetionService.printFact("http://www.prismasolucionescr.com/PLUS/Index/Fact_Print", IdFactura, Informe, "1").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
@@ -228,22 +228,22 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     }
 
     public void previewPdf(){
-        webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + URL);
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                webView.loadUrl("javascript:(function() { " +
-                        "document.querySelector('[role=\"toolbar\"]').remove();})()");
-            }
-
-            public void onPageFinished(WebView view, String url) {
-                progressBar.setVisibility(View.GONE);
-                webView.loadUrl("javascript:(function() { " +
-                        "document.querySelector('[role=\"toolbar\"]').remove();})()");
-            }
-        });
+//        webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + URL);
+//        webView.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                super.onPageStarted(view, url, favicon);
+//                webView.loadUrl("javascript:(function() { " +
+//                        "document.querySelector('[role=\"toolbar\"]').remove();})()");
+//            }
+//
+//            public void onPageFinished(WebView view, String url) {
+//                progressBar.setVisibility(View.GONE);
+//                webView.loadUrl("javascript:(function() { " +
+//                        "document.querySelector('[role=\"toolbar\"]').remove();})()");
+//            }
+//        });
     }
 
 
@@ -276,7 +276,12 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
 
 
     public void saveInDownload(){
-        Uri uri = Uri.parse(URL);
+
+
+        String url = String.format(URL, IdFactura, Informe);
+
+        Log.d("URL: ", url);
+        Uri uri = Uri.parse(String.format(URL, IdFactura, Informe));
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "factura _numero_" + IdFactura + ".pdf" );
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); // to notify when download is complete
@@ -332,7 +337,7 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
         //connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(this.getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
 
         IdFactura = this.getArguments().getString("idFactura");
-        Informe = this.getArguments().getString("informe") + "/facturabase";
+        Informe = this.getArguments().getString("informe") + "/facturabaseapp";
 
         downloadPdfFromRetrofit();
 
@@ -356,12 +361,25 @@ public class PDFFragment extends Fragment implements OnPageChangeListener{
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onPageChanged(int page, int pageCount) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        Log.d("id", String.valueOf(item.getItemId()));
+        switch (item.getItemId()) {
+            case HOME:
+                mActivity.getSupportActionBar().setTitle("LISTADO DE DOCUMENTOS");
+                mActivity.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**

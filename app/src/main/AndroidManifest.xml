@@ -42,7 +42,9 @@
         <activity
             android:name=".activities.ProductsActivity" android:configChanges="screenLayout|orientation|screenSize"></activity>
         <activity android:name=".activities.ListDocActivity" android:configChanges="screenLayout|orientation|screenSize"></activity>
-
+        <activity
+            android:name=".prisma.MainActivity"
+            android:label="@string/title_activity_main"></activity>
         <service android:name=".utils.MyPrintService"
             android:permission="android.permission.BIND_PRINT_SERVICE">
             <intent-filter>

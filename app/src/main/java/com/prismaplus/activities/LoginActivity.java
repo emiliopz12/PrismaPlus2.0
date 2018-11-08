@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.prismaplus.DrawerActivity;
 import com.prismaplus.R;
+import com.prismaplus.fragments.CompanyLoginFragment;
 import com.prismaplus.fragments.LoginFragment;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
@@ -44,7 +45,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
-        setFragment(new LoginFragment(), 1);
+
+        Intent intent = getIntent();
+
+        int f = intent.getIntExtra("fragment", 1);
+
+        if(f == 2)
+            setFragment(new CompanyLoginFragment(), 2);
+        else
+            setFragment(new LoginFragment(), 1);
         //connetionService = ConnetionService.obtenerServicio();
     }
 

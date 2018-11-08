@@ -193,5 +193,17 @@
         android:tint="@android:color/black"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <ImageButton
+        android:id="@+id/pdfPrint"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="6dp"
+        android:adjustViewBounds="false"
+        android:background="#E5E5E5"
+
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/pdf2" />
+
 
 </TableRow>

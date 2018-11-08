@@ -29,6 +29,7 @@ import com.prismaplus.entities.ClientInfo;
 import com.prismaplus.entities.ListDocsInfo;
 import com.prismaplus.entities.ProductInfo;
 import com.prismaplus.herlpers.PreferencesManager;
+import com.prismaplus.prisma.MainActivity;
 import com.prismaplus.services.ConnectionInterface;
 import com.prismaplus.services.ConnetionService;
 import com.prismaplus.utils.Utils;
@@ -252,20 +253,16 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         rows.add(row);
 
         ImageButton send = (ImageButton)row.findViewById(R.id.send);
+        ImageButton pdfPrint = (ImageButton)row.findViewById(R.id.pdfPrint);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        pdfPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //mActivity.setFragment(new PDFFragment(), 4);
-
-
-
-
                 TableRow r = (TableRow) (v.getParent());
 
                 int i = rows.lastIndexOf(r);
-
 
                 String idFacturar = ((TextView)(r.getChildAt(0))).getText().toString();
 
@@ -278,16 +275,59 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
                 Fragment fragment = new PDFFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("idFactura", String.valueOf(a.getIdFactura()));
+                bundle.putString("idFactura", new DecimalFormat("#").format(a.getIdFactura()));
                 String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
-
                 bundle.putString("informe", IdEmpresa);
-
                 fragment.setArguments(bundle);
 
                 mActivity.setFragment(fragment, 4);
+
+//                Intent in = new Intent(mActivity, MainActivity.class);
+//                in.putExtra("idFactura", new DecimalFormat("#").format(a.getIdFactura()));
+//                in.putExtra("informe", IdEmpresa);
 //
-//                reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
+//                startActivity(in);
+//                mActivity.finish();
+//
+               // reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
+
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //mActivity.setFragment(new PDFFragment(), 4);
+                TableRow r = (TableRow) (v.getParent());
+
+                int i = rows.lastIndexOf(r);
+
+                String idFacturar = ((TextView)(r.getChildAt(0))).getText().toString();
+
+                String cliente = ((TextView)(r.getChildAt(4))).getText().toString();
+
+                ListDocsInfo a = lisDocList.get(i);
+                Log.d("Factura: ", String.valueOf(a.getIdFactura()));
+
+                Log.d("cliente: ", String.valueOf(a.getIdCliente()));
+
+//                Fragment fragment = new PDFFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("idFactura", String.valueOf(a.getIdFactura()));
+                String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
+
+                //bundle.putString("informe", IdEmpresa);
+
+                //fragment.setArguments(bundle);
+//                Intent in = new Intent(mActivity, MainActivity.class);
+//                in.putExtra("idFactura", new DecimalFormat("#").format(a.getIdFactura()));
+//                in.putExtra("informe", IdEmpresa);
+//
+//                startActivity(in);
+//                mActivity.finish();
+//
+                reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
 
             }
         });

@@ -87,6 +87,8 @@
     </group>
 
     <group android:checkableBehavior="none">
+        <item android:id="@+id/changeCompany"
+            android:title="Cambiar de Empresa" />
         <item android:id="@+id/contra"
             android:title="Contraseña" />
         <item android:id="@+id/salir"
