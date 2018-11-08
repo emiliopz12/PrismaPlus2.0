@@ -77,6 +77,9 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
     String fechaIncio = "";
     String fechaFin = "";
+    private Calendar calendar;
+    private int year, month, day;
+
 
     List<ListDocsInfo> lisDocList = new ArrayList<>();
     List<TableRow> rows = new ArrayList<TableRow>();
@@ -94,6 +97,19 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
         rootView =  inflater.inflate(R.layout.fragment_list_docs, container, false);
         ButterKnife.bind(this,rootView);
       //  pupulateListDocs();
+
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        fechaIncio = day  + "/" + (month +1)  + "/" + year;
+        textInicio.setText(fechaIncio);
+
+        fechaFin = day  + "/" + (month +1)  + "/" + year;
+        textFin.setText(fechaFin);
+
         return rootView;
 
     }
@@ -110,7 +126,6 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
         preferencesManager = PreferencesManager.getInstance();
         connetionService = ConnetionService.obtenerServicio(preferencesManager.getStringValue(getActivity(),"url").equals("pruebas") ? utils.URL_PRUEBAS : utils.URL_PROD);
-
 
         try {
             mActivity.getSupportActionBar().setIcon(R.drawable.ic_prisma_big);
@@ -200,6 +215,18 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
         utils.showProgess(getActivity(),"Cargando");
 
+        if(lisDocList.size() > 0) {
+            lisDocList = new ArrayList<>();
+
+            rows = new ArrayList<TableRow>();
+
+            tableClients.removeViews(1, tableClients.getChildCount()-1);
+
+            tableClients.requestLayout();
+        }
+
+        lines = 0;
+
         connetionService.getFacturasListado(IdEmpresa, fechaIncio,fechaFin,"T",0).enqueue(new Callback<List<ListDocsInfo>>() {
             private String[] tmpClients;
 
@@ -259,7 +286,6 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
 
-                //mActivity.setFragment(new PDFFragment(), 4);
                 TableRow r = (TableRow) (v.getParent());
 
                 int i = rows.lastIndexOf(r);
@@ -282,15 +308,6 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
                 mActivity.setFragment(fragment, 4);
 
-//                Intent in = new Intent(mActivity, MainActivity.class);
-//                in.putExtra("idFactura", new DecimalFormat("#").format(a.getIdFactura()));
-//                in.putExtra("informe", IdEmpresa);
-//
-//                startActivity(in);
-//                mActivity.finish();
-//
-               // reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
-
             }
         });
 
@@ -312,20 +329,8 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
 
                 Log.d("cliente: ", String.valueOf(a.getIdCliente()));
 
-//                Fragment fragment = new PDFFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("idFactura", String.valueOf(a.getIdFactura()));
                 String IdEmpresa = String.valueOf(preferencesManager.getIntValue(mActivity,"IdEmpresa"));
 
-                //bundle.putString("informe", IdEmpresa);
-
-                //fragment.setArguments(bundle);
-//                Intent in = new Intent(mActivity, MainActivity.class);
-//                in.putExtra("idFactura", new DecimalFormat("#").format(a.getIdFactura()));
-//                in.putExtra("informe", IdEmpresa);
-//
-//                startActivity(in);
-//                mActivity.finish();
 //
                 reenviarApi(new DecimalFormat("#").format(a.getIdFactura()) , new DecimalFormat("#").format(a.getIdCliente()) );
 
@@ -353,15 +358,26 @@ public class ListDocsFragment extends Fragment implements DatePickerDialog.OnDat
                 //Toast.makeText(rootView.getContext(), "send success", Toast.LENGTH_LONG).show();
                 Object loginResponse = response.body();
 
-                new MaterialDialog.Builder(rootView.getContext())
-                        .title("Mensaje")
-                        .content("Se ha enviado satisfactoriamente")
-                        .contentGravity(GravityEnum.CENTER)
-                        .positiveText("Aceptar")
-                        .onPositive((dialog, which) -> {
-                        })
-                        .show();
-
+                //Toast.makeText(mActivity, response.body().toString(), Toast.LENGTH_LONG).show();
+                if(response.body() != null)
+                if(!response.body().toString().equals("El sitio no esta configurado para enviar emails, puede que esté trabajando una versión de Test"))
+                    new MaterialDialog.Builder(rootView.getContext())
+                            .title("Mensaje")
+                            .content("Se ha enviado satisfactoriamente")
+                            .contentGravity(GravityEnum.CENTER)
+                            .positiveText("Aceptar")
+                            .onPositive((dialog, which) -> {
+                            })
+                            .show();
+                else
+                    new MaterialDialog.Builder(rootView.getContext())
+                            .title("Error")
+                            .content("El sitio no esta configurado para enviar emails, puede que esté trabajando una versión de Test")
+                            .contentGravity(GravityEnum.CENTER)
+                            .positiveText("Aceptar")
+                            .onPositive((dialog, which) -> {
+                            })
+                            .show();
 
                 utils.hideProgress();
             }
